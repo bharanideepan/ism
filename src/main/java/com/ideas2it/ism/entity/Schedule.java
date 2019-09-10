@@ -75,9 +75,15 @@ public class Schedule {
     private Employee interviewer;
     
     public Schedule() {
-    	this.status = ScheduleStatus.Pending;
+    	this.status = ScheduleStatus.New;
     }
     
+    @Override
+    public String toString() {
+    	return this.interviewType.toString();
+    }
+    
+    // Getters and Setter 
     public long getId() {
         return this.id;
     }

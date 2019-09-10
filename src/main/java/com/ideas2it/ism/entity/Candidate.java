@@ -177,5 +177,4 @@ public class Candidate {
 	public void setSchedules(List<Schedule> schedules) {
 		this.schedules = schedules;
 	}
-
 }

@@ -1,21 +1,30 @@
-   .table {
-      margin: auto;
-      width:400px;
-      height:500px;
-      border: none;
-      border-radius: 20px;
-      box-shadow: 10px 10px 5px grey; 
-      background:linear-gradient(to top, #dad299, #b0dab9); 
-      padding: 10px;
-   }
-   html, body {
-      background-image: linear-gradient(to right, #26a7af, #26aeab, #30b4a5, #41ba9d, #54c094);
-   }
-   table, td {
-      text-align: center;
-      padding: 10px;
-   }
-    
+.reject {
+  color: red;
+  align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.reject:hover,
+.reject:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.select {	
+  color: green;
+  align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.select:hover,
+.select:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
    #home {
     height: 100%;
     width:100%; 
@@ -26,8 +35,26 @@
       display:inline-block;
       margin:10px;
       float:left;
-   } 
-  .sidebar {
+   }
+   
+   .table {
+      margin: auto;
+      width:400px;
+      height:500px;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 10px 10px 5px grey; 
+      background:linear-gradient(to top, #dad299, #b0dab9); 
+      padding: 20px;
+   }
+   html, body {
+      background-image: linear-gradient(to right, #26a7af, #26aeab, #30b4a5, #41ba9d, #54c094);
+   }
+   table, td {
+      text-align: center;
+      padding: 10px;
+   }
+ .sidebar {
   height: 100%;
   width: 200px;
   position: fixed;
@@ -61,4 +88,3 @@
   .sidebar {padding-top: 15px;}
   .sidebar a {font-size: 18px;}
 }
-    

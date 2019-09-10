@@ -7,6 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>View schedules</title>
+ <link rel="stylesheet" type="text/css" href="/css/viewSchedules.css">
+</head>
+<body>
+	<div>
+	      <h2 align="center">Interview Schedule Management </h2>
 </head>
 <body>
 	<div>
