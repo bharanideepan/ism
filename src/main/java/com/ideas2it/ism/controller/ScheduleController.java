@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -153,7 +154,7 @@ public class ScheduleController {
      * @param RequestParam comment - Comment given by the client for rescheduling.
      * @param model - Used to send schedule object to jsp.
      * 
-     * @return CREATE_RESCHEDULE_JSP - 
+     * @return VIEW_SCHEDULE_JSP - 
      */
     @RequestMapping(value = Constant.RESCHEDULE, method = RequestMethod.POST)  
     private String reschedule(Model model,
@@ -178,7 +179,7 @@ public class ScheduleController {
      * @param RequestParam comment - Comment given by the client for cancelling.
      * @param model - Used to send schedule object to jsp.
      * 
-     * @return SCHEDULE_BY_STATUS - 
+     * @return GET_RECRUITER_OPERATIONS - 
      */
     @RequestMapping(value = Constant.CANCEL_SCHEDULE, method = RequestMethod.POST)  
     private String cancelSchedule(Model model, @ModelAttribute(Constant.SCHEDULE)Schedule schedule) {
@@ -189,16 +190,33 @@ public class ScheduleController {
     /**
      * Gets interviewers available for that schedule
      * 
-     * @param ModelAttribute schedule - Needs to be cancelled.
-     * @param RequestParam comment - Comment given by the client for cancelling.
      * @param model - Used to send schedule object to jsp.
+     * @param RequestParam scheduleId - Id of the schedule to be assigned
      * 
-     * @return SCHEDULE_BY_STATUS - 
+     * @return ASSIGN_INTERVIEWER_JSP - 
      */
     @RequestMapping(value = Constant.GET_INTERVIEWERS, method = RequestMethod.POST)  
     private String getInterviewersByTechnology(Model model,
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId) {
-    	scheduleService.getScheduleAndInterviewersByTechnology(scheduleId);
-        return Constant.GET_RECRUITER_OPERATIONS;
+    	Map<String, Object> scheduleAndInterviewers= scheduleService.getScheduleAndInterviewersByTechnology(scheduleId);
+        model.addAttribute(Constant.SCHEDULE, scheduleAndInterviewers.get(Constant.SCHEDULE));
+        model.addAttribute(Constant.INTERVIEWERS, scheduleAndInterviewers.get(Constant.INTERVIEWERS));
+        return Constant.ASSIGN_INTERVIEWER_JSP;
+    }
+ 
+    /**
+     * Gets interviewers available for that schedule
+     * 
+     * @param model - Used to send schedule object to jsp.
+     * @param RequestParam scheduleId - Id of the schedule to be assigned
+     * @param RequestParam candidateId - Id of the candidate to be assigned
+     * 
+     * @return VIEW_SCHEDULE_JSP - 
+     */
+    @RequestMapping(value = Constant.ASSIGN_INTERVIEWER, method = RequestMethod.POST)  
+    private String assignInterviewer(Model model,
+    		@RequestParam(Constant.SCHEDULE_ID)long scheduleId,
+    		@RequestParam(Constant.CANDIDATE_ID)long candidateId) {
+        return Constant.VIEW_SCHEDULE_JSP;
     }
 }
