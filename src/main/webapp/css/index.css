@@ -1,0 +1,43 @@
+  html, body {
+    background:linear-gradient(to top, #dad299, #b0dab9)
+  }
+  .save {
+    align:center;
+    background-color:green; 
+    color:white;
+    width:100px;
+  }
+  
+    #mySidenav a {
+  position: absolute;
+  left: -80px;
+  transition: 0.3s;
+  padding: 15px;
+  width: 200px;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  border-radius: 0 5px 5px 0;
+}
+
+#mySidenav a:hover {
+  left: 0;
+}
+
+#about {
+  top: 20px;
+  width: 100px;
+  background-color: #4CAF50;
+}
+
+#blog {
+  top: 80px;
+  width: 100px;
+  background-color: #2196F3;
+}
+
+#projects {
+  top: 140px;
+  width: 100px;
+  background-color: #f44336;
+}
