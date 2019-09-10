@@ -49,6 +49,8 @@ public class Constant {
 	public static final String CANCEL_COMMENT = "cancellationComment";
 	public static final String COMMENT = "comment";
 	public static final String NEW_SCHEDULE = "newSchedule";
+	public static final String INTERVIEWERS = "interviewers";
+	public static final String ASSIGN_INTERVIEWER = "assignInterviewer";
 
     // Schedule JSP pages.
 	public static final String VIEW_SCHEDULES_JSP = "viewSchedules";
@@ -67,6 +69,7 @@ public class Constant {
 	public static final String CANCEL_SCHEDULE = "cancelSchedule";
 	public static final String GET_RECRUITER_OPERATIONS = "getRecruiterOperations";
 	public static final String GET_INTERVIEWERS = "getInterviewers";
+	public static final String ASSIGN_INTERVIEWER_JSP = "assignInterviewer";
 	
 }
 

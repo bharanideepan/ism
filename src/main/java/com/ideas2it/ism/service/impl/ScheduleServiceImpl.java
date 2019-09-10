@@ -2,12 +2,14 @@ package com.ideas2it.ism.service.impl;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ideas2it.ism.common.Constant;
 import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.dao.ScheduleRepository;
 import com.ideas2it.ism.entity.Employee;
@@ -69,8 +71,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	public Map<String, Object> getScheduleAndInterviewersByTechnology(long scheduleId) {
-		Map<String, Object>
-		return null;
+		Map<String, Object> scheduleAndInterviewers = new HashMap<String, Object>();
+		Schedule schedule = this.getScheduleById(scheduleId);
+		scheduleAndInterviewers.put(Constant.SCHEDULE, schedule);
+		scheduleAndInterviewers.put(Constant.INTERVIEWERS,
+				candidateService.getEmployeesByTechnology(schedule.getCandidate().getTechnology()););
+		return scheduleAndInterviewers;
 	}
 
 }
