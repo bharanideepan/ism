@@ -20,7 +20,7 @@
         <div class="sidebar">
             <a href="addCandidate">Add Candidate</a>
             <a href="viewCandidates">View Candidates</a>
-            <a href="schedulesByStatus">View Schedules</a>
+            <a href="schedulesByStatus?status=New">View Schedules</a>
         </div>
 </head>
 <body>

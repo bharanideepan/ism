@@ -99,20 +99,6 @@ public class ScheduleController {
         model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
         return Constant.VIEW_SCHEDULE_JSP;
     }
- 
-    /**
-     * Gets all pending schedules.
-     * 
-     * @param candidate - Created object.
-     * @param model - Used to send candidate object along with request to jsp.
-     * @return
-     */
-    @RequestMapping(value = Constant.SCHEDULE_BY_STATUS, method = RequestMethod.GET)  
-    private String getSchedulesByStatus(HttpServletRequest request, Model model) {
-        model.addAttribute(Constant.SCHEDULES, scheduleService.getAllSchedules()); 
-        model.addAttribute(Constant.SCHEDULE, new Schedule());
-        return Constant.VIEW_SCHEDULES_JSP;
-    }
     
     /**
      * When the employee update the interview result the status of the schedule
@@ -195,7 +181,7 @@ public class ScheduleController {
      * 
      * @return ASSIGN_INTERVIEWER_JSP - 
      */
-    @RequestMapping(value = Constant.GET_INTERVIEWERS, method = RequestMethod.POST)  
+    @RequestMapping(value = Constant.GET_INTERVIEWERS, method = RequestMethod.GET)  
     private String getInterviewersByTechnology(Model model,
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId) {
     	Map<String, Object> scheduleAndInterviewers= scheduleService.getScheduleAndInterviewersByTechnology(scheduleId);

@@ -18,21 +18,15 @@
         <div class="sidebar">
             <a href="addCandidate">Add Candidate</a>
             <a href="viewCandidates">View Candidates</a>
-            <a href="schedulesByStatus">View Schedules</a>
+            <a href="schedulesByStatus?status=New">View Schedules</a>
         </div>
         <div id="container">
-        <form action="searchByName" method="post">
-      <h2 align="center">Interview Schedule Management </h2>
       <form action="searchByName" method="post">
           <table align="center"><tr>
               <td><input type="text" name="name"/></td>
               <td><input type="submit" value=&#128269;></td></tr>
           </table>
         </form>
-      
-        <div>
-          <table id="contentTable" class = "table" align="right" cellpadding = "10">
-      </form>
       
       <div>
         <table id="contentTable" class = "table" align="center" cellpadding = "10">

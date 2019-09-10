@@ -39,10 +39,10 @@
     </div>
     <div id="interviewersId">
         <table>
-        <c:foreach var="interviewer" items="${interviewers}">
+        <c:forEach var="interviewer" items="${interviewers}">
             <tr>
                 <td>Interviewer Name:</td>
-                <form action="assignInterviewer" methos="post">
+                <form action="assignInterviewer" method="post">
                 <td>
                 	<input type="hidden" name="interviewerId" value="${interviewer.id}">
                 	<input type="hidden" name="scheduleId" value="${schedule.id}">
@@ -50,7 +50,7 @@
                	</td>
                	</form>
             </tr>
-        </c:foreach>
+        </c:forEach>
         </table>
     </div>
 

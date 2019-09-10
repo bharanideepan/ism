@@ -7,27 +7,22 @@ package com.ideas2it.ism.common;
  */ 
 public class Constant {
 	// General Constants.
-  public static final String STATUS = "status";
+    public static final String STATUS = "status";
 	public static final String RESULT = "result";
+	public static final String SCHEDULE = "schedule";
 	public static final String SELECTED = "selected";
 	public static final String FEED_BACK = "feedback";
-  public static final  String CREATED = "created";
+    public static final  String CREATED = "created";
 	public static final String UPDATED = "updated";	
 	public static final String ACTION = "action";	
 	public static final String UPDATE = "update";	
-  public static final  String ID = "id";
-  public static final  String NAME = "name";
+    public static final  String ID = "id";
+    public static final  String NAME = "name";
 	public static final String RESUME = "resume";
 	public static final int RETRIEVE_LIMIT = 0;
     
 	// Candidate constants.
-  public static final  String CANDIDATE = "candidate";
-  public final static String STATUS = "status";
-  public final static String CREATED = "created";
-  public final static String ID = "id";
-  public final static String NAME = "name";
-	public static final String RESUME = "resume";
-	public static final int RETRIEVE_LIMIT = 0;
+    public static final  String CANDIDATE = "candidate";
 	public static final String REDIRECT = "redirect:/";
    
 	public static final String CANDIDATE_FORM_INFO = "candidateFormInfo";
@@ -35,11 +30,11 @@ public class Constant {
 	public static final String CANDIDATE_ID = "candidateId";
     
     // Candidate mapping constants. 
-  public final static String ADD_CANDIDATE = "addCandidate";
-  public final static String SAVE_CANDIDATE = "saveCandidate";
+    public final static String ADD_CANDIDATE = "addCandidate";
+    public final static String SAVE_CANDIDATE = "saveCandidate";
 	public static final String VIEW_CANDIDATES = "viewCandidates";
 	public static final String SEARCH_BY_NAME = "searchByName";
-  public static final  String CREATE_CANDIDATE_JSP = "createCandidate";
+    public static final  String CREATE_CANDIDATE_JSP = "createCandidate";
 	public static final String INDEX_JSP = "index";
 	public static final String VIEW_CANDIDATES_JSP = "viewCandidates";
 	public static final String VIEW_CANDIDATE_JSP = "viewCandidate";

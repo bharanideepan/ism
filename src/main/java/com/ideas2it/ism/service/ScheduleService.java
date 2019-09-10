@@ -37,9 +37,6 @@ public interface ScheduleService {
 	 */
 	List<Schedule> fetchSchedulesByCandidateId(long candidateId);
 
-	List<Schedule> getAllSchedules();
-
-	Schedule getScheduleById(long id);
 	
 	/**
 	 * For the given employee id the newly assigned schedules for the particular employee

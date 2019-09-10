@@ -18,6 +18,7 @@ import com.ideas2it.ism.entity.Schedule;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
 import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.service.CandidateService;
+import com.ideas2it.ism.service.EmployeeService;
 import com.ideas2it.ism.service.ScheduleService;
 
 @Service
@@ -27,6 +28,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private ScheduleRepository scheduleRepository;
 	@Autowired
 	private CandidateService candidateService;
+	@Autowired
+	private EmployeeService employeeService;
 
     /**
      * {@inheritDoc}
@@ -104,7 +107,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		Schedule schedule = this.getScheduleById(scheduleId);
 		scheduleAndInterviewers.put(Constant.SCHEDULE, schedule);
 		scheduleAndInterviewers.put(Constant.INTERVIEWERS,
-				candidateService.getEmployeesByTechnology(schedule.getCandidate().getTechnology()););
+				employeeService.getEmployeesByTechnology(schedule.getCandidate().getTechnology()));
 		return scheduleAndInterviewers;
 	}
 
