@@ -3,6 +3,7 @@ package com.ideas2it.ism.service;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
+import java.util.Map;
 
 import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.entity.Employee;
@@ -21,16 +22,16 @@ public interface ScheduleService {
 	 * @param time - interview time which is in string format
 	 * 
 	 * @throws IsmException -
-	 * 
 	 * @return true when the schedule added successfully and id created for that schedule else false
 	 */
-	boolean addSchedule(Schedule schedule, long candidateId, String date, String time);
+	Schedule addSchedule(Schedule schedule, long candidateId, String date, String time);
 	
 	/**
 	 * For the given candidate id the schedules conducted for the particular candidate
 	 * is fetch and returned as list.
 	 * 
 	 * @param candidateId - Id of the candidate whose schedule track is required.
+	 * 
 	 * @return schedules - List of schedules conducted for the particular candidate.
 	 * If there is no schedule conducted empty list is passed.
 	 */
@@ -78,4 +79,62 @@ public interface ScheduleService {
 	 */
 	void updateResult(String feedBack, long scheduleId, String result);
 	
+	/**
+	 * Gets all schedules
+	 * 
+	 * @return schedules - List of all schedules.
+	 */
+	List<Schedule> getAllSchedules();
+	
+	/**
+	 * Gets the schedule having the given ID
+	 * 
+	 * @param id - Schedule ID which should not be null.
+	 * 
+	 * @return schedule - If the id exists, the schedule will be returned else null will be returned
+	 */
+	Schedule getScheduleById(long id);
+	
+	/**
+	 * Updates the schedule status as cancelled.
+	 * 
+	 * @param scheduleInfo - Model schedule from the client along with cancellation comment
+	 * @param comment - Comment for cancelling
+	 * 
+	 * @return true if the status of the schedule is updated as cancelled else false
+	 */
+	boolean cancelSchedule(Schedule scheduleInfo);
+	
+	/**
+	 * Updates the schedule status as rescheduled and also creates a new schedule.
+	 * 
+	 * @param newSchedule - Model schedule from the client along with reschedule comment
+	 * @param comment - Comment for rescheduling
+	 * @param scheduleId - Schedule id used to update the schedule
+	 * @param candidateId - Candidate id used to reschedule
+	 * @param date - Interview date
+	 * @param time - Interview time
+	 * 
+	 * @return schedule - After rescheduling successfully
+	 */
+	Schedule reschedule(Schedule newSchedule, String comment, long scheduleId, long candidateId, String date, String time);
+	
+	/**
+	 * Gets the schedules by status
+	 * 
+	 * @param status - Status of the schedule to view
+	 * 
+	 * @return schedules - List of schedule having the given status
+	 * If the given status is not available, returns null
+	 */
+	List<Schedule> getSchedulesByStatus(ScheduleStatus status);
+	
+	/**
+	 * Gets the schedule and available interviewers for that schedule.
+	 * 
+	 * @param scheduleId - Used to fetch the schedule so that we can fetch the available interviewers.
+	 * 
+	 * @return scheduleAndInterviewers - Both schedule and the available interviewers for that schedule.
+	 */
+	Map<String, Object> getScheduleAndInterviewersByTechnology(long scheduleId);
 }

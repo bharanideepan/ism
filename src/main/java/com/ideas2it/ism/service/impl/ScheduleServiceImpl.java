@@ -3,6 +3,7 @@ package com.ideas2it.ism.service.impl;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,14 +30,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     /**
      * {@inheritDoc}
      */	
-
-	public boolean addSchedule(Schedule schedule, long candidateId, String date, String time) 
-	        {
+	public Schedule addSchedule(Schedule schedule, long candidateId, String date, String time) {
 		schedule.setCandidate(candidateService.fetchCandidateById(candidateId));
     	schedule.setDate(Date.valueOf(date));
     	schedule.setTime(Time.valueOf(time));
-		schedule = scheduleRepository.save(schedule);
-		return schedule.getId() != 0;
+		return scheduleRepository.save(schedule);
 	}
 	
 	public List<Schedule> fetchSchedulesByCandidateId(long candidateId) {
@@ -44,7 +42,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 	
 	public List<Schedule> getAllSchedules() {
-		// TODO Auto-generated method stub
 		return scheduleRepository.findAll();
 	}
 
@@ -52,7 +49,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleRepository.getOne(id);
 	}
 
-	@Override
 	public List<Schedule> getEmployeeNewSchedulesById(long employeeId) {
 		return scheduleRepository.fetchEmployeeNewSchedulesById(employeeId);
 	}
@@ -81,4 +77,30 @@ public class ScheduleServiceImpl implements ScheduleService {
 		schedule.setInterviewFeedback(feedBack);
 		scheduleRepository.save(schedule);
 	}
+  
+	public boolean cancelSchedule(Schedule scheduleInfo) {
+		Schedule schedule = scheduleRepository.getOne(scheduleInfo.getId());
+		schedule.setCancellationComment(scheduleInfo.getCancellationComment());
+		schedule.setStatus(ScheduleStatus.Cancelled);
+		schedule = scheduleRepository.save(schedule);
+		return schedule.getStatus().equals(ScheduleStatus.Cancelled);
+	}
+
+	public Schedule reschedule(Schedule newSchedule, String comment, long scheduleId, long candidateId, String date, String time) {
+		Schedule schedule = scheduleRepository.getOne(scheduleId);
+		schedule.setRescheduleComment(comment);
+		schedule.setStatus(ScheduleStatus.Rescheduled);
+		scheduleRepository.save(schedule);
+		return this.addSchedule(newSchedule, candidateId, date, time);
+	}
+
+	public List<Schedule> getSchedulesByStatus(ScheduleStatus status) {
+		return scheduleRepository.getSchedulesByStatus(status);
+	}
+
+	public Map<String, Object> getScheduleAndInterviewersByTechnology(long scheduleId) {
+		Map<String, Object>
+		return null;
+	}
+
 }

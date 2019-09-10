@@ -6,6 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.entity.Schedule;
 
 /**
@@ -52,4 +56,15 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 	 */
 	@Query("SELECT s FROM Schedule s WHERE employee_id = :employeeId and status = 'Pending'")
 	List<Schedule> fetchEmployeePendingSchedulesById(long employeeId);
+
+	
+	/**
+	 * Fetch List of schedules having the given status
+	 * 
+	 * @param status - Status of the schedule to view
+	 * 
+	 * @return schedules - List of schedules having the given status
+	 */
+	@Query("SELECT s FROM Schedule s WHERE status = :status")
+	List<Schedule> getSchedulesByStatus(@Param("status")ScheduleStatus status);
 }

@@ -56,6 +56,7 @@ public class CandidateServiceImpl implements CandidateService {
    
 	public Candidate saveCandidate(Candidate candidate, MultipartFile resume) 
 			throws IOException {
+		System.out.println(candidate);
 		candidate = saveCandidateResume(candidate, resume);
 		return candidateDAO.save(candidate);
 	}

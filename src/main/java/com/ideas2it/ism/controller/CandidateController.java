@@ -118,7 +118,8 @@ public class CandidateController {
         }
         return Constant.VIEW_CANDIDATE_JSP;
     }
-    
+
+ 
     /**
      * All the candidate informations are fetched from DB.
      * 

@@ -22,6 +22,11 @@
             <a href="viewCandidates">View Candidates</a>
             <a href="schedulesByStatus">View Schedules</a>
         </div>
+</head>
+<body>
+    <div>
+        <h2 align="center">Interview Schedule Management </h2>
+    </div>
     <div>
         <table class="table">
             <tr>

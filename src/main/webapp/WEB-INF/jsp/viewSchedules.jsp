@@ -12,6 +12,9 @@
 <body>
 	<div>
 	      <h2 align="center">Interview Schedule Management </h2>
+</head>
+<body>
+	<div>
         <table id="contentTable" class = "table" align="center" cellpadding = "10">
             <tr>
                 <th>S.No.</th>

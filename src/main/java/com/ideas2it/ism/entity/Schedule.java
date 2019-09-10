@@ -83,7 +83,7 @@ public class Schedule {
     	return this.interviewType.toString();
     }
     
-    // Getters and Setters
+    // Getters and Setter 
     public long getId() {
         return this.id;
     }

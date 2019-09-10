@@ -1,9 +1,9 @@
 package com.ideas2it.ism.common;
 
 public enum ScheduleStatus {
-	New,
-	Selected,
-	Rejected,
+	  New,
+  	Selected,
+  	Rejected,
     Completed,
     Pending,
     Rescheduled,

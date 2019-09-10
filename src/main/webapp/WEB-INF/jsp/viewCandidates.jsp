@@ -22,6 +22,8 @@
         </div>
         <div id="container">
         <form action="searchByName" method="post">
+      <h2 align="center">Interview Schedule Management </h2>
+      <form action="searchByName" method="post">
           <table align="center"><tr>
               <td><input type="text" name="name"/></td>
               <td><input type="submit" value=&#128269;></td></tr>
@@ -30,6 +32,10 @@
       
         <div>
           <table id="contentTable" class = "table" align="right" cellpadding = "10">
+      </form>
+      
+      <div>
+        <table id="contentTable" class = "table" align="center" cellpadding = "10">
             <tr>
                 <th>Name</th>
                 <th>Position</th>
@@ -58,6 +64,6 @@
             </c:forEach>
           </table>  
         </div>
-        </div>
+      </div>
 </body>
 </html>

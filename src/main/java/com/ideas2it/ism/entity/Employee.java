@@ -16,14 +16,18 @@ import javax.persistence.Table;
 
 import com.ideas2it.ism.common.Department;
 import com.ideas2it.ism.common.Technology;
+import javax.persistence.Table;
+
+import com.ideas2it.ism.common.Department;
+import com.ideas2it.ism.common.InterviewType;
 
 @Entity
 @Table(name="employee")
 public class Employee {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", updatable = false, nullable = false)
 	private long id;
 	
 	@Column(name = "name")
@@ -33,15 +37,18 @@ public class Employee {
 	private boolean isInterviewer;
 	
 	@Enumerated(EnumType.STRING)
-    @Column(name = "technology")
+  @Column(name = "technology")
 	private Technology technology;
+  
+  @Column(name = "interview_type")
+	private InterviewType interviewType;
 	
 	@Enumerated(EnumType.STRING)
-    @Column(name = "department")
+  @Column(name = "department")
 	private Department department;
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="candidate_id")
+  @JoinColumn(name="candidate_id")
 	private List<Schedule> schedules;
 
     @Override
@@ -97,4 +104,5 @@ public class Employee {
 	public void setSchedules(List<Schedule> schedules) {
 		this.schedules = schedules;
 	}
+
 }

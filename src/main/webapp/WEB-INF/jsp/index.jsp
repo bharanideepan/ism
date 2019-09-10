@@ -19,5 +19,12 @@
             <a href="schedulesByStatus">Manager</a>
             <a href="newSchedules?id=1">Employee</a>
         </div>
-    </body>
+    <h2 align="center">Interview Schedule Management</h2><br>
+    <form action="viewCandidates" method="get">
+        <input class="save" type="submit" value="view candidates"/>
+    </form>
+    <form action="getRecruiterOperations" method="get">
+        <input class="save" type="submit" value="Recruiter"/>
+    </form>
+</body>
 </html>
