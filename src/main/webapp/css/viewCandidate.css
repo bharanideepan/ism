@@ -1,0 +1,63 @@
+   .table {
+      margin: auto;
+      width:400px;
+      height:500px;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 10px 10px 5px grey; 
+      background:linear-gradient(to top, #dad299, #b0dab9); 
+      padding: 10px;
+   }
+   html, body {
+      background-image: linear-gradient(to right, #26a7af, #26aeab, #30b4a5, #41ba9d, #54c094);
+   }
+   table, td {
+      text-align: center;
+      padding: 10px;
+   }
+    
+   #home {
+    height: 100%;
+    width:100%; 
+    font-size: 0;
+   }
+    #home {width: 20%; }
+   .cards {
+      display:inline-block;
+      margin:10px;
+      float:left;
+   } 
+  .sidebar {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 15%;
+  left: 0;
+  background-color: #0a1b24;;
+  overflow-x: hidden;
+  padding-top: 16px;
+}
+
+.sidebar a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  height: 100px;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}

@@ -1,0 +1,34 @@
+
+a:link {
+         color: #786D5F;
+         background-color: transparent;
+         text-decoration: none;
+     }
+     a:hover {
+         color: red;
+         background-color: transparent;
+         text-decoration: underline;
+     }
+     .table {
+        margin: auto;
+        width:400px;
+        height:500px;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 10px 10px 5px grey; 
+        background:linear-gradient(to top, #dad299, #b0dab9); 
+        padding: 10px;
+     }
+    
+  #save {
+    background-color:green; 
+    color:white;
+    width:100px;
+  }
+  
+  .td {
+    color:goldenrod;
+  }
+html, body {
+    background-image: linear-gradient(to right, #26a7af, #26aeab, #30b4a5, #41ba9d, #54c094);
+  }
