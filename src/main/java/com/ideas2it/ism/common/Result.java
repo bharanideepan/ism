@@ -13,5 +13,5 @@ public enum Result {
     Pending,
     Selected,
     Rejected,
-    Cancelled;
+    Cancelled,
 }

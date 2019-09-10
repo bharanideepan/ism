@@ -132,14 +132,12 @@ public class CandidateServiceImpl implements CandidateService {
     	return (int) candidateDAO.count();
     }
 
-	@Override
 	public void updateCandidateStatus(long candidateId, Result status) {
 		Candidate candidate = candidateDAO.getOne(candidateId);
 		candidate.setStatus(status);
 		candidateDAO.save(candidate);
 	}
 
-	@Override
 	public Candidate updateCandidate(Candidate candidate, MultipartFile resume) throws IOException {
 		candidate = saveCandidateResume(candidate, resume);
 		Candidate candidateToBeUpdated = candidateDAO.getOne(candidate.getId());

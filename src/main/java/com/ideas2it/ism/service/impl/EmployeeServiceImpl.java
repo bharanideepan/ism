@@ -44,7 +44,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employee;
 	}
 
-	@Override
 	public Employee acceptSchedule(long candidateId, long employeeId, long scheduleId) {
         Employee employee = employeeRepository.getOne(employeeId);
         scheduleService.updateScheduleStatus(scheduleId, ScheduleStatus.Pending);

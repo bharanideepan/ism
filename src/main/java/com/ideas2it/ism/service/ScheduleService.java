@@ -36,10 +36,6 @@ public interface ScheduleService {
 	 * If there is no schedule conducted empty list is passed.
 	 */
 	List<Schedule> fetchSchedulesByCandidateId(long candidateId);
-
-	List<Schedule> getAllSchedules();
-
-	Schedule getScheduleById(long id);
 	
 	/**
 	 * For the given employee id the newly assigned schedules for the particular employee

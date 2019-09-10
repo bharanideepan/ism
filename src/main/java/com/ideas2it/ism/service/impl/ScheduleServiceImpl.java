@@ -65,7 +65,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 		scheduleRepository.save(schedule);
 	}
 
-	@Override
 	public void updateResult(String feedBack, long scheduleId, String result) {
 		Schedule schedule = scheduleRepository.getOne(scheduleId);
 		if (result.equals(Constant.SELECTED)) {
@@ -99,7 +98,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	public Map<String, Object> getScheduleAndInterviewersByTechnology(long scheduleId) {
-		Map<String, Object>
 		return null;
 	}
 

@@ -1,14 +1,11 @@
 package com.ideas2it.ism.controller;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -99,19 +96,6 @@ public class ScheduleController {
         return Constant.VIEW_SCHEDULE_JSP;
     }
  
-    /**
-     * Gets all pending schedules.
-     * 
-     * @param candidate - Created object.
-     * @param model - Used to send candidate object along with request to jsp.
-     * @return
-     */
-    @RequestMapping(value = Constant.SCHEDULE_BY_STATUS, method = RequestMethod.GET)  
-    private String getSchedulesByStatus(HttpServletRequest request, Model model) {
-        model.addAttribute(Constant.SCHEDULES, scheduleService.getAllSchedules()); 
-        model.addAttribute(Constant.SCHEDULE, new Schedule());
-        return Constant.VIEW_SCHEDULES_JSP;
-    }
     
     /**
      * When the employee update the interview result the status of the schedule
