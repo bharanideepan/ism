@@ -179,7 +179,7 @@ public class ScheduleController {
      * 
      * @return SCHEDULE_BY_STATUS - 
      */
-    @RequestMapping(value = Constant.GET_INTERVIEWERS, method = RequestMethod.POST)  
+    @RequestMapping(value = Constant.GET_INTERVIEWERS, method = RequestMethod.GET)  
     private String getInterviewersByTechnology(Model model,
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId) {
     	scheduleService.getScheduleAndInterviewersByTechnology(scheduleId);
