@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.info.CandidateFormInfo;
 import com.ideas2it.ism.info.CandidatePagenationInfo;
@@ -72,4 +73,26 @@ public interface CandidateService {
 	 * @return candidate - Candidate object with updated schedule.
 	 */
 	Candidate getCandidateProgress(long candidateId);
+
+	/**
+	 * The candidate object is fetched from DB and the given status is updated.
+	 * 
+	 * @param candidateId - Id of the candidate in which the status to be changed.
+	 * @param status - Type of status to be updated.
+	 */
+	void updateCandidateStatus(long candidateId, Result status);
+
+	/**
+	 * Recruiter updated candidate informations are obtained
+	 * as an candidate object.Then the same candidate object is fetched from DB 
+	 * and the list of candidate is updated to the candidate object obtained from JSP.
+	 * 
+	 * @param candidate - Recruiter entered informations are passed 
+	 * as candidate object. 
+	 * @param resume - Resume uploaded by the recruiter is saved to the local 
+	 * directory and the path is saved in the DB. 
+	 * @return candidate - Update candidate object
+	 */
+	Candidate updateCandidate(Candidate candidate, MultipartFile resume) throws IOException;
+
 }

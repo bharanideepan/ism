@@ -41,7 +41,7 @@ public class CandidateController {
      * @return CREATE_CANDIDATE_JSP - Page shows the create candidate form to
      * enter the details and to store it.
      */
-    @RequestMapping(value = Constant.ADD_CANDIDATE, method = RequestMethod.POST)  
+    @RequestMapping(value = Constant.ADD_CANDIDATE, method = RequestMethod.GET)  
     public String addCandidateForm(Model model) { 
         CandidateFormInfo candidateFormInfo = candidateService.getCandidateFormInfo(); 
         model.addAttribute(Constant.CANDIDATE, candidateFormInfo.getCandidate());  
@@ -63,13 +63,62 @@ public class CandidateController {
             MultipartFile resume, Model model) {
         try { 
             candidate = candidateService.saveCandidate(candidate, resume);
-    		System.out.println(candidate);
             model.addAttribute(Constant.STATUS, Constant.CREATED); 
+            model.addAttribute(Constant.CANDIDATE, candidate); 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return Constant.INDEX_JSP;
+        return Constant.VIEW_CANDIDATE_JSP;
     }
+    
+    /**
+     * When the recruiter is willing to update the candidate information.
+     * The information of the candidate is fetched for the given id and passed 
+     * so that recruiter can modify the the required fields.
+     * 
+     * @param candidateId - Id of the candidate to be updated.
+     * @param model - Used to send candidate object along with request to jsp.
+     * @return
+     */
+    @RequestMapping(value = Constant.VIEW_CANDIDATE_FOR_UPDATE, method = RequestMethod.GET)  
+    private String viewCandidateForUpdate(@RequestParam(name = Constant.CANDIDATE_ID)
+            long candidateId, Model model) {
+        try { 
+        	System.out.println("inside update");
+            Candidate candidate = candidateService.fetchCandidateById(candidateId);
+            CandidateFormInfo candidateFormInfo = candidateService.getCandidateFormInfo(); 
+            model.addAttribute(Constant.CANDIDATE_FORM_INFO, candidateFormInfo);  
+            model.addAttribute(Constant.CANDIDATE, candidate); 
+            model.addAttribute(Constant.ACTION, Constant.UPDATE); 
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return Constant.CREATE_CANDIDATE_JSP;
+    }
+ 
+    /**
+     * When the recruiter is willing to update the candidate information.
+     * The information of the candidate is fetched for the given id and passed 
+     * so that recruiter can modify the the required fields.
+     * 
+     * @param candidateId - Id of the candidate to be updated.
+     * @param model - Used to send candidate object along with request to jsp.
+     * @return
+     */
+    @RequestMapping(value = Constant.UPDATE_CANDIDATE, method = RequestMethod.POST)  
+    private String updateCandidate(@ModelAttribute(Constant.CANDIDATE) Candidate candidate, 
+    		@RequestParam(name = Constant.RESUME, required = false) MultipartFile resume,
+    		Model model) {
+        try { 
+            candidate = candidateService.updateCandidate(candidate, resume);   
+            model.addAttribute(Constant.CANDIDATE, candidate);
+            model.addAttribute(Constant.STATUS, Constant.UPDATED); 
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return Constant.VIEW_CANDIDATE_JSP;
+    }
+
  
     /**
      * All the candidate informations are fetched from DB.

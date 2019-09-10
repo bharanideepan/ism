@@ -10,6 +10,7 @@ package com.ideas2it.ism.common;
 public enum Result {
     New,
     Hold,
+    Pending,
     Selected,
     Rejected,
     Cancelled;

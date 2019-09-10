@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,28 @@
  <link rel="stylesheet" type="text/css" href="/css/createCandidate.css">
 </head>
 <body>
+        <div>
+            <div class="cards">
+                <a href="index.jsp" ><img src="/image/logo.png" width="200px" height="200px"/></a>
+            </div>
+            <div class="cards">
+                <h2 align="center">Interview Schedule Management</h2>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="addCandidate">Add Candidate</a>
+            <a href="viewCandidates">View Candidates</a>
+            <a href="schedulesByStatus">View Schedules</a>
+        </div>
+ <form:form name="form" action="saveCandidate" method="post" modelAttribute="candidate" enctype = "multipart/form-data"> 
+      <table class="table"> 
+        <tr> <td colspan = "3">Candidate Information </td>
+             <td><form:input type="hidden" path="id" value="${candidate.id}"/>
+             <td><form:input type="hidden" path="resumeFilePath" value="${candidate.resumeFilePath}"/>
+        </tr> 
+        <tr><td >Name:</td>
+          <td>
+            <form:input type="text" path="name" value="${candidate.name}" required="required"></form:input>
     <h2 align="center">Interview Schedule Management</h2><br>
  <form:form action="saveCandidate" method="post" modelAttribute="candidate" enctype = "multipart/form-data"> 
       <table class="table"> 
@@ -20,31 +43,37 @@
         </tr>  
         <tr><td>Phone Number:</td>
           <td>
+          <form:input type ="tel"  maxlength="10" value="${candidate.phoneNumber}" path="phoneNumber"/>
           <form:input type ="text" path="phoneNumber"/>
           </td>
         </tr>
         <tr><td>Email Id:</td>
           <td>
+          <form:input type ="email" value="${candidate.emailId}" path="emailId" required="required"/>
           <form:input type ="email" path="emailId"/>
           </td>
         </tr>
         <tr><td>Position:</td>
           <td>
+          <form:input type ="text" value="${candidate.position}" path="position" required="required"/>
           <form:input type ="text" path="position"/>
           </td>
         </tr>
         <tr><td>Department:</td>
           <td>
+          <form:select path="department" value="${candidate.department}" items="${candidateFormInfo.departments}"/>
           <form:select path="department" items="${candidateFormInfo.departments}"/>
           </td>
         </tr>
         <tr><td>Technology:</td>
           <td>
+          <form:select path="technology" value="${candidate.technology}" items="${candidateFormInfo.technologies}"/>
           <form:select path="technology" items="${candidateFormInfo.technologies}"/>
           </td>
         </tr>
         <tr><td>Experience:</td>
           <td>
+          <form:input type ="text" value="${candidate.experience}" path="experience"/>
           <form:input type ="text" path="experience"/>
           </td>
         </tr>
@@ -52,6 +81,24 @@
           <td> <input name="resume" type="file" />
         </td></tr>  
         <tr>
+          <c:if test="${update == action}">
+              <td>
+                  <input id="save" type ="submit" value="Save"/>
+              </td>
+          </c:if>
+          <c:if test="${update != action}">
+              <td>
+                  <input id="save" type ="submit" onclick="changeAction()" value="Update"/>
+              </td>
+          </c:if>
+        </tr>
+       </table>
+  </form:form>
+  <script type="text/javascript">
+      function changeAction() {
+          document.form.action = "updateCandidate";
+      }
+  </script>
           <td>
           <input id="save" type ="submit" value="Save"/>
           </td>

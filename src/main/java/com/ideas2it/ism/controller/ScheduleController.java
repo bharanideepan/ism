@@ -29,6 +29,7 @@ public class ScheduleController {
 	@Autowired
     private ScheduleService scheduleService;
 
+
     /**
      * Dispatches the create schedule page.
      *
@@ -36,7 +37,7 @@ public class ScheduleController {
      *
      * @return CREATE_SCHEDULE_JSP - Page to be displayed to the client
      */ 
-	@RequestMapping(value = Constant.GET_RECRUITER_OPERATIONS, method = RequestMethod.GET)
+	  @RequestMapping(value = Constant.GET_RECRUITER_OPERATIONS, method = RequestMethod.GET)
     public String getRecruitersOperations(Model model) {
     	model.addAttribute(Constant.SCHEDULE_STATUS, new ArrayList<ScheduleStatus>(Arrays.asList(ScheduleStatus.values())));
     	model.addAttribute(Constant.CANDIDATE_STATUS, new ArrayList<CandidateStatus>(Arrays.asList(CandidateStatus.values())));
@@ -51,7 +52,7 @@ public class ScheduleController {
      *
      * @return CREATE_SCHEDULE_JSP - Page to be displayed to the client
      */ 
-	@RequestMapping(value = Constant.SCHEDULE_FORM, method = RequestMethod.GET)
+	  @RequestMapping(value = Constant.SCHEDULE_FORM, method = RequestMethod.GET)
     public String getScheduleForm(@RequestParam(name = Constant.CANDIDATE_ID) 
         long candidateId, Model model) {
     	model.addAttribute(Constant.SCHEDULE, new Schedule());
@@ -99,6 +100,38 @@ public class ScheduleController {
     }
  
     /**
+     * Gets all pending schedules.
+     * 
+     * @param candidate - Created object.
+     * @param model - Used to send candidate object along with request to jsp.
+     * @return
+     */
+    @RequestMapping(value = Constant.SCHEDULE_BY_STATUS, method = RequestMethod.GET)  
+    private String getSchedulesByStatus(HttpServletRequest request, Model model) {
+        model.addAttribute(Constant.SCHEDULES, scheduleService.getAllSchedules()); 
+        model.addAttribute(Constant.SCHEDULE, new Schedule());
+        return Constant.VIEW_SCHEDULES_JSP;
+    }
+    
+    /**
+     * When the employee update the interview result the status of the schedule
+     * is updated as per the feedback send by the employee.
+     * 
+     * @param request - An HttpServletRequest object that contains the request
+     * the client has made of the servlet
+     * @param ModelAttribute schedule - Schedule model object from the browser
+     * @return
+     */
+    @RequestMapping(value = Constant.INTERVIEW_RESULT, method = RequestMethod.GET)  
+    private String updateResult(HttpServletRequest request, Model model) {
+        String feedBack = request.getParameter(Constant.FEED_BACK); 
+        long scheduleId = Long.parseLong(request.getParameter(Constant.ID));
+        String result = request.getParameter(Constant.RESULT);
+        scheduleService.updateResult(feedBack, scheduleId, result);
+        return Constant.INDEX_JSP;
+    }
+  
+     /** 
      * Gets all schedules by status.
      * 
      * @param RequestParam status - Status of the schedule entered by the client.

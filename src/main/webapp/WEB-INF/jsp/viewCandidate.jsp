@@ -6,6 +6,22 @@
 <meta charset="UTF-8">
 <title>View Candidate</title>
  <link rel="stylesheet" type="text/css" href="/css/viewCandidate.css">
+  <link rel="stylesheet" type="text/css" href="/css/popUp.css">
+</head>
+<body onload="currentStatus('${status}');">
+        <div>
+            <div class="cards">
+                <a href="index.jsp" ><img src="/image/logo.png" width="200px" height="200px"/></a>
+            </div>
+            <div class="cards">
+                <h2 align="center">Interview Schedule Management</h2>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="addCandidate">Add Candidate</a>
+            <a href="viewCandidates">View Candidates</a>
+            <a href="schedulesByStatus">View Schedules</a>
+        </div>
 </head>
 <body>
     <div>
@@ -50,5 +66,37 @@
             </c:forEach>
         </table>
     </div>
+    <div id="pass">
+      <div class="modal-content">
+          <div id="created">Created Successfully</div><br>
+          <div id="updated">Updated Successfully</div><br>
+          <span class="close">&times;</span>
+	  </div>
+    </div>
+    <script type="text/javascript">
+    function currentStatus(status) {
+        if (status === "created") {
+            var modal = document.getElementById("pass");
+            var created = document.getElementById("created");
+            var span = document.getElementsByClassName("close")[0];
+            modal.style.display = "block";
+            created.style.display = "block"
+            span.onclick = function() {
+                modal.style.display = "none";
+                created.style.display = "none"; 
+             }
+        } else if (status === "updated") {
+            var modal = document.getElementById("pass");
+            var updated = document.getElementById("updated");
+            var span = document.getElementsByClassName("close")[0];
+            modal.style.display = "block";
+            updated.style.display = "block"; 
+            span.onclick = function() {
+                modal.style.display = "none";
+                updated.style.display = "none"; 
+            }
+        }
+    }
+    </script>
 </body>
 </html>

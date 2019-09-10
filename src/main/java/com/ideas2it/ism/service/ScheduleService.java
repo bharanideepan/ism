@@ -21,6 +21,7 @@ public interface ScheduleService {
 	 * @param date - interview date which is in string format
 	 * @param time - interview time which is in string format
 	 * 
+	 * @throws IsmException -
 	 * @return true when the schedule added successfully and id created for that schedule else false
 	 */
 	Schedule addSchedule(Schedule schedule, long candidateId, String date, String time);
@@ -35,6 +36,48 @@ public interface ScheduleService {
 	 * If there is no schedule conducted empty list is passed.
 	 */
 	List<Schedule> fetchSchedulesByCandidateId(long candidateId);
+
+	List<Schedule> getAllSchedules();
+
+	Schedule getScheduleById(long id);
+	
+	/**
+	 * For the given employee id the newly assigned schedules for the particular employee
+	 * is fetch and returned as list.
+	 * 
+	 * @param employeeId - Id of the employee whose newly assigned schedule to be fetched.
+	 * @return schedules - List of newly assigned schedules for the particular employee.
+	 * If there is no schedule is assigned empty list is passed.
+	 */
+	List<Schedule> getEmployeeNewSchedulesById(long employeeId);
+
+	/**
+	 * For the given employee id the pending schedules for the particular employee
+	 * is fetch and returned as list.
+	 * 
+	 * @param employeeId - Id of the employee whose newly assigned schedule to be fetched.
+	 * @return schedules - List of pending schedules for the particular employee.
+	 * If there is no schedule is assigned empty list is passed.
+	 */
+	List<Schedule> getEmployeePendingSchedulesById(long employeeId);
+
+	/**
+	 * The schedule is fetched from DB and the given status is updated.
+	 * 
+	 * @param scheduleId - Id of the schedule in which the status to be changed.
+	 * @param status - Type of status to be updated.
+	 */
+	void updateScheduleStatus(long scheduleId, ScheduleStatus status);
+	
+	/**
+	 * When the employee updates the result of the schedule id, feedback and result
+	 * is obtained and updated in the schedule.
+	 * 
+	 * @param feedBack - Comments passed for the interview result.
+	 * @param scheduleId - Id of the schedule in which the result to be updated.
+	 * @param result - Result of the schedule.
+	 */
+	void updateResult(String feedBack, long scheduleId, String result);
 	
 	/**
 	 * Gets all schedules
@@ -94,6 +137,4 @@ public interface ScheduleService {
 	 * @return scheduleAndInterviewers - Both schedule and the available interviewers for that schedule.
 	 */
 	Map<String, Object> getScheduleAndInterviewersByTechnology(long scheduleId);
-
-	
 }

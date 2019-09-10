@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ideas2it.ism.common.Department;
+import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.dao.CandidateDAO;
 import com.ideas2it.ism.entity.Candidate;
@@ -130,4 +131,20 @@ public class CandidateServiceImpl implements CandidateService {
     private int totalCount() {   
     	return (int) candidateDAO.count();
     }
+
+	@Override
+	public void updateCandidateStatus(long candidateId, Result status) {
+		Candidate candidate = candidateDAO.getOne(candidateId);
+		candidate.setStatus(status);
+		candidateDAO.save(candidate);
+	}
+
+	@Override
+	public Candidate updateCandidate(Candidate candidate, MultipartFile resume) throws IOException {
+		candidate = saveCandidateResume(candidate, resume);
+		Candidate candidateToBeUpdated = candidateDAO.getOne(candidate.getId());
+		candidate.setSchedules(candidateToBeUpdated.getSchedules());
+		candidate.setStatus(candidateToBeUpdated.getStatus());
+		return candidateDAO.save(candidate);
+	}
 }

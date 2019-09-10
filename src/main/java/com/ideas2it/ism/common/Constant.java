@@ -7,35 +7,49 @@ package com.ideas2it.ism.common;
  */ 
 public class Constant {
 	// General Constants.
-    public final static String STATUS = "status";
-    public final static String CREATED = "created";
-    public final static String ID = "id";
-    public final static String NAME = "name";
+  public static final String STATUS = "status";
+	public static final String RESULT = "result";
+	public static final String SELECTED = "selected";
+	public static final String FEED_BACK = "feedback";
+  public static final  String CREATED = "created";
+	public static final String UPDATED = "updated";	
+	public static final String ACTION = "action";	
+	public static final String UPDATE = "update";	
+  public static final  String ID = "id";
+  public static final  String NAME = "name";
+	public static final String RESUME = "resume";
+	public static final int RETRIEVE_LIMIT = 0;
+    
+	// Candidate constants.
+  public static final  String CANDIDATE = "candidate";
+  public final static String STATUS = "status";
+  public final static String CREATED = "created";
+  public final static String ID = "id";
+  public final static String NAME = "name";
 	public static final String RESUME = "resume";
 	public static final int RETRIEVE_LIMIT = 0;
 	public static final String REDIRECT = "redirect:/";
-    
-	// Candidate constants.
-    public final static String CANDIDATE = "candidate";
+   
 	public static final String CANDIDATE_FORM_INFO = "candidateFormInfo";
 	public static final String PAGENATION_INFO = "pagenationInfo";
 	public static final String CANDIDATE_ID = "candidateId";
     
     // Candidate mapping constants. 
-    public final static String ADD_CANDIDATE = "addCandidate";
-    public final static String SAVE_CANDIDATE = "saveCandidate";
+  public final static String ADD_CANDIDATE = "addCandidate";
+  public final static String SAVE_CANDIDATE = "saveCandidate";
 	public static final String VIEW_CANDIDATES = "viewCandidates";
 	public static final String SEARCH_BY_NAME = "searchByName";
- 
-    // Candidate JSP pages.
-    public final static String CREATE_CANDIDATE_JSP = "createCandidate";
+  public static final  String CREATE_CANDIDATE_JSP = "createCandidate";
 	public static final String INDEX_JSP = "index";
 	public static final String VIEW_CANDIDATES_JSP = "viewCandidates";
 	public static final String VIEW_CANDIDATE_JSP = "viewCandidate";
+	public static final String VIEW_NEW_SCHEDULES_JSP = "viewNewSchedules";
+	public static final String VIEW_PENDING_SCHEDULES_JSP = "viewPendingSchedules";
 
+	// Employee constants.	
+	public static final String EMPLOYEE = "employee";
 	// Schedule constants.
 	public static final String SCHEDULES = "schedules";
-	public static final String SCHEDULE = "schedule";
 	public static final String SCHEDULED_DATE = "shdate";
 	public static final String SCHEDULED_TIME = "shtime";
 	public static final String SECONDS = ":00";
@@ -57,12 +71,19 @@ public class Constant {
 	public static final String CREATE_RESCHEDULE_JSP = "createReschedule";
 	public static final String RECRUITER_JSP = "recruiter";
 
+
     // Schedule mapping constants.
 	public static final String SCHEDULE_FORM = "scheduleForm";
 	public static final String CREATE_SCHEDULE = "createSchedule";
 	public static final String SCHEDULE_BY_STATUS = "schedulesByStatus";
 	public static final String VIEW_PROGRESS = "viewProgress";
 	public static final String GET_SCHEDULE = "getSchedule";
+	public static final String NEW_SCHEDULES = "newSchedules";
+	public static final String PENDING_SCHEDULES = "pendingSchedules";
+	public static final String ACCEPT_SCHEDULE = "acceptSchedule";
+	public static final String UPDATE_CANDIDATE = "updateCandidate";
+	public static final String VIEW_CANDIDATE_FOR_UPDATE = "viewCandidateForUpdate";
+	public static final String INTERVIEW_RESULT = "interviewResult";
 	public static final String RESCHEDULE = "reschedule";
 	public static final String CANCEL_SCHEDULE = "cancelSchedule";
 	public static final String GET_RECRUITER_OPERATIONS = "getRecruiterOperations";

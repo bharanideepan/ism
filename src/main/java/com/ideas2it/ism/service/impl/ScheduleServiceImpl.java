@@ -8,6 +8,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ideas2it.ism.common.Constant;
+import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.dao.ScheduleRepository;
 import com.ideas2it.ism.entity.Employee;
@@ -28,7 +30,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     /**
      * {@inheritDoc}
      */	
-
 	public Schedule addSchedule(Schedule schedule, long candidateId, String date, String time) {
 		schedule.setCandidate(candidateService.fetchCandidateById(candidateId));
     	schedule.setDate(Date.valueOf(date));
@@ -48,6 +49,35 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleRepository.getOne(id);
 	}
 
+	public List<Schedule> getEmployeeNewSchedulesById(long employeeId) {
+		return scheduleRepository.fetchEmployeeNewSchedulesById(employeeId);
+	}
+	
+	@Override
+	public List<Schedule> getEmployeePendingSchedulesById(long employeeId) {
+		return scheduleRepository.fetchEmployeePendingSchedulesById(employeeId);
+	}
+
+	@Override
+	public void updateScheduleStatus(long scheduleId, ScheduleStatus status) {
+		Schedule schedule = scheduleRepository.getOne(scheduleId);
+		schedule.setStatus(status);
+		scheduleRepository.save(schedule);
+	}
+
+	@Override
+	public void updateResult(String feedBack, long scheduleId, String result) {
+		Schedule schedule = scheduleRepository.getOne(scheduleId);
+		if (result.equals(Constant.SELECTED)) {
+			schedule.setStatus(ScheduleStatus.Selected);
+		} else {
+			schedule.setStatus(ScheduleStatus.Rejected);	
+			candidateService.updateCandidateStatus(schedule.getCandidate().getId(), Result.Rejected);
+		}
+		schedule.setInterviewFeedback(feedBack);
+		scheduleRepository.save(schedule);
+	}
+  
 	public boolean cancelSchedule(Schedule scheduleInfo) {
 		Schedule schedule = scheduleRepository.getOne(scheduleInfo.getId());
 		schedule.setCancellationComment(scheduleInfo.getCancellationComment());
