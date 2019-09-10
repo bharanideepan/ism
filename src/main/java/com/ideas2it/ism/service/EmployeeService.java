@@ -34,6 +34,19 @@ public interface EmployeeService {
 	 * @return employee - Employee along with updated schedules. 
 	 */
 	Employee acceptSchedule(long candidateId, long employeeId, long scheduleId);
+
+	/**
+	 * When the employee declained the assigned schedule the status of the schedule
+	 * and candidate is changed. Then the update list of schedule is
+	 * updated in the employee and returned.
+	 * 
+	 * @param employeeId - Id of the employee whose schedule to be updated.
+	 * @param scheduleId - Id of the schedule whose status to be updated.
+	 * @param candidateId - Id of the candidate whose status to be updated.
+	 * @param comment - Reason entered by the employee while declining schedule.
+	 * @return employee - Employee along with updated schedules. 
+	 */
+	Employee rejectSchedule(long candidateId, long employeeId, long scheduleId, String comment);
  
 	/**
 	 * Employees working in the particular technology who are interested to take 
@@ -43,4 +56,12 @@ public interface EmployeeService {
 	 * @return employees - List of employees working in the particular technology.
 	 */
 	List<Employee> getEmployeesByTechnology(Technology technology);
+	 
+	/**
+	 * Gets employee by id
+	 *  
+	 * @param employeeId - To fetch the employee by id
+	 * @return employee - Employee having the ID
+	 */
+	Employee getEmployeeById(long employeeId);
 }

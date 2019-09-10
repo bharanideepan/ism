@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
  <link rel="stylesheet" type="text/css" href="/css/viewNewSchedules.css">
+    <link rel="stylesheet" type="text/css" href="/css/popUp.css">
 </head>
 <body>
         <div>
@@ -45,11 +46,41 @@
                       </button></td>           
                     <td class = "td">
                       <button class = "reject"
-                          onclick="location.href='rejectSchedule?id=${schedule.id}';">&times;
+                          onclick="getComment('${employee.id}', '${schedule.id}', '${schedule.candidate.id}')">&times;
                       </button></td>
                 </tr>
             </c:forEach>
         </table>  
+           <div id="pass">
+               <div class="modal-content">
+                  <div>Comment</div>
+                      <input type="text" id="feedback" name="feedback" /><br>
+                      <input type="submit" id="saveComment" value="submit"/>
+	              </div>
+           </div>
       </div>
+    <script type="text/javascript">
+    function getComment(employeeId , scheduleId, candidateId) {
+        var modal = document.getElementById("pass");
+        var feedback = document.getElementById("feedback");
+        var submit = document.getElementById("saveComment");
+        modal.style.display = "block";
+        feedback.style.display = "block"
+        submit.style.display = "block"
+        submit.onclick = function() {
+            modal.style.display = "none";
+            submit.style.display = "none";
+            var feedback = document.getElementById("feedback").value;
+            location.href = "rejectSchedule?id="+employeeId+"&scheduleId="+scheduleId+"&candidateId="+candidateId+"&comment="+feedback;
+        }
+        window.onclick = function(event) {
+             if (event.target == modal) {
+                 modal.style.display = "none";
+                 feedback.style.display = "none";
+                 submit.style.display = "none";
+             }
+         }
+    }
+    </script>
 </body>
 </html>

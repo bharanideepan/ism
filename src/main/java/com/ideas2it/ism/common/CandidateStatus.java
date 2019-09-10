@@ -10,6 +10,7 @@ package com.ideas2it.ism.common;
 public enum CandidateStatus {
     New,
     Hold,
+    Cleared,
     Selected,
     Rejected,
     Cancelled;

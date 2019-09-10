@@ -24,7 +24,7 @@ public class EmployeeController {
 	EmployeeService employeeService;
     
 	/**
-     * All the newly assinged schedules for the employee are fetched from DB.
+     * All the newly assigned schedules for the employee are fetched from DB.
      * 
      * @param model - Used to send candidate object along with request to jsp.
      * @return VIEW_CANDIDATES_JSP - Display all the fetched candidates information.
@@ -42,7 +42,7 @@ public class EmployeeController {
     }
     
     /**
-     * Gets schedule by id.
+     * Accepts schedule
      * 
      * @param candidate - Created object.
      * @param model - Used to send candidate object along with request to jsp.
@@ -54,6 +54,23 @@ public class EmployeeController {
     		@RequestParam(name = Constant.CANDIDATE_ID) long candidateId, Model model) {
         model.addAttribute(Constant.EMPLOYEE, employeeService.acceptSchedule(candidateId, 
         		employeeId, scheduleId));
+        return Constant.VIEW_NEW_SCHEDULES_JSP;
+    }
+    
+    /**
+     * Rejects schedule
+     * 
+     * @param candidate - Created object.
+     * @param model - Used to send candidate object along with request to jsp.
+     * @return
+     */
+    @RequestMapping(value = Constant.REJECT_SCHEDULE, method = RequestMethod.GET)  
+    private String rejectSchedule(@RequestParam(name = Constant.SCHEDULE_ID) long scheduleId, 
+    		@RequestParam(name = Constant.ID) long employeeId, 
+    		@RequestParam(name = Constant.CANDIDATE_ID) long candidateId,
+    		@RequestParam(name = Constant.COMMENT) String comment ,Model model) {
+        model.addAttribute(Constant.EMPLOYEE, employeeService.rejectSchedule(candidateId, 
+        		employeeId, scheduleId, comment));
         return Constant.VIEW_NEW_SCHEDULES_JSP;
     }
     

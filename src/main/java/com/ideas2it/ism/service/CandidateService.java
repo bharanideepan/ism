@@ -1,9 +1,11 @@
 package com.ideas2it.ism.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ideas2it.ism.common.CandidateStatus;
 import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.info.CandidateFormInfo;
@@ -94,5 +96,13 @@ public interface CandidateService {
 	 * @return candidate - Update candidate object
 	 */
 	Candidate updateCandidate(Candidate candidate, MultipartFile resume) throws IOException;
+
+	/**
+	 * Gets candidates by status
+	 * 
+	 * @param status - Status of the candidate to fetch 
+	 * @return candidates - Candidates having the entered status
+	 */
+	List<Candidate> getCandidatesByStatus(CandidateStatus status);
 
 }

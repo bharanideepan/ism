@@ -10,7 +10,7 @@
       <div id="createScheduleId" class="makeSchedule" align="center">
          <form:form id="createScheduleFormId" action="createSchedule" method="post" modelAttribute="schedule">
             <table class="table">
-               <input type="hidden" name="candidateId" value="${candidateId}"/>
+               <input type="hidden" name="candidateId" value="${candidate.id}"/>
                <tr>
                   <td>InterviewLevel</td>
                   <td>
@@ -18,9 +18,12 @@
                   </td>
                </tr>
                <tr>
-                  <td>InterviewTypes</td>
+                  <td>Round</td>
                   <td>
-                  	 <form:select path="interviewType" items="${types}" />
+                  	<c:forEach var="schedule" items="${candidate.schedules}">
+           				 <c:set var="round" value="${schedule.round}" scope="page"/>
+                  	</c:forEach>
+                  	 <form:input path="round" value="${round+1}" />
                   </td>
                </tr>
               <tr>

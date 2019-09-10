@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ideas2it.ism.common.Constant;
+import com.ideas2it.ism.common.InterviewType;
 import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.dao.ScheduleRepository;
+import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.entity.Employee;
 import com.ideas2it.ism.entity.Schedule;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
@@ -20,6 +22,7 @@ import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.service.CandidateService;
 import com.ideas2it.ism.service.EmployeeService;
 import com.ideas2it.ism.service.ScheduleService;
+import com.ideas2it.ism.util.EmailSender;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -30,6 +33,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private CandidateService candidateService;
 	@Autowired
 	private EmployeeService employeeService;
+	@Autowired
+	private EmailSender mailSender;
 
     /**
      * {@inheritDoc}
@@ -37,7 +42,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public Schedule addSchedule(Schedule schedule, long candidateId, String date, String time) {
 		schedule.setCandidate(candidateService.fetchCandidateById(candidateId));
     	schedule.setDate(Date.valueOf(date));
-    	schedule.setTime(Time.valueOf(time));
 		return scheduleRepository.save(schedule);
 	}
 	
@@ -63,10 +67,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public void updateScheduleStatus(long scheduleId, ScheduleStatus status) {
+	public Schedule updateScheduleStatus(long scheduleId, ScheduleStatus status) {
 		Schedule schedule = scheduleRepository.getOne(scheduleId);
 		schedule.setStatus(status);
-		scheduleRepository.save(schedule);
+		return scheduleRepository.save(schedule);
 	}
 
 	@Override
@@ -74,6 +78,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 		Schedule schedule = scheduleRepository.getOne(scheduleId);
 		if (result.equals(Constant.SELECTED)) {
 			schedule.setStatus(ScheduleStatus.Selected);
+			if(schedule.getInterviewType().equals(InterviewType.Final)) {
+				candidateService.updateCandidateStatus(schedule.getCandidate().getId(), Result.Selected);
+			} else {
+				candidateService.updateCandidateStatus(schedule.getCandidate().getId(), Result.Cleared);
+			}
 		} else {
 			schedule.setStatus(ScheduleStatus.Rejected);	
 			candidateService.updateCandidateStatus(schedule.getCandidate().getId(), Result.Rejected);
@@ -109,6 +118,19 @@ public class ScheduleServiceImpl implements ScheduleService {
 		scheduleAndInterviewers.put(Constant.INTERVIEWERS,
 				employeeService.getEmployeesByTechnology(schedule.getCandidate().getTechnology()));
 		return scheduleAndInterviewers;
+	}
+
+	@Override
+	public Schedule assignSchedule(long scheduleId, long employeeId) {
+		Schedule schedule = this.getScheduleById(scheduleId);
+		schedule.setInterviewer(employeeService.getEmployeeById(employeeId));
+		mailSender.sendMail("manibharathi@ideas2it.com", "Testing", "Success");
+		return scheduleRepository.save(schedule);
+	}
+
+	@Override
+	public Candidate getcandidateById(long candidateId) {
+		return candidateService.fetchCandidateById(candidateId);
 	}
 
 }

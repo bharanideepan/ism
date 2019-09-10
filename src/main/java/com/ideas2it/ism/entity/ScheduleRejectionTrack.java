@@ -41,6 +41,13 @@ public class ScheduleRejectionTrack {
     @Column(name = "COMMENT")
     private String comment;
     
+    public ScheduleRejectionTrack(Employee employee,
+    		Schedule schedule, String comment) {
+        this.employee = employee;
+        this.schedule = schedule;
+        this.comment = comment;
+    }
+    
     public long getId() {
         return this.id;
     }

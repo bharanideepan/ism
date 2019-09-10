@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ideas2it.ism.common.ScheduleStatus;
+import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.entity.Employee;
 import com.ideas2it.ism.entity.Schedule;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
@@ -63,8 +64,9 @@ public interface ScheduleService {
 	 * 
 	 * @param scheduleId - Id of the schedule in which the status to be changed.
 	 * @param status - Type of status to be updated.
+	 * @return schedule - After updating successfully.
 	 */
-	void updateScheduleStatus(long scheduleId, ScheduleStatus status);
+	Schedule updateScheduleStatus(long scheduleId, ScheduleStatus status);
 	
 	/**
 	 * When the employee updates the result of the schedule id, feedback and result
@@ -134,4 +136,23 @@ public interface ScheduleService {
 	 * @return scheduleAndInterviewers - Both schedule and the available interviewers for that schedule.
 	 */
 	Map<String, Object> getScheduleAndInterviewersByTechnology(long scheduleId);
+	
+	/**
+	 * Assigns the interviewer with the schedule
+	 * 
+	 * @param scheduleId - To fetch schedule by using this id
+	 * @param employeeId - To fetch employee by using this id
+	 * 
+	 * @return schedule - After assigning with the interviewer
+	 */
+	Schedule assignSchedule(long scheduleId, long employeeId);
+	
+	/**
+	 * Gets candidate by id
+	 * 
+	 * @param candidateId - id of the candidate to fetch the candidate
+	 * 
+	 * @return schedule - After assigning with the interviewer
+	 */
+	Candidate getcandidateById(long candidateId);
 }

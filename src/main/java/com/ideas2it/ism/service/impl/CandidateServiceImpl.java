@@ -12,10 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ideas2it.ism.common.CandidateStatus;
 import com.ideas2it.ism.common.Department;
 import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.Technology;
-import com.ideas2it.ism.dao.CandidateDAO;
+import com.ideas2it.ism.dao.CandidateRepository;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.info.CandidateFormInfo;
 import com.ideas2it.ism.info.CandidatePagenationInfo;
@@ -36,7 +37,7 @@ import com.ideas2it.ism.service.ScheduleService;
 public class CandidateServiceImpl implements CandidateService {
 	
     @Autowired
-    private CandidateDAO candidateDAO;
+    private CandidateRepository candidateDAO;
     @Autowired
     private ScheduleService scheduleService;
     
@@ -146,5 +147,10 @@ public class CandidateServiceImpl implements CandidateService {
 		candidate.setSchedules(candidateToBeUpdated.getSchedules());
 		candidate.setStatus(candidateToBeUpdated.getStatus());
 		return candidateDAO.save(candidate);
+	}
+
+	@Override
+	public List<Candidate> getCandidatesByStatus(CandidateStatus status) {
+		return candidateDAO.fetchCandidatesByStatus(status);
 	}
 }
