@@ -9,11 +9,8 @@
 <title>Assign interviewer</title>
 </head>
 <body>
-      <div class="navbar">
-         <a href="addCandidate">Add candidate</a>
-         <a href="viewCandidates">View Candidates</a>
-         <a href="viewSchedules">View Schedules</a>
-      </div>
+<%@ include file="header.jsp" %> 
+<%@ include file="recruiterMenu.jsp" %> 
       
     <div id="scheduleId">
         <table>
@@ -26,8 +23,8 @@
                 <td>${schedule.interviewType}</td>
             </tr>
             <tr>
-                <td>Interview Level:</td>
-                <td>${schedule.interviewLevel}</td>
+                <td>Interview Round:</td>
+                <td>${schedule.round}</td>
             </tr>
             <tr>
                 <td>Date:</td>
@@ -37,13 +34,20 @@
                 <td>Status:</td>
                 <td>${schedule.status}</td>
             </tr>
+            <c:if test="${schedule.interviewer != null}">
+            <tr>
+                <td>Interviewer:</td>
+                <td>${schedule.interviewer.name}</td>
+            </tr>
+            </c:if>
         </table>
     </div>
+    <c:if test="${schedule.interviewer == null}">
     <div id="interviewersId">
         <table>
+                <caption>Interviewers</caption>
         <c:forEach var="interviewer" items="${interviewers}">
-            <tr>
-                <td>Interviewer Name:</td>
+              <tr>
                 <form action="assignInterviewer" method="post">
                 <td>
                 	<input type="hidden" name="interviewerId" value="${interviewer.id}">
@@ -55,6 +59,7 @@
         </c:forEach>
         </table>
     </div>
+    </c:if>
 
 </body>
 </html>

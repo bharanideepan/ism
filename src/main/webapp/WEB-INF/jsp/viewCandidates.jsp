@@ -7,14 +7,8 @@
  <link rel="stylesheet" type="text/css" href="/css/viewCandidates.css">
 </head>
 <body>
-        <div id="container">
-            <div>
-                <a href="index.jsp" ><img src="/image/logo.png" width="100px" height="100px"/></a>
-            </div>
-            <div>
-                <h2 align="center">Interview Schedule Management</h2>
-            </div>
-        </div>
+<%@ include file="header.jsp" %>  
+<%@ include file="recruiterMenu.jsp" %>
         <div>
           <table align="center">
           <tr>

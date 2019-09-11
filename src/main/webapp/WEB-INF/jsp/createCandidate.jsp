@@ -10,19 +10,8 @@
  <link rel="stylesheet" type="text/css" href="/css/createCandidate.css">
 </head>
 <body>
-        <div>
-            <div class="cards">
-                <a href="index.jsp" ><img src="/image/logo.png" width="200px" height="200px"/></a>
-            </div>
-            <div class="cards">
-                <h2 align="center">Interview Schedule Management</h2>
-            </div>
-        </div>
-        <div class="sidebar">
-            <a href="addCandidate">Add Candidate</a>
-            <a href="viewCandidates">View Candidates</a>
-            <a href="schedulesByStatus?status=New">View Schedules</a>
-        </div>
+<%@ include file="header.jsp" %> 
+<%@ include file="recruiterMenu.jsp" %> 
  <form:form name ="form" action="saveCandidate" method="post" modelAttribute="candidate" enctype = "multipart/form-data"> 
       <table class="table"> 
         <form:input type="hidden" path="id" value="${candidate.id}"/>

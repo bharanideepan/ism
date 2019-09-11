@@ -5,7 +5,8 @@
    <head>
       <link rel="stylesheet" href="/css/createSchedule.css">
    <body>
-         <h1>Interview Schedule Management</h1>
+<%@ include file="header.jsp" %>   
+<%@ include file="recruiterMenu.jsp" %>
 
       <div id="createScheduleId" class="makeSchedule" align="center">
          <form:form id="createScheduleFormId" action="createSchedule" method="post" modelAttribute="schedule">
@@ -36,6 +37,16 @@
                   <td>Time</td>
                   <td>
                   	 <input type="time" name="shtime" />
+                  </td>
+               </tr>
+               <tr>
+                  <td>Interviewer</td>
+                  <td>
+                  	 <select name="interviewerId">
+	                  	 <c:forEach var="interviewer" items="${interviewers}">
+	                  	 	<option value="${interviewer.id}">${interviewer.name}</option>
+	                  	 </c:forEach>
+                  	 </select>
                   </td>
                </tr>
                <tr>

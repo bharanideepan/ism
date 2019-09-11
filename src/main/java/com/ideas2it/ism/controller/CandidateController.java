@@ -82,7 +82,7 @@ public class CandidateController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return Constant.VIEW_CANDIDATE_JSP;
+        return Constant.REDIRECT + Constant.SEARCH_BY_STATUS + "?" + Constant.RESULT + "=New";
     }
     
     /**
@@ -251,6 +251,27 @@ public class CandidateController {
         try { 
             model.addAttribute(Constant.CANDIDATES, candidateService.getCandidatesByStatus(status)); 
         	model.addAttribute(Constant.CANDIDATE_STATUSES, new ArrayList<CandidateStatus>(Arrays.asList(CandidateStatus.values())));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return Constant.VIEW_CANDIDATES_JSP;
+    }
+    
+    /**
+     * Recruiter entered informations are obtained as an object.
+     * Then the object is passed to the DAO layer to store it in DB.
+     * 
+     * @param candidate - Created object.
+     * @param model - Used to send candidate object along with request to jsp.
+     * @return
+     */
+    @RequestMapping(value = Constant.SEARCH_BY_STATUS, method = RequestMethod.GET)  
+    private String searchCandidateByStatus(@RequestParam(name = Constant.RESULT) Result status,
+    		Model model) {
+        try { 
+        	CandidatePagenationInfo pagenationInfo = 
+        			candidateService.searchByStatus(status);
+            model.addAttribute(Constant.PAGENATION_INFO, pagenationInfo); 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
