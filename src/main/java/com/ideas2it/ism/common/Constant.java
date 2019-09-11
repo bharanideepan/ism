@@ -12,19 +12,24 @@ public class Constant {
 	public static final String SCHEDULE = "schedule";
 	public static final String SELECTED = "selected";
 	public static final String FEED_BACK = "feedback";
-    public static final  String CREATED = "created";
+    public static final String CREATED = "created";
 	public static final String UPDATED = "updated";	
 	public static final String ACTION = "action";	
 	public static final String UPDATE = "update";	
-    public static final  String ID = "id";
-    public static final  String NAME = "name";
+    public static final String ID = "id";
+    public static final String NAME = "name";
 	public static final String RESUME = "resume";
-	public static final int RETRIEVE_LIMIT = 0;
+	public static final String PAGE_NO = "pageNo";
+	public static final int RETRIEVE_LIMIT = 5;
+	public static final String APPLICATION_JSON = "application/json";
     
 	// Candidate constants.
     public static final  String CANDIDATE = "candidate";
 	public static final String REDIRECT = "redirect:/";
-   
+	public static final String CANDIDATE_NAME = "candidateName";
+	public static final String POSITION = "position";
+	public static final String DEPARTMENT = "department";
+	public static final String EXPERIENCE = "experience";
 	public static final String CANDIDATE_FORM_INFO = "candidateFormInfo";
 	public static final String PAGENATION_INFO = "pagenationInfo";
 	public static final String CANDIDATE_ID = "candidateId";
@@ -34,7 +39,7 @@ public class Constant {
     public final static String SAVE_CANDIDATE = "saveCandidate";
 	public static final String VIEW_CANDIDATES = "viewCandidates";
 	public static final String SEARCH_BY_NAME = "searchByName";
-    public static final  String CREATE_CANDIDATE_JSP = "createCandidate";
+    public static final String CREATE_CANDIDATE_JSP = "createCandidate";
 	public static final String INDEX_JSP = "index";
 	public static final String VIEW_CANDIDATES_JSP = "viewCandidates";
 	public static final String VIEW_CANDIDATE_JSP = "viewCandidate";
@@ -86,7 +91,10 @@ public class Constant {
 	public static final String GET_RECRUITER_OPERATIONS = "getRecruiterOperations";
 	public static final String GET_INTERVIEWERS = "getInterviewers";
 	public static final String ASSIGN_INTERVIEWER_JSP = "assignInterviewer";
-	
+	public static final String NO_OF_RECORDS = "noOfRecords";
+	public static final String SEARCH_BY_FIELDS = "searchByFields";
+	public static final String SEARCH_BY_STATUS = "searchByStatus";
+	public static final String VIEW_ALL_CANDIDATES = "viewAllCandidates";
 }
 
    

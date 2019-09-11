@@ -23,8 +23,10 @@
             <a href="viewCandidates">View Candidates</a>
             <a href="schedulesByStatus?status=New">View Schedules</a>
         </div>
- <form:form action="saveCandidate" method="post" modelAttribute="candidate" enctype = "multipart/form-data"> 
+ <form:form name ="form" action="saveCandidate" method="post" modelAttribute="candidate" enctype = "multipart/form-data"> 
       <table class="table"> 
+        <form:input type="hidden" path="id" value="${candidate.id}"/>
+        <form:input type="hidden" path="resumeFilePath" value="${candidate.resumeFilePath}"/>
         <tr> <td colspan = "3">Candidate Information </td> 
         <tr><td >Name:</td>
           <td>

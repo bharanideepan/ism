@@ -1,6 +1,12 @@
 package com.ideas2it.ism.controller;
 
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ideas2it.ism.common.Constant;
+import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.info.CandidateFormInfo;
 import com.ideas2it.ism.info.CandidatePagenationInfo;
@@ -84,7 +91,6 @@ public class CandidateController {
     private String viewCandidateForUpdate(@RequestParam(name = Constant.CANDIDATE_ID)
             long candidateId, Model model) {
         try { 
-        	System.out.println("inside update");
             Candidate candidate = candidateService.fetchCandidateById(candidateId);
             CandidateFormInfo candidateFormInfo = candidateService.getCandidateFormInfo(); 
             model.addAttribute(Constant.CANDIDATE_FORM_INFO, candidateFormInfo);  
@@ -112,6 +118,7 @@ public class CandidateController {
         try { 
             candidate = candidateService.updateCandidate(candidate, resume);   
             model.addAttribute(Constant.CANDIDATE, candidate);
+            System.out.println("inside");
             model.addAttribute(Constant.STATUS, Constant.UPDATED); 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -147,10 +154,32 @@ public class CandidateController {
      * @return
      */
     @RequestMapping(value = Constant.SEARCH_BY_NAME, method = RequestMethod.POST)  
-    private String searchByName(@RequestParam(name = Constant.NAME) String name, Model model) {
+    private String searchByName(@RequestParam(name = Constant.NAME) String name, 
+    		Model model) {
         try { 
         	CandidatePagenationInfo pagenationInfo = 
         			candidateService.searchByName(name);
+            model.addAttribute(Constant.PAGENATION_INFO, pagenationInfo); 
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return Constant.VIEW_CANDIDATES_JSP;
+    }
+    
+    /**
+     * Recruiter entered informations are obtained as an object.
+     * Then the object is passed to the DAO layer to store it in DB.
+     * 
+     * @param candidate - Created object.
+     * @param model - Used to send candidate object along with request to jsp.
+     * @return
+     */
+    @RequestMapping(value = Constant.SEARCH_BY_STATUS, method = RequestMethod.POST)  
+    private String searchByStatus(@RequestParam(name = Constant.RESULT) Result status,
+    		Model model) {
+        try { 
+        	CandidatePagenationInfo pagenationInfo = 
+        			candidateService.searchByStatus(status);
             model.addAttribute(Constant.PAGENATION_INFO, pagenationInfo); 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -178,5 +207,26 @@ public class CandidateController {
         return Constant.VIEW_CANDIDATE_JSP;
     }
     
-	
+    /**
+     * Sets required information along with request.
+     * Set the pageno  for pagenation along with request.
+     * Forward the request to displayplayerspage.
+     *
+     * @param request - User request from server.
+     * @param reponse - Response to server from servlet
+     * @throws ServletException -
+     *         Defines a general exception a servlet can throw when it 
+     *         encounters difficulty.
+     * @throws IOException - 
+     *         general class of exceptions produced by failed or 
+     *         interrupted I/O operations.
+     */
+    @RequestMapping(value = Constant.VIEW_ALL_CANDIDATES, method = RequestMethod.GET)  
+    private void viewAllCandidates(HttpServletRequest request, HttpServletResponse 
+            response) throws IOException {
+        int pageNo = Integer.parseInt(request.getParameter(Constant.PAGE_NO));
+        JSONArray playersInfo = candidateService.retrieveAllPlayers(pageNo);
+        response.setContentType(Constant.APPLICATION_JSON);
+        response.getWriter().write(playersInfo.toString());
+    }
 }
