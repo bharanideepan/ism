@@ -32,24 +32,53 @@
             <tr>
                 <th colspan="4">Interview Details</th>
             </tr>
-            <tr> 
-                <th>SI.No</th>
-                <th>Round</th>
-                <th>Type</th>
-                <th>Result</th>
-                <th>Comment</th>
-            </tr>
-            <c:set var="siNo" value="1" scope="page"/>
-            <c:forEach var="schedule" items="${candidate.schedules}">
-                <tr>
-                    <td>${siNo}</td>
-                    <td>${schedule.round}</td>
-                    <td>${schedule.interviewType}</td>
-                    <td>${schedule.status}</td>
-                    <td>${schedule.rescheduleComment}${schedule.cancellationComment}${schedule.interviewFeedback}</td>
-                </tr>
-                <c:set var="siNo" value="${siNo + 1}" scope="page"/>
-            </c:forEach>
+      	<c:if test="${candidate.schedules != null}">
+	      	<c:if test="${!candidate.schedules.isEmpty()}">
+	            <tr> 
+	                <th>SI.No</th>
+	                <th>Round</th>
+	                <th>Type</th>
+	                <th>Result</th>
+	                <th>Comment</th>
+	            </tr>
+	            <c:set var="siNo" value="1" scope="page"/>
+	            <c:forEach var="schedule" items="${candidate.schedules}">
+	                <tr>
+	                    <td>${siNo}</td>
+	                    <td>${schedule.round}</td>
+	                    <td>${schedule.interviewType}</td>
+	                    <td>${schedule.status}</td>
+	                    <td>${schedule.rescheduleComment}${schedule.cancellationComment}${schedule.interviewFeedback}</td>
+	                    <c:if test="${schedule.interviewType != 'Final' && schedule.status == 'Selected'}">
+				        	<th>
+				        		<button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">
+				        			&#x1F4C5;
+			        			</button>
+			        		</th>
+	                    </c:if>
+	                </tr>
+	                <c:set var="siNo" value="${siNo + 1}" scope="page"/>
+	            </c:forEach>
+	        </c:if>
+	        <c:if test="${candidate.schedules.isEmpty()}">
+		        <tr>
+		        	<th>
+		        		<button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">
+		        			&#x1F4C5;
+	        			</button>
+	        		</th>
+		        </tr>
+	        </c:if>
+        </c:if>
+        <c:if test="${candidate.schedules == null}">
+	        <tr>
+	        	<th>
+	        		<button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">
+	        			&#x1F4C5;
+        			</button>
+        		</th>
+	        </tr>
+        </c:if>
         </table>
     </div>
     <div id="pass">

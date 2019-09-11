@@ -12,6 +12,8 @@
 <body>
 <%@ include file="header.jsp" %> 
 	<div>
+      <c:if test="${schedules != null}">
+      	<c:if test="${!schedules.isEmpty()}">
         <table id="contentTable" class = "table" align="center" cellpadding = "10">
             <tr>
                 <th>S.No.</th>
@@ -47,6 +49,18 @@
                 <c:set var="sNumber" value="${sNumber+1}" scope="page"/>
             </c:forEach>
         </table>
+	      </c:if>
+	      <c:if test="${schedules.isEmpty()}">
+	        <table id="contentTable" class = "table" align="center" cellpadding = "10">
+	        	<tr><td>No results available for your search</td></tr>
+	        </table> 
+	      </c:if>
+	      </c:if>
+	      <c:if test="${schedules == null}">
+	        <table id="contentTable" class = "table" align="center" cellpadding = "10">
+	        	<tr><td>No results available for your search</td></tr>
+	        </table> 
+	      </c:if>
       </div>
 </body>
 </html>
