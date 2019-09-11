@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ideas2it.ism.common.CandidateStatus;
 import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.entity.Candidate;
+import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.info.CandidateFormInfo;
 import com.ideas2it.ism.info.CandidatePagenationInfo;
 
@@ -60,7 +61,7 @@ public interface CandidateService {
 	 * 
 	 * @return pagenationInfo - Informations such as list of candidates, list of pages are passed. 
 	 */
-	CandidatePagenationInfo getPagenationInfo();
+	CandidatePagenationInfo getPagenationInfo() throws IsmException;
 
 	/**
 	 * List of candidate details of the given name is fetch from DB to display. 
@@ -100,13 +101,12 @@ public interface CandidateService {
 	Candidate updateCandidate(Candidate candidate, MultipartFile resume) throws IOException;
 
 	/**
-<<<<<<< HEAD
 	 * List of candidate details of the given status is fetched from DB to display. 
 	 * 
 	 * @param name - Candidates of the particular status should be fetched.
 	 * @return pagenationInfo - Informations such as list of candidates, list of pages are passed. 
 	 */
-	CandidatePagenationInfo searchByStatus(Result status);
+	CandidatePagenationInfo searchByStatus(Result status) throws IsmException;
 
     /** 
      * Information of candidate object is converted Json object and then 
@@ -114,8 +114,10 @@ public interface CandidateService {
      *
      * @param    pageNo - Candidates corresponding to the pageNo is fetched.
      * @return    players - Candidate details.
+     * @throws IsmException - Thrown when a hibernate exception occurs while retrieving
+     * candidates details from DB. 
      */ 
-	JSONArray retrieveAllPlayers(int pageNo);
+	JSONArray retrieveAllCandidates(int pageNo, Result candidateResult) throws IsmException;
 
 	/**
 	 * Gets candidates by status

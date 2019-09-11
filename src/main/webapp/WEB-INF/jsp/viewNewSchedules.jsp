@@ -33,8 +33,8 @@
                 <th>Accept</th>
                 <th>Reject</th>
             </tr>
-            <c:forEach var="schedule" items="${employee.schedules}">
-                <tr>
+               <c:forEach var="schedule" items="${employee.schedules}">
+                  <tr>
                     <td class = "td"><a href="viewProgress?id=${schedule.candidate.id}">${schedule.candidate.name}</a></td>
                     <td class = "td">${schedule.candidate.position}</td>
                     <td class = "td">${schedule.candidate.department}</td>
@@ -48,8 +48,8 @@
                       <button class = "reject"
                           onclick="getComment('${employee.id}', '${schedule.id}', '${schedule.candidate.id}')">&times;
                       </button></td>
-                </tr>
-            </c:forEach>
+                    </tr>
+                </c:forEach>
         </table>  
            <div id="pass">
                <div class="modal-content">

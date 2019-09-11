@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import com.ideas2it.ism.common.Constant;
 import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.entity.Candidate;
+import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.info.CandidateFormInfo;
 import com.ideas2it.ism.info.CandidatePagenationInfo;
 import com.ideas2it.ism.service.CandidateService;
@@ -42,6 +44,7 @@ import com.ideas2it.ism.service.CandidateService;
  */
 @Controller
 public class CandidateController {
+	//private static final Logger logger = Logger.getLogger(CandidateController.class);
 	
     @Autowired
 	private CandidateService candidateService;
@@ -57,6 +60,7 @@ public class CandidateController {
      */
     @RequestMapping(value = Constant.ADD_CANDIDATE, method = RequestMethod.GET)  
     public String addCandidateForm(Model model) { 
+    	//logger.info("logger");
         CandidateFormInfo candidateFormInfo = candidateService.getCandidateFormInfo(); 
         model.addAttribute(Constant.CANDIDATE, candidateFormInfo.getCandidate());  
         model.addAttribute(Constant.CANDIDATE_FORM_INFO, candidateFormInfo);  
@@ -232,10 +236,15 @@ public class CandidateController {
     @RequestMapping(value = Constant.VIEW_ALL_CANDIDATES, method = RequestMethod.GET)  
     private void viewAllCandidates(HttpServletRequest request, HttpServletResponse 
             response) throws IOException {
-        int pageNo = Integer.parseInt(request.getParameter(Constant.PAGE_NO));
-        JSONArray playersInfo = candidateService.retrieveAllPlayers(pageNo);
-        response.setContentType(Constant.APPLICATION_JSON);
-        response.getWriter().write(playersInfo.toString());
+    	try {
+            int pageNo = Integer.parseInt(request.getParameter(Constant.PAGE_NO));
+            Result candidateStatus = Result.valueOf(request.getParameter(Constant.RESULT));
+            JSONArray playersInfo = candidateService.retrieveAllCandidates(pageNo, candidateStatus);
+            response.setContentType(Constant.APPLICATION_JSON);
+            response.getWriter().write(playersInfo.toString());
+    	} catch(IsmException e) {
+    	    System.out.println(e.getMessage());	
+    	}
     }
    
     /**
