@@ -16,7 +16,7 @@
         </div>
         <div class="sidebar">
             <a href="viewCandidates">Recruiter</a>
-            <a href="schedulesByStatus">Manager</a>
+            <a href="viewSchedules">Manager</a>
             <a href="newSchedules?id=1">Employee</a>
         </div>
     </body>

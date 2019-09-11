@@ -12,21 +12,13 @@
      .table {
         width:1000px;
         height:400px;
-        margin: 20px;
+        margin: auto;
         border: none;
         border-radius: 20px;
         box-shadow: 10px 10px 5px grey; 
         background:linear-gradient(to right, #ffefba, #ffffff);
      }
-    #container {
-       right: 0;
-    }
-    #container {height: 100%; width:100%; font-size: 0;}
-    #home, #left, #middle, #right {display: inline-block; *display: inline; zoom: 1; vertical-align: top; font-size: 12px;}
-    #home {width: 20%; }
-    #left {width: 25%; }
-    #middle {width: 25%; }
-    #right {width: 25%; }
+    #container { width:100%; font-size: 0;}
 
 
    .show {display: block;}
@@ -121,7 +113,6 @@
    .cards {
       display:inline-block;
       margin:10px;
-      float:left;
    }
 
 .sidebar {

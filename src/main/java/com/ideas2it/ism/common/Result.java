@@ -14,4 +14,5 @@ public enum Result {
     Selected,
     Rejected,
     Cancelled,
+    Cleared;
 }

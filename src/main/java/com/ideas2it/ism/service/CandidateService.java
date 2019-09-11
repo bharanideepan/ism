@@ -1,9 +1,12 @@
 package com.ideas2it.ism.service;
 
 import java.io.IOException;
+import java.util.List;
 
+import org.json.JSONArray;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ideas2it.ism.common.CandidateStatus;
 import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.info.CandidateFormInfo;
@@ -62,6 +65,7 @@ public interface CandidateService {
 	/**
 	 * List of candidate details of the given name is fetch from DB to display. 
 	 * 
+	 * @param name - Candidates of the particular name should be fetched.
 	 * @return pagenationInfo - Informations such as list of candidates, list of pages are passed. 
 	 */
 	CandidatePagenationInfo searchByName(String name);
@@ -95,4 +99,29 @@ public interface CandidateService {
 	 */
 	Candidate updateCandidate(Candidate candidate, MultipartFile resume) throws IOException;
 
+	/**
+<<<<<<< HEAD
+	 * List of candidate details of the given status is fetched from DB to display. 
+	 * 
+	 * @param name - Candidates of the particular status should be fetched.
+	 * @return pagenationInfo - Informations such as list of candidates, list of pages are passed. 
+	 */
+	CandidatePagenationInfo searchByStatus(Result status);
+
+    /** 
+     * Information of candidate object is converted Json object and then 
+     *     added in JsonArray
+     *
+     * @param    pageNo - Candidates corresponding to the pageNo is fetched.
+     * @return    players - Candidate details.
+     */ 
+	JSONArray retrieveAllPlayers(int pageNo);
+
+	/**
+	 * Gets candidates by status
+	 * 
+	 * @param status - Status of the candidate to fetch 
+	 * @return candidates - Candidates having the entered status
+	 */
+	List<Candidate> getCandidatesByStatus(CandidateStatus status);
 }

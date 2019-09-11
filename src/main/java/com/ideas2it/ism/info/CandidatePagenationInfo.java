@@ -2,6 +2,7 @@ package com.ideas2it.ism.info;
 
 import java.util.List;
 
+import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.entity.Candidate;
 
 public class CandidatePagenationInfo {
@@ -9,6 +10,7 @@ public class CandidatePagenationInfo {
     private int lastPageNo;
     private int pageNo;
 	private List<Candidate> candidates;
+	private List<Result> results;
 	private List<Integer> pages;
 
 	//Getters and Setters	
@@ -42,6 +44,14 @@ public class CandidatePagenationInfo {
 	
 	public void setCandidates(List<Candidate> candidates) {
 		this.candidates = candidates;
+	}
+	
+	public List<Result> getResults() {
+		return results;
+	}
+
+	public void setResults(List<Result> results) {
+		this.results = results;
 	}
 
     public List<Integer> getPages() {

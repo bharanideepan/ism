@@ -10,9 +10,12 @@ import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.dao.EmployeeRepository;
 import com.ideas2it.ism.entity.Employee;
+import com.ideas2it.ism.entity.Schedule;
 import com.ideas2it.ism.service.CandidateService;
 import com.ideas2it.ism.service.EmployeeService;
+import com.ideas2it.ism.service.ScheduleRejectionTrackService;
 import com.ideas2it.ism.service.ScheduleService;
+import com.ideas2it.ism.service.ScheduleRejectionTrackService;
 
 /**
  * Gets the schedule assigned for the employee from {link-@ScheduleService} and set 
@@ -29,6 +32,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	CandidateService candidateService;
 	@Autowired
 	ScheduleService scheduleService;
+	@Autowired
+	ScheduleRejectionTrackService scheduleRejectionTrackService;
 
 	@Override
 	public Employee getEmployeeWithNewSchedulesById(long employeeId) {
@@ -51,9 +56,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setSchedules(scheduleService.getEmployeeNewSchedulesById(employeeId));      
 		return employee;
 	}
+
+	@Override
+	public Employee rejectSchedule(long candidateId, long employeeId, long scheduleId, String comment) {
+        Employee employee = employeeRepository.getOne(employeeId);
+        Schedule schedule = scheduleService.updateScheduleStatus(scheduleId, ScheduleStatus.Declined);
+        candidateService.updateCandidateStatus(candidateId, Result.Pending);
+        scheduleRejectionTrackService.createScheduleRejectionTrack(employee, schedule, comment);
+        employee.setSchedules(scheduleService.getEmployeeNewSchedulesById(employeeId));      
+		return employee;
+	}
 	
 	public List<Employee> getEmployeesByTechnology(Technology technology) {
 		return employeeRepository.fetchEmployeesByTechnology(technology);
+	}
+
+	@Override
+	public Employee getEmployeeById(long employeeId) {
+		return employeeRepository.getOne(employeeId);
 	}
     
 }

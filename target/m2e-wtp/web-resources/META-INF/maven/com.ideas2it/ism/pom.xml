@@ -19,9 +19,17 @@
 		<java.version>1.8</java.version>
 		<log4j.version>1.2.17</log4j.version>
         <jstl.version>1.2</jstl.version>
+        <json.version>20180813</json.version>
 	</properties>
 
 	<dependencies>
+
+        <!-- send email -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        
 	    <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -29,6 +37,11 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.version}</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>

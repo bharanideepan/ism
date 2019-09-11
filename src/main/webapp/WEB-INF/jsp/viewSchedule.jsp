@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>View schedule</title>
 </head>
 <body>
 
@@ -60,8 +60,14 @@
 	            </tr>
 	            <tr>
 	                <td><form:input type="hidden" path="id" value="${schedule.id}"/>
+	                <c:choose>
+	                <c:when test="${schedule.status != 'Rescheduled'  && schedule.status != 'Cancelled'}">
 	                	<input id="confirm" type="submit" value="Confirm" style="display:none"/>
-	                	<input id="reset" type="reset" onclick="getCommentBox(this.value)" value="Cancel" style="display:none"></td>
+	                	<input id="reset" type="reset" onclick="getCommentBox(this.value)" value="Cancel" style="display:none">
+                	</c:when>
+                	<c:otherwise>${schedule.cancellationComment}${schedule.cancellationComment}</c:otherwise>
+                	</c:choose>
+	                </td>
 	            </tr>
 	        </form:form>
         </table>

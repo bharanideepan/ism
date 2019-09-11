@@ -2,6 +2,7 @@ package com.ideas2it.ism.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,7 +26,6 @@ import com.ideas2it.ism.service.ScheduleService;
 public class ScheduleController {
 	@Autowired
     private ScheduleService scheduleService;
-
 
     /**
      * Dispatches the create schedule page.
@@ -55,7 +55,7 @@ public class ScheduleController {
     	model.addAttribute(Constant.SCHEDULE, new Schedule());
     	model.addAttribute(Constant.LEVELS, new ArrayList<InterviewLevel>(Arrays.asList(InterviewLevel.values())));
     	model.addAttribute(Constant.TYPES, new ArrayList<InterviewType>(Arrays.asList(InterviewType.values())));
-    	model.addAttribute(Constant.CANDIDATE_ID, candidateId);
+    	model.addAttribute(Constant.CANDIDATE, scheduleService.getcandidateById(candidateId));
         return Constant.CREATE_SCHEDULE_JSP;
     }
 	
@@ -75,8 +75,8 @@ public class ScheduleController {
     		@ModelAttribute(Constant.SCHEDULE)Schedule schedule, Model model) {
     	long candidateId = Integer.parseInt(request.getParameter(Constant.CANDIDATE_ID));
     	scheduleService.addSchedule(schedule, candidateId,
-    			    request.getParameter(Constant.SCHEDULED_DATE), 
-    			    request.getParameter(Constant.SCHEDULED_TIME) + Constant.SECONDS);
+    			    request.getParameter(Constant.SCHEDULED_DATE),
+    			    request.getParameter(Constant.SCHEDULED_TIME));
     	model.addAttribute(Constant.SCHEDULE, new Schedule());
         return Constant.REDIRECT + Constant.VIEW_CANDIDATES;
     }
@@ -95,7 +95,6 @@ public class ScheduleController {
         model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
         return Constant.VIEW_SCHEDULE_JSP;
     }
- 
     
     /**
      * When the employee update the interview result the status of the schedule
@@ -123,10 +122,9 @@ public class ScheduleController {
      * 
      * @return VIEW_SCHEDULES_JSP - 
      */
-    @RequestMapping(value = Constant.SCHEDULE_BY_STATUS, method = RequestMethod.GET)  
+    @RequestMapping(value = Constant.VIEW_SCHEDULES_BY_STATUS, method = RequestMethod.GET)  
     private String getSchedulesByStatus(@RequestParam(Constant.STATUS)ScheduleStatus status, Model model) {
         model.addAttribute(Constant.SCHEDULES, scheduleService.getSchedulesByStatus(status)); 
-        model.addAttribute(Constant.SCHEDULE, new Schedule());
         return Constant.VIEW_SCHEDULES_JSP;
     }
  
@@ -137,7 +135,7 @@ public class ScheduleController {
      * @param RequestParam comment - Comment given by the client for rescheduling.
      * @param model - Used to send schedule object to jsp.
      * 
-     * @return CREATE_RESCHEDULE_JSP - 
+     * @return VIEW_SCHEDULE_JSP - 
      */
     @RequestMapping(value = Constant.RESCHEDULE, method = RequestMethod.POST)  
     private String reschedule(Model model,
@@ -150,7 +148,7 @@ public class ScheduleController {
     		) {
         model.addAttribute(Constant.SCHEDULE,
         		scheduleService.reschedule(newSchedule, comment,
-				scheduleId, candidateId, date, time + Constant.SECONDS));
+				scheduleId, candidateId, date, time));
         model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
         return Constant.VIEW_SCHEDULE_JSP;
     }
@@ -162,27 +160,59 @@ public class ScheduleController {
      * @param RequestParam comment - Comment given by the client for cancelling.
      * @param model - Used to send schedule object to jsp.
      * 
-     * @return SCHEDULE_BY_STATUS - 
+     * @return GET_RECRUITER_OPERATIONS - 
      */
     @RequestMapping(value = Constant.CANCEL_SCHEDULE, method = RequestMethod.POST)  
     private String cancelSchedule(Model model, @ModelAttribute(Constant.SCHEDULE)Schedule schedule) {
     	scheduleService.cancelSchedule(schedule);
-        return Constant.GET_RECRUITER_OPERATIONS;
+        return "redirect:/schedulesByStatus?status=New";
     }
  
     /**
      * Gets interviewers available for that schedule
      * 
-     * @param ModelAttribute schedule - Needs to be cancelled.
-     * @param RequestParam comment - Comment given by the client for cancelling.
      * @param model - Used to send schedule object to jsp.
+     * @param RequestParam scheduleId - Id of the schedule to be assigned
      * 
-     * @return SCHEDULE_BY_STATUS - 
+     * @return ASSIGN_INTERVIEWER_JSP - 
      */
     @RequestMapping(value = Constant.GET_INTERVIEWERS, method = RequestMethod.GET)  
     private String getInterviewersByTechnology(Model model,
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId) {
-    	scheduleService.getScheduleAndInterviewersByTechnology(scheduleId);
-        return Constant.GET_RECRUITER_OPERATIONS;
+    	Map<String, Object> scheduleAndInterviewers= scheduleService.getScheduleAndInterviewersByTechnology(scheduleId);
+        model.addAttribute(Constant.SCHEDULE, scheduleAndInterviewers.get(Constant.SCHEDULE));
+        model.addAttribute(Constant.INTERVIEWERS, scheduleAndInterviewers.get(Constant.INTERVIEWERS));
+        return Constant.ASSIGN_INTERVIEWER_JSP;
+    }
+ 
+    /**
+     * Gets interviewers available for that schedule
+     * 
+     * @param model - Used to send schedule object to jsp.
+     * @param RequestParam scheduleId - Id of the schedule to be assigned
+     * @param RequestParam candidateId - Id of the candidate to be assigned
+     * 
+     * @return VIEW_SCHEDULE_JSP - 
+     */
+    @RequestMapping(value = Constant.ASSIGN_INTERVIEWER, method = RequestMethod.POST)  
+    private String assignInterviewer(Model model,
+    		@RequestParam(Constant.SCHEDULE_ID)long scheduleId,
+    		@RequestParam(Constant.INTERVIEWER_ID)long employeeId) {
+        model.addAttribute(Constant.SCHEDULE, scheduleService.assignSchedule(scheduleId, employeeId));
+        model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
+        return Constant.VIEW_SCHEDULE_JSP;
+    }
+ 
+    /**
+     * Gets all schedules
+     * 
+     * @param model - Used to send schedule objects to jsp.
+     * 
+     * @return VIEW_SCHEDULES_JSP - 
+     */
+    @RequestMapping(value = Constant.VIEW_SCHEDULES, method = RequestMethod.GET)  
+    private String assignInterviewer(Model model) {
+        model.addAttribute(Constant.SCHEDULES, scheduleService.getAllSchedules());
+        return Constant.VIEW_SCHEDULES_JSP;
     }
 }

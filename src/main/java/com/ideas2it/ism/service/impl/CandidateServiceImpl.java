@@ -8,19 +8,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ideas2it.ism.common.Constant;
 import com.ideas2it.ism.common.Department;
 import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.dao.CandidateDAO;
+import com.ideas2it.ism.common.CandidateStatus;
+import com.ideas2it.ism.common.Department;
+import com.ideas2it.ism.common.Result;
+import com.ideas2it.ism.common.Technology;
+import com.ideas2it.ism.dao.CandidateRepository;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.info.CandidateFormInfo;
 import com.ideas2it.ism.info.CandidatePagenationInfo;
 import com.ideas2it.ism.service.CandidateService;
 import com.ideas2it.ism.service.ScheduleService;
+import com.ideas2it.ism.util.CalculatePage;
 
 
 
@@ -35,6 +44,8 @@ import com.ideas2it.ism.service.ScheduleService;
 @Service
 public class CandidateServiceImpl implements CandidateService {
 	
+    @Autowired
+    private CandidateRepository candidateRepository;
     @Autowired
     private CandidateDAO candidateDAO;
     @Autowired
@@ -58,15 +69,15 @@ public class CandidateServiceImpl implements CandidateService {
 			throws IOException {
 		System.out.println(candidate);
 		candidate = saveCandidateResume(candidate, resume);
-		return candidateDAO.save(candidate);
+		return candidateRepository.save(candidate);
 	}
 	
     public Candidate fetchCandidateById(long candidateId) {   
-    	return candidateDAO.getOne(candidateId);
+    	return candidateRepository.getOne(candidateId);
     }
     
     public Candidate getCandidateProgress(long candidateId) {
-    	Candidate candidate = candidateDAO.getOne(candidateId);
+    	Candidate candidate = candidateRepository.getOne(candidateId);
     	candidate.setSchedules(scheduleService.fetchSchedulesByCandidateId(candidateId));
 		return candidate;   	
     }
@@ -74,16 +85,34 @@ public class CandidateServiceImpl implements CandidateService {
 	public CandidatePagenationInfo getPagenationInfo() {
 		CandidatePagenationInfo pagenationInfo = new CandidatePagenationInfo();
 		int count = totalCount();
-		pagenationInfo.setCandidates(fetchCandidates());
+		pagenationInfo.setCandidates(candidateDAO.fetchCandidatesByLimit(0));
 		pagenationInfo.setTotalCount(count);
+		List<Result> results = new ArrayList<Result>(Arrays.asList(Result.values()));
+		pagenationInfo.setResults(results);
+		List<Integer> pages = CalculatePage.calculatePages(count, Constant.RETRIEVE_LIMIT); 
+		pagenationInfo.setPages(pages);
+		int lastPage = pages.get(pages.size() - 1); 
+		pagenationInfo.setLastPageNo(lastPage);
 		return pagenationInfo;
 	}
 	
 	public CandidatePagenationInfo searchByName(String name) {
 		CandidatePagenationInfo pagenationInfo = new CandidatePagenationInfo();
 		int count = this.totalCount();
-		pagenationInfo.setCandidates(candidateDAO.findCandidateByName(name));
+		pagenationInfo.setCandidates(candidateRepository.findCandidateByName(name));
+		List<Result> results = new ArrayList<Result>(Arrays.asList(Result.values()));
 		pagenationInfo.setTotalCount(count);
+		pagenationInfo.setResults(results);
+		return pagenationInfo;	
+	}
+	
+	public CandidatePagenationInfo searchByStatus(Result status) {
+		CandidatePagenationInfo pagenationInfo = new CandidatePagenationInfo();
+		int count = this.totalCount();
+		pagenationInfo.setCandidates(candidateRepository.findCandidateByStatus(status));
+		List<Result> results = new ArrayList<Result>(Arrays.asList(Result.values()));
+		pagenationInfo.setTotalCount(count);
+		pagenationInfo.setResults(results);
 		return pagenationInfo;	
 	}
 	
@@ -113,14 +142,34 @@ public class CandidateServiceImpl implements CandidateService {
         }
         return candidate;
     }
+
+	@Override
+	public void updateCandidateStatus(long candidateId, Result status) {
+		Candidate candidate = candidateRepository.getOne(candidateId);
+		candidate.setStatus(status);
+		candidateRepository.save(candidate);
+	}
+
+	@Override
+	public Candidate updateCandidate(Candidate candidate, MultipartFile resume) throws IOException {
+		candidate = saveCandidateResume(candidate, resume);
+		Candidate candidateToBeUpdated = candidateRepository.getOne(candidate.getId());
+		candidate.setSchedules(candidateToBeUpdated.getSchedules());
+		candidate.setStatus(candidateToBeUpdated.getStatus());
+		return candidateRepository.save(candidate);
+	}
+	
     
     /**
      * List of all candidate object is fetched from DB.
      * 
+     * @param noOfRecords - Limit of records to be fetched.
      * @return candidates - List of entities fetched from DB.
      */
-    private List<Candidate> fetchCandidates() {   
-    	return candidateDAO.findAll();
+    private List<Candidate> fetchCandidates(int pageNo) {   
+        pageNo = pageNo - 1;
+        pageNo = pageNo * Constant.RETRIEVE_LIMIT; 
+    	return candidateDAO.fetchCandidatesByLimit(pageNo);
     }
     
     /**
@@ -129,20 +178,28 @@ public class CandidateServiceImpl implements CandidateService {
      * @return count - COunt of entities present.
      */
     private int totalCount() {   
-    	return (int) candidateDAO.count();
+    	return (int) candidateRepository.count();
     }
 
-	public void updateCandidateStatus(long candidateId, Result status) {
-		Candidate candidate = candidateDAO.getOne(candidateId);
-		candidate.setStatus(status);
-		candidateDAO.save(candidate);
+	@Override
+	public JSONArray retrieveAllPlayers(int pageNo) {
+        List<Candidate> candidates  = this.fetchCandidates(pageNo);
+        JSONArray candidatesInfo = new JSONArray();
+        for (Candidate candidate : candidates) { 
+            JSONObject candidateInfo = new JSONObject();
+            candidateInfo.put(Constant.CANDIDATE_ID, candidate.getId());
+            candidateInfo.put(Constant.CANDIDATE_NAME, candidate.getName());
+            candidateInfo.put(Constant.POSITION, candidate.getPosition());
+            candidateInfo.put(Constant.DEPARTMENT, candidate.getDepartment());
+            candidateInfo.put(Constant.EXPERIENCE, candidate.getExperience());
+            candidateInfo.put(Constant.STATUS, candidate.getStatus());
+            candidatesInfo.put(candidateInfo);
+        }
+        return candidatesInfo;
 	}
 
-	public Candidate updateCandidate(Candidate candidate, MultipartFile resume) throws IOException {
-		candidate = saveCandidateResume(candidate, resume);
-		Candidate candidateToBeUpdated = candidateDAO.getOne(candidate.getId());
-		candidate.setSchedules(candidateToBeUpdated.getSchedules());
-		candidate.setStatus(candidateToBeUpdated.getStatus());
-		return candidateDAO.save(candidate);
+	@Override
+	public List<Candidate> getCandidatesByStatus(CandidateStatus status) {
+		return candidateRepository.fetchCandidatesByStatus(status);
 	}
 }
