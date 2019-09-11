@@ -16,6 +16,8 @@
         </div>
       
       <div>
+      <c:if test="${employee.schedules != null}">
+      	<c:if test="${!employee.schedules.isEmpty()}">
         <table id="contentTable" class = "table" align="center" cellpadding = "10">
             <tr>
                 <th>Name</th>
@@ -52,6 +54,18 @@
                 </div>
             </c:forEach>
         </table>  
+	      </c:if>
+	      <c:if test="${employee.schedules.isEmpty()}">
+	        <table id="contentTable" class = "table" align="center" cellpadding = "10">
+	        	<tr><td>No pending schedules</td></tr>
+	        </table> 
+	      </c:if>
+	      </c:if> 
+	      <c:if test="${employee.schedules == null}">
+	        <table id="contentTable" class = "table" align="center" cellpadding = "10">
+	        	<tr><td>No pending schedules</td></tr>
+	        </table> 
+	      </c:if>
       </div>
     <script type="text/javascript">
     function getComment(result , id) {

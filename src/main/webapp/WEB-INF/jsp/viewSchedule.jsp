@@ -67,14 +67,16 @@
             </tr>
 	        <c:if test="${schedule.status == 'Declined'}">
 	        	<c:forEach var="scheduleRejectionTrack" items="${schedule.scheduleRejectionTracks}">
+	        		<c:set var="employeeName" value="${scheduleRejectionTrack.employee.name}"/>
+	        		<c:set var="comment" value="${scheduleRejectionTrack.comment}"/>
 	        	</c:forEach>
 	        	<tr>
 	        		<td>Declined By:</td>
-	        		<td>${scheduleRejectionTrack.employee.name}</td>
+	        		<td>${employeeName}</td>
 	        	</tr>
 	        	<tr>
 	        		<td>Reason:</td>
-	        		<td>${scheduleRejectionTrack.comment}</td>
+	        		<td>${comment}</td>
 	        	</tr>
 	        </c:if>
 	            <tr id="comment" style="display:none">
@@ -119,7 +121,7 @@
             </tr>
             <tr>
                 <td>Interview Level:</td>
-                <td><form:input value="${schedule.interviewLevel}" path="interviewLevel" readonly="true"/></td>
+                <td><form:input value="${schedule.round}" path="round" readonly="true"/></td>
             </tr>
             <tr>
                 <td>Date:</td>
@@ -153,6 +155,9 @@
                   document.getElementById("rescheduleButton").style.display="none";
                   document.getElementById("cancelButton").style.display="none";
                   document.getElementById("comment").style.display="none";
+                  document.getElementById("comment").style.display="block";
+                  document.getElementById("confirm").style.display="block";
+                  document.getElementById("reset").style.display="block";
                   
               } else if(value === "Cancel Schedule") {
                   document.getElementById("rescheduleForm").style.display="none";

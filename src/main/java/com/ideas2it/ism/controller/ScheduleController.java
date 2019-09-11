@@ -2,6 +2,7 @@ package com.ideas2it.ism.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import com.ideas2it.ism.common.InterviewType;
 import com.ideas2it.ism.common.CandidateStatus;
 import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.entity.Schedule;
+import com.ideas2it.ism.entity.ScheduleRejectionTrack;
 import com.ideas2it.ism.service.ScheduleService;
 
 @Controller
@@ -186,7 +188,13 @@ public class ScheduleController {
         model.addAttribute(Constant.SCHEDULE, scheduleAndInterviewers.get(Constant.SCHEDULE));
         model.addAttribute(Constant.INTERVIEWERS, scheduleAndInterviewers.get(Constant.INTERVIEWERS));
         Schedule schedule = (Schedule)scheduleAndInterviewers.get(Constant.SCHEDULE);
-        System.out.println("\n\n"+schedule.getScheduleRejectionTracks()+"\n\n");
+        List<ScheduleRejectionTrack> srts = schedule.getScheduleRejectionTracks();
+        if(srts != null) {
+        	for(ScheduleRejectionTrack srt: srts) {
+                System.out.println("\n\n"+srt.getEmployee().getName()+"\n\n");
+                System.out.println("\n\n"+srt.getComment()+"\n\n");
+        	}
+        }
         model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
         return Constant.VIEW_SCHEDULE_JSP;
     }
