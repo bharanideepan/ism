@@ -1,0 +1,21 @@
+@charset "UTF-8"; 
+html, body {
+    background:white;
+  }
+  
+  #heading{
+  	position:relative;
+  	top:-50px;
+  	left:400px;
+  }
+  
+  #logo{
+  	position:relative;
+  	top:20px;
+  	left:0px;
+  }
+  
+  #header{
+  	height:75px;
+  	font-size:20px;
+  }

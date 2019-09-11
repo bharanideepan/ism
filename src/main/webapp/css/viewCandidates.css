@@ -1,0 +1,151 @@
+
+ a:visited {
+         color: black;
+         background-color: transparent;
+         text-decoration: none;
+     }
+     a:hover {
+         color: red;
+         background-color: transparent;
+         text-decoration: underline;
+     }
+     .table {
+        width:1000px;
+        height:400px;
+        margin: auto;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 10px 10px 5px grey; 
+        background:linear-gradient(to right, #ffefba, #ffffff);
+     }
+    #container { width:100%; font-size: 0;}
+
+
+   .show {display: block;}
+   input[type=submit] {
+     width: 100%;
+     background-image: linear-gradient(to right, #26a7af, #26aeab, #30b4a5, #41ba9d, #54c094);
+     color: black;
+     padding: 10px 10px;
+     margin: 8px 0;
+     border: none;
+     border-radius: 4px;
+     cursor: pointer;
+   }
+   input[type=button] {
+     width: 100%;
+     background-image: linear-gradient(to right, #26a7af, #26aeab, #30b4a5, #41ba9d, #54c094);
+     color: black;
+     padding: 10px 10px;
+     margin: 8px 0;
+     border: none;
+     border-radius: 4px;
+     cursor: pointer;
+   }
+   .schedule {
+     background: transparent;
+     border: 1px solid green;
+     border-radius: 2em;
+     color: green;
+     display: inline-block;
+     font-size: 12px;
+     height: 30px;
+     line-height: 2px;
+     margin: 0 0 8px;
+     padding: 0;
+     text-align: center;
+     width: 30px;
+     cursor: pointer;
+     outline: none;
+  }    
+  .editButton {
+     background: transparent;
+     border: 1px solid green;
+     border-radius: 2em;
+     color: green;
+     display: inline-block;
+     font-size: 12px;
+     height: 30px;
+     line-height: 2px;
+     margin: 0 0 8px;
+     padding: 0;
+     text-align: center;
+     width: 30px;
+     cursor: pointer;
+     outline: none;
+  }  
+
+
+   input[type=submit]:hover {
+    background-color: #45a049;
+  }`
+   input[type=button]:hover {
+    background-color: #45a049;
+  }
+  .cards {
+      display:inline-block;
+      margin:1px;
+  }
+  .btn {
+     width:30px; 
+     height:30px; 
+     cursor:pointer;
+  } 
+  #body {
+     background:linear-gradient(to bottom, #141E30 20%, #243B55 100%);
+  }
+  .td {
+     text-align:center;
+  }
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   color: white;
+   text-align: center;
+}
+   #home {
+    height: 100%;
+    font-size: 0;
+   }
+    #home {width: 20%; }
+   .cards {
+      display:inline-block;
+      margin:10px;
+   }
+
+.sidebar {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 15%;
+  left: 0;
+  background-color: #0a1b24;;
+  overflow-x: hidden;
+  padding-top: 16px;
+}
+
+.sidebar a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  height: 100px;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
