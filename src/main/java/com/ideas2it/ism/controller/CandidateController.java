@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ideas2it.ism.common.CandidateStatus;
 import com.ideas2it.ism.common.Constant;
 import com.ideas2it.ism.common.Result;
+import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.info.CandidateFormInfo;
 import com.ideas2it.ism.info.CandidatePagenationInfo;
@@ -139,6 +146,7 @@ public class CandidateController {
         	CandidatePagenationInfo pagenationInfo = 
         			candidateService.getPagenationInfo();
             model.addAttribute(Constant.PAGENATION_INFO, pagenationInfo); 
+        	model.addAttribute(Constant.CANDIDATE_STATUSES, new ArrayList<CandidateStatus>(Arrays.asList(CandidateStatus.values())));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -228,5 +236,24 @@ public class CandidateController {
         JSONArray playersInfo = candidateService.retrieveAllPlayers(pageNo);
         response.setContentType(Constant.APPLICATION_JSON);
         response.getWriter().write(playersInfo.toString());
+    }
+   
+    /**
+     * Recruiter entered informations are obtained as an object.
+     * Then the object is passed to the DAO layer to store it in DB.
+     * 
+     * @param candidate - Created object.
+     * @param model - Used to send candidate object along with request to jsp.
+     * @return
+     */
+    @RequestMapping(value = Constant.GET_CANDIDATES_BY_STATUS, method = RequestMethod.POST)  
+    private String getCandidatesByStatus(@RequestParam(name = Constant.CANDIDATE_STATUS) CandidateStatus status, Model model) {
+        try { 
+            model.addAttribute(Constant.CANDIDATES, candidateService.getCandidatesByStatus(status)); 
+        	model.addAttribute(Constant.CANDIDATE_STATUSES, new ArrayList<CandidateStatus>(Arrays.asList(CandidateStatus.values())));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return Constant.VIEW_CANDIDATES_JSP;
     }
 }

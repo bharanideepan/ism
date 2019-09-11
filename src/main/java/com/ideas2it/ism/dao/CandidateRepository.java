@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.ideas2it.ism.common.Result;
+import com.ideas2it.ism.common.CandidateStatus;
 import com.ideas2it.ism.entity.Candidate;
 
 /**
@@ -37,4 +38,12 @@ public interface CandidateRepository extends JpaRepository<Candidate, Long> {
      */
     @Query("SELECT c FROM Candidate c WHERE status = :status")
     public List<Candidate> findCandidateByStatus(@Param("status") Result status);
+
+    /**
+     * Fetches candidates by status
+     * @param status - status of the candidate
+     * @return  candidates - Candidates having the status
+     */
+    @Query("SELECT s FROM Schedule s WHERE status = :status")
+	public List<Candidate> fetchCandidatesByStatus(@Param("status")CandidateStatus status);
 }

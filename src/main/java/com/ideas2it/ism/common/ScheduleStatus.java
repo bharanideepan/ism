@@ -7,6 +7,7 @@ public enum ScheduleStatus {
     Completed,
     Pending,
     Rescheduled,
+    Declined,
     Cancelled;
 
 }

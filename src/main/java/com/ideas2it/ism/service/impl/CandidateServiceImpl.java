@@ -19,6 +19,10 @@ import com.ideas2it.ism.common.Department;
 import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.dao.CandidateDAO;
+import com.ideas2it.ism.common.CandidateStatus;
+import com.ideas2it.ism.common.Department;
+import com.ideas2it.ism.common.Result;
+import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.dao.CandidateRepository;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.info.CandidateFormInfo;
@@ -192,5 +196,10 @@ public class CandidateServiceImpl implements CandidateService {
             candidatesInfo.put(candidateInfo);
         }
         return candidatesInfo;
+	}
+
+	@Override
+	public List<Candidate> getCandidatesByStatus(CandidateStatus status) {
+		return candidateRepository.fetchCandidatesByStatus(status);
 	}
 }

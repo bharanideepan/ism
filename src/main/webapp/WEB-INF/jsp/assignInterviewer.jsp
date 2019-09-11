@@ -9,6 +9,12 @@
 <title>Assign interviewer</title>
 </head>
 <body>
+      <div class="navbar">
+         <a href="addCandidate">Add candidate</a>
+         <a href="viewCandidates">View Candidates</a>
+         <a href="viewSchedules">View Schedules</a>
+      </div>
+      
     <div id="scheduleId">
         <table>
             <tr>
@@ -26,10 +32,6 @@
             <tr>
                 <td>Date:</td>
                 <td>${schedule.date}</td>
-            </tr>
-            <tr>
-                <td>Time:</td>
-                <td>${schedule.time}</td>
             </tr>
             <tr>
                 <td>Status:</td>

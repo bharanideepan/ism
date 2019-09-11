@@ -74,6 +74,9 @@ public class Schedule {
     @JoinColumn(name = "employee_id")
     private Employee interviewer;
     
+    @Column(name = "round")
+    private int round;
+    
     public Schedule() {
     	this.status = ScheduleStatus.New;
     }
@@ -171,5 +174,13 @@ public class Schedule {
     
     public void setInterviewer(Employee interviewer) {
         this.interviewer = interviewer;
+    }
+   
+    public int getRound() {
+        return this.round;
+    }
+    
+    public void setRound(int round) {
+        this.round = round;
     }
 }

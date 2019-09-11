@@ -33,6 +33,7 @@ public class Constant {
 	public static final String CANDIDATE_FORM_INFO = "candidateFormInfo";
 	public static final String PAGENATION_INFO = "pagenationInfo";
 	public static final String CANDIDATE_ID = "candidateId";
+	public static final String CANDIDATES = "candidate";
     
     // Candidate mapping constants. 
     public final static String ADD_CANDIDATE = "addCandidate";
@@ -45,6 +46,7 @@ public class Constant {
 	public static final String VIEW_CANDIDATE_JSP = "viewCandidate";
 	public static final String VIEW_NEW_SCHEDULES_JSP = "viewNewSchedules";
 	public static final String VIEW_PENDING_SCHEDULES_JSP = "viewPendingSchedules";
+	public static final String GET_CANDIDATES_BY_STATUS = "getCandidatesByStatus";
 
 	// Employee constants.	
 	public static final String EMPLOYEE = "employee";
@@ -59,12 +61,15 @@ public class Constant {
 	public static final String LEVELS = "levels";
 	public static final String SCHEDULE_STATUS = "scheduleStatus";
 	public static final String CANDIDATE_STATUS = "candidateStatus";
+	public static final String CANDIDATE_STATUSES = "candidateStatuses";
 	public static final String RESCHEDULE_COMMENT = "rescheduleComment";
 	public static final String CANCEL_COMMENT = "cancellationComment";
 	public static final String COMMENT = "comment";
 	public static final String NEW_SCHEDULE = "newSchedule";
 	public static final String INTERVIEWERS = "interviewers";
 	public static final String ASSIGN_INTERVIEWER = "assignInterviewer";
+	public static final String INTERVIEWER_ID = "interviewerId";
+	public static final String REJECT_SCHEDULE = "rejectSchedule";
 
     // Schedule JSP pages.
 	public static final String VIEW_SCHEDULES_JSP = "viewSchedules";
@@ -72,6 +77,7 @@ public class Constant {
 	public static final String CREATE_SCHEDULE_JSP = "createSchedule";
 	public static final String CREATE_RESCHEDULE_JSP = "createReschedule";
 	public static final String RECRUITER_JSP = "recruiter";
+	public static final String ASSIGN_INTERVIEWER_JSP = "assignInterviewer";
 
 
     // Schedule mapping constants.
@@ -90,11 +96,12 @@ public class Constant {
 	public static final String CANCEL_SCHEDULE = "cancelSchedule";
 	public static final String GET_RECRUITER_OPERATIONS = "getRecruiterOperations";
 	public static final String GET_INTERVIEWERS = "getInterviewers";
-	public static final String ASSIGN_INTERVIEWER_JSP = "assignInterviewer";
 	public static final String NO_OF_RECORDS = "noOfRecords";
 	public static final String SEARCH_BY_FIELDS = "searchByFields";
 	public static final String SEARCH_BY_STATUS = "searchByStatus";
 	public static final String VIEW_ALL_CANDIDATES = "viewAllCandidates";
+	public static final String VIEW_SCHEDULES_BY_STATUS = "viewSchedulesByStatus";
+	public static final String VIEW_SCHEDULES = "viewSchedules";
 }
 
    
