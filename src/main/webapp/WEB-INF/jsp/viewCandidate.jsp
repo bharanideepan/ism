@@ -9,24 +9,8 @@
   <link rel="stylesheet" type="text/css" href="/css/popUp.css">
 </head>
 <body onload="currentStatus('${status}');">
-        <div>
-            <div class="cards">
-                <a href="index.jsp" ><img src="/image/logo.png" width="200px" height="200px"/></a>
-            </div>
-            <div class="cards">
-                <h2 align="center">Interview Schedule Management</h2>
-            </div>
-        </div>
-        <div class="sidebar">
-            <a href="addCandidate">Add Candidate</a>
-            <a href="viewCandidates">View Candidates</a>
-            <a href="schedulesByStatus?status=New">View Schedules</a>
-        </div>
-</head>
-<body>
-    <div>
-        <h2 align="center">Interview Schedule Management </h2>
-    </div>
+<%@ include file="header.jsp" %>  
+<%@ include file="recruiterMenu.jsp" %>
     <div>
         <table class="table">
             <tr>
@@ -50,17 +34,19 @@
             </tr>
             <tr> 
                 <th>SI.No</th>
-                <th>Level</th>
+                <th>Round</th>
                 <th>Type</th>
                 <th>Result</th>
+                <th>Comment</th>
             </tr>
             <c:set var="siNo" value="1" scope="page"/>
             <c:forEach var="schedule" items="${candidate.schedules}">
                 <tr>
                     <td>${siNo}</td>
-                    <td>${schedule.interviewLevel}</td>
+                    <td>${schedule.round}</td>
                     <td>${schedule.interviewType}</td>
                     <td>${schedule.status}</td>
+                    <td>${schedule.rescheduleComment}${schedule.cancellationComment}${schedule.interviewFeedback}</td>
                 </tr>
                 <c:set var="siNo" value="${siNo + 1}" scope="page"/>
             </c:forEach>

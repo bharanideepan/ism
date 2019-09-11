@@ -5,7 +5,7 @@
    <head>
       <link rel="stylesheet" href="/css/createSchedule.css">
    <body>
-         <h1>Interview Schedule Management</h1>
+<%@ include file="header.jsp" %>  
 
       <div align="center">
          <form:form id="createScheduleFormId" action="createSchedule" method="post" modelAttribute="schedule">

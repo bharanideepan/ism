@@ -48,6 +48,9 @@ public class ScheduleRejectionTrack {
         this.comment = comment;
     }
     
+    public ScheduleRejectionTrack() {
+    }
+    
     public long getId() {
         return this.id;
     }

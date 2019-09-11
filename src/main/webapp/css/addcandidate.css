@@ -129,9 +129,6 @@ a:link {
   .td {
     color:goldenrod;
   }
-html, body {
-    background: linear-gradient(to right, #e1e1c7, #a8beaf, #7e9999, #62747d, #4d4f5a);
-  }
 
   .tablehead {
     color:goldenrod;

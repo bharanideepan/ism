@@ -6,12 +6,11 @@
 <meta charset="UTF-8">
  <link rel="stylesheet" type="text/css" href="/css/viewNewSchedules.css">
     <link rel="stylesheet" type="text/css" href="/css/popUp.css">
+   <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
 </head>
 <body>
-        <div>
-            <h2 align="center">Interview Schedule Management</h2>
-        </div>
-        <div class="sidebar">
+<%@ include file="header.jsp" %> 
+        <div class="navbar">
             <a href="newSchedules?id=${employee.id}">New Schedules</a>
             <a href="pendingSchedules?id=${employee.id}">Pending Schedules</a>
         </div>
