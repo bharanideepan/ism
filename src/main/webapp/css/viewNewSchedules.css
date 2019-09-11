@@ -46,9 +46,6 @@
       margin:10px;
       float:left;
    }
-   html, body {
-      background-image: linear-gradient(to right, #26a7af, #26aeab, #30b4a5, #41ba9d, #54c094);
-   }
    table, td {
       text-align: center;
       padding: 10px;

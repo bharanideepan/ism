@@ -53,9 +53,10 @@ public class ScheduleController {
     public String getScheduleForm(@RequestParam(name = Constant.CANDIDATE_ID) 
         long candidateId, Model model) {
     	model.addAttribute(Constant.SCHEDULE, new Schedule());
-    	model.addAttribute(Constant.LEVELS, new ArrayList<InterviewLevel>(Arrays.asList(InterviewLevel.values())));
     	model.addAttribute(Constant.TYPES, new ArrayList<InterviewType>(Arrays.asList(InterviewType.values())));
-    	model.addAttribute(Constant.CANDIDATE, scheduleService.getcandidateById(candidateId));
+    	Map<String, Object> candidateAndInterviewers = scheduleService.getCandidateAndInterviewersByTechnology(candidateId);
+        model.addAttribute(Constant.INTERVIEWERS, candidateAndInterviewers.get(Constant.INTERVIEWERS));
+    	model.addAttribute(Constant.CANDIDATE, candidateAndInterviewers.get(Constant.CANDIDATE));
         return Constant.CREATE_SCHEDULE_JSP;
     }
 	
@@ -76,9 +77,10 @@ public class ScheduleController {
     	long candidateId = Integer.parseInt(request.getParameter(Constant.CANDIDATE_ID));
     	scheduleService.addSchedule(schedule, candidateId,
     			    request.getParameter(Constant.SCHEDULED_DATE),
-    			    request.getParameter(Constant.SCHEDULED_TIME));
+    			    request.getParameter(Constant.SCHEDULED_TIME),
+    			    request.getParameter(Constant.INTERVIEWER_ID));
     	model.addAttribute(Constant.SCHEDULE, new Schedule());
-        return Constant.REDIRECT + Constant.VIEW_CANDIDATES;
+        return Constant.REDIRECT + Constant.VIEW_SCHEDULES + "?status=New";
     }
  
     /**
@@ -144,11 +146,12 @@ public class ScheduleController {
     		@RequestParam(Constant.SCHEDULED_TIME)String time,
     		@RequestParam(Constant.COMMENT)String comment,
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId,
-    		@RequestParam(Constant.CANDIDATE_ID)long candidateId
+    		@RequestParam(Constant.CANDIDATE_ID)long candidateId,
+    		@RequestParam(Constant.INTERVIEWER_ID)String interviewerId
     		) {
         model.addAttribute(Constant.SCHEDULE,
         		scheduleService.reschedule(newSchedule, comment,
-				scheduleId, candidateId, date, time));
+				scheduleId, candidateId, date, time, interviewerId));
         model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
         return Constant.VIEW_SCHEDULE_JSP;
     }
@@ -176,13 +179,16 @@ public class ScheduleController {
      * 
      * @return ASSIGN_INTERVIEWER_JSP - 
      */
-    @RequestMapping(value = Constant.GET_INTERVIEWERS, method = RequestMethod.GET)  
+    @RequestMapping(value = Constant.GET_SCHEDULE_WITH_INTERVIEWERS, method = RequestMethod.GET)  
     private String getInterviewersByTechnology(Model model,
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId) {
     	Map<String, Object> scheduleAndInterviewers= scheduleService.getScheduleAndInterviewersByTechnology(scheduleId);
         model.addAttribute(Constant.SCHEDULE, scheduleAndInterviewers.get(Constant.SCHEDULE));
         model.addAttribute(Constant.INTERVIEWERS, scheduleAndInterviewers.get(Constant.INTERVIEWERS));
-        return Constant.ASSIGN_INTERVIEWER_JSP;
+        Schedule schedule = (Schedule)scheduleAndInterviewers.get(Constant.SCHEDULE);
+        System.out.println("\n\n"+schedule.getScheduleRejectionTracks()+"\n\n");
+        model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
+        return Constant.VIEW_SCHEDULE_JSP;
     }
  
     /**
@@ -199,8 +205,7 @@ public class ScheduleController {
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId,
     		@RequestParam(Constant.INTERVIEWER_ID)long employeeId) {
         model.addAttribute(Constant.SCHEDULE, scheduleService.assignSchedule(scheduleId, employeeId));
-        model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
-        return Constant.VIEW_SCHEDULE_JSP;
+        return Constant.REDIRECT + Constant.GET_SCHEDULE_WITH_INTERVIEWERS + "?" + Constant.SCHEDULE_ID + "=" + scheduleId;
     }
  
     /**

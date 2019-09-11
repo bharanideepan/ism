@@ -21,11 +21,13 @@ public interface ScheduleService {
 	 * @param candidateId - Id of the candidate for whom the schedule is created.
 	 * @param date - interview date which is in string format
 	 * @param time - interview time which is in string format
+	 * @param interviewerId - Id of the interviewer Which is in string format
 	 * 
 	 * @throws IsmException -
 	 * @return true when the schedule added successfully and id created for that schedule else false
 	 */
-	Schedule addSchedule(Schedule schedule, long candidateId, String date, String time);
+	Schedule addSchedule(Schedule schedule, long candidateId, String date,
+			String time, String interviewerId);
 	
 	/**
 	 * For the given candidate id the schedules conducted for the particular candidate
@@ -112,10 +114,13 @@ public interface ScheduleService {
 	 * @param candidateId - Candidate id used to reschedule
 	 * @param date - Interview date
 	 * @param time - Interview time
+	 * @param interviewerId - Id of the interviewer Which is in string format
 	 * 
 	 * @return schedule - After rescheduling successfully
 	 */
-	Schedule reschedule(Schedule newSchedule, String comment, long scheduleId, long candidateId, String date, String time);
+	Schedule reschedule(Schedule newSchedule, String comment,
+			long scheduleId, long candidateId, String date,
+			String time, String interviewerId);
 	
 	/**
 	 * Gets the schedules by status
@@ -151,7 +156,16 @@ public interface ScheduleService {
 	 * 
 	 * @param candidateId - id of the candidate to fetch the candidate
 	 * 
-	 * @return schedule - After assigning with the interviewer
+	 * @return candidate - candidate having the id
 	 */
 	Candidate getcandidateById(long candidateId);
+	
+	/**
+	 * Gets candidate and available interviewers
+	 * 
+	 * @param candidateId - id of the candidate to fetch the candidate
+	 * 
+	 * @return candidateAndInterviewers - After assigning with the interviewer
+	 */
+	Map<String, Object> getCandidateAndInterviewersByTechnology(long candidateId);
 }

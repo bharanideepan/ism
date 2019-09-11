@@ -10,9 +10,7 @@
  <link rel="stylesheet" type="text/css" href="/css/viewSchedules.css">
 </head>
 <body>
-	      <h2 align="center">Interview Schedule Management </h2>
-</head>
-<body>
+<%@ include file="header.jsp" %> 
 	<div>
         <table id="contentTable" class = "table" align="center" cellpadding = "10">
             <tr>
@@ -31,20 +29,20 @@
 	                <tr>
 	                    <td>${sNumber}</td>
 	                    <td>${schedule.candidate.name}</td>
-	                    <td>${schedule.interviewLevel}</td>
+	                    <td>${schedule.round}</td>
 	                    <td>${schedule.interviewType}</td>
 	                    <td>${schedule.date}</td>         
 	                    <td>${schedule.time}</td>
 	                    <td>${schedule.status}</td>
                     	<c:choose>
-	                    <c:when test="${schedule.interviewer != null}">               
-		                    <td>${schedule.interviewer.name}</td>
-	                    </c:when>
-	                    <c:otherwise>               
-		                    <td>Not assigned</td>
-	                    </c:otherwise>
+		                    <c:when test="${schedule.interviewer != null}">               
+			                    <td>${schedule.interviewer.name}</td>
+		                    </c:when>
+		                    <c:otherwise>               
+			                    <td>Not assigned</td>
+		                    </c:otherwise>
 	                    </c:choose>               
-	                    <td><a href="getSchedule?scheduleId=${schedule.id}">Click here</a></td>
+	                    <td><a href="getScheduleWithInterviewers?scheduleId=${schedule.id}">Click here</a></td>
 	                </tr>
                 <c:set var="sNumber" value="${sNumber+1}" scope="page"/>
             </c:forEach>

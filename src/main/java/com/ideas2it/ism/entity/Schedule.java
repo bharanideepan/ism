@@ -1,7 +1,9 @@
 package com.ideas2it.ism.entity;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.entity.Employee;
@@ -76,8 +79,20 @@ public class Schedule {
     
     @Column(name = "round")
     private int round;
+
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="schedule_id")
+	private List<ScheduleRejectionTrack> scheduleRejectionTracks;
     
-    public Schedule() {
+    public List<ScheduleRejectionTrack> getScheduleRejectionTracks() {
+		return scheduleRejectionTracks;
+	}
+
+	public void setScheduleRejectionTracks(List<ScheduleRejectionTrack> scheduleRejectionTracks) {
+		this.scheduleRejectionTracks = scheduleRejectionTracks;
+	}
+
+	public Schedule() {
     	this.status = ScheduleStatus.New;
     }
     

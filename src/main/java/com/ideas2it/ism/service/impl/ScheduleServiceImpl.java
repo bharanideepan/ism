@@ -39,9 +39,16 @@ public class ScheduleServiceImpl implements ScheduleService {
     /**
      * {@inheritDoc}
      */	
-	public Schedule addSchedule(Schedule schedule, long candidateId, String date, String time) {
-		schedule.setCandidate(candidateService.fetchCandidateById(candidateId));
+	public Schedule addSchedule(Schedule schedule, long candidateId,
+			String date, String time, String interviewerId) {
+		Candidate candidate = candidateService.fetchCandidateById(candidateId);
+		candidate.setStatus(Result.Pending);
+		schedule.setCandidate(candidate);
     	schedule.setDate(Date.valueOf(date));
+    	if(null != interviewerId) {
+			schedule.setInterviewer(employeeService.getEmployeeById(Long.parseLong(interviewerId)));
+			mailSender.sendMail("manibharathi@ideas2it.com", "Testing", "Success");
+    	}
 		return scheduleRepository.save(schedule);
 	}
 	
@@ -70,23 +77,29 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public Schedule updateScheduleStatus(long scheduleId, ScheduleStatus status) {
 		Schedule schedule = scheduleRepository.getOne(scheduleId);
 		schedule.setStatus(status);
+		if(status.equals(ScheduleStatus.Declined)) {
+			schedule.setInterviewer(null);
+		}
 		return scheduleRepository.save(schedule);
 	}
 
 	public void updateResult(String feedBack, long scheduleId, String result) {
 		Schedule schedule = scheduleRepository.getOne(scheduleId);
+		schedule.setInterviewFeedback(feedBack);
 		if (result.equals(Constant.SELECTED)) {
 			schedule.setStatus(ScheduleStatus.Selected);
 			if(schedule.getInterviewType().equals(InterviewType.Final)) {
-				candidateService.updateCandidateStatus(schedule.getCandidate().getId(), Result.Selected);
+				schedule.getCandidate().setStatus(Result.Selected);
+				//candidateService.updateCandidateStatus(schedule.getCandidate().getId(), Result.Selected);
 			} else {
-				candidateService.updateCandidateStatus(schedule.getCandidate().getId(), Result.Cleared);
+				schedule.getCandidate().setStatus(Result.Cleared);
+				//candidateService.updateCandidateStatus(schedule.getCandidate().getId(), Result.Cleared);
 			}
 		} else {
-			schedule.setStatus(ScheduleStatus.Rejected);	
-			candidateService.updateCandidateStatus(schedule.getCandidate().getId(), Result.Rejected);
+			schedule.setStatus(ScheduleStatus.Rejected);
+			schedule.getCandidate().setStatus(Result.Rejected);	
+			//candidateService.updateCandidateStatus(schedule.getCandidate().getId(), Result.Rejected);
 		}
-		schedule.setInterviewFeedback(feedBack);
 		scheduleRepository.save(schedule);
 	}
   
@@ -98,12 +111,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return schedule.getStatus().equals(ScheduleStatus.Cancelled);
 	}
 
-	public Schedule reschedule(Schedule newSchedule, String comment, long scheduleId, long candidateId, String date, String time) {
+	public Schedule reschedule(Schedule newSchedule, String comment,
+			long scheduleId, long candidateId, String date, String time, String interviewerId) {
 		Schedule schedule = scheduleRepository.getOne(scheduleId);
 		schedule.setRescheduleComment(comment);
 		schedule.setStatus(ScheduleStatus.Rescheduled);
 		scheduleRepository.save(schedule);
-		return this.addSchedule(newSchedule, candidateId, date, time);
+		return this.addSchedule(newSchedule, candidateId, date, time, interviewerId);
 	}
 
 	public List<Schedule> getSchedulesByStatus(ScheduleStatus status) {
@@ -123,6 +137,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public Schedule assignSchedule(long scheduleId, long employeeId) {
 		Schedule schedule = this.getScheduleById(scheduleId);
 		schedule.setInterviewer(employeeService.getEmployeeById(employeeId));
+		schedule.setStatus(ScheduleStatus.New);
 		mailSender.sendMail("manibharathi@ideas2it.com", "Testing", "Success");
 		return scheduleRepository.save(schedule);
 	}
@@ -130,6 +145,16 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public Candidate getcandidateById(long candidateId) {
 		return candidateService.fetchCandidateById(candidateId);
+	}
+
+	@Override
+	public Map<String, Object> getCandidateAndInterviewersByTechnology(long candidateId) {
+		Map<String, Object> candidateAndInterviewers = new HashMap<String, Object>();
+		Candidate candidate = this.getcandidateById(candidateId);
+		candidateAndInterviewers.put(Constant.CANDIDATE, candidate);
+		candidateAndInterviewers.put(Constant.INTERVIEWERS,
+				employeeService.getEmployeesByTechnology(candidate.getTechnology()));
+		return candidateAndInterviewers;
 	}
 
 }

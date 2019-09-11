@@ -97,16 +97,17 @@ public class Constant {
 	public static final String RESCHEDULE = "reschedule";
 	public static final String CANCEL_SCHEDULE = "cancelSchedule";
 	public static final String GET_RECRUITER_OPERATIONS = "getRecruiterOperations";
-	public static final String GET_INTERVIEWERS = "getInterviewers";
+	public static final String GET_SCHEDULE_WITH_INTERVIEWERS = "getScheduleWithInterviewers";
 	public static final String NO_OF_RECORDS = "noOfRecords";
 	public static final String SEARCH_BY_FIELDS = "searchByFields";
 	public static final String SEARCH_BY_STATUS = "searchByStatus";
 	public static final String VIEW_ALL_CANDIDATES = "viewAllCandidates";
 	public static final String VIEW_SCHEDULES_BY_STATUS = "viewSchedulesByStatus";
 	public static final String VIEW_SCHEDULES = "viewSchedules";
-
+	
 	// Error Constants.
 	public static final String ERROR_RETRIEVING_CANDIDATES = "Error while fetching the Candidiate details";
+	public static final String INDEX = "index";
 }
 
    
