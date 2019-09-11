@@ -14,12 +14,6 @@
             <a href="newSchedules?id=${employee.id}">New Schedules</a>
             <a href="pendingSchedules?id=${employee.id}">Pending Schedules</a>
         </div>
-      <form action="searchByName" method="post">
-          <table align="center"><tr>
-              <td><input type="text" name="name"/></td>
-              <td><input type="submit" value=&#128269;></td></tr>
-          </table>
-      </form>
       
       <div>
         <table id="contentTable" class = "table" align="center" cellpadding = "10">

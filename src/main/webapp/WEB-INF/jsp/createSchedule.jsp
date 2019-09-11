@@ -9,7 +9,9 @@
 <%@ include file="recruiterMenu.jsp" %>
 
       <div id="createScheduleId" class="makeSchedule" align="center">
-         <form:form id="createScheduleFormId" action="createSchedule" method="post" modelAttribute="schedule">
+      <div class= "flex">
+        <div class="box">
+         <form:form name="form" id="createScheduleFormId" action="createSchedule" method="post" modelAttribute="schedule">
             <table class="table">
                <input type="hidden" name="candidateId" value="${candidate.id}"/>
                <tr>
@@ -40,21 +42,48 @@
                   </td>
                </tr>
                <tr>
-                  <td>Interviewer</td>
-                  <td>
-                  	 <select name="interviewerId">
-	                  	 <c:forEach var="interviewer" items="${interviewers}">
-	                  	 	<option value="${interviewer.id}">${interviewer.name}</option>
-	                  	 </c:forEach>
-                  	 </select>
-                  </td>
-               </tr>
-               <tr>
                   <td><input type="reset" value="Clear"></td>
                   <td><input type="submit" value="Submit"></td>
                </tr>
             </table>
+           </div>
+           <div class="box"> 
+            <table  class="table">
+               <tr>
+                   <th>Name</th>
+                   <th>Department</th>
+                   <th>Assign</th>
+               </tr>
+               <c:forEach var="interviewer" items="${interviewers}">
+                 <tr>
+                   <td align="center">${interviewer.name}</td>
+	               <td align="center">${interviewer.department}</td>
+	               <td align="center"><input type = "radio" 
+                       onclick = 'assignInterviewer();' name="interviewerId" value="${interviewer.id}"/>
+                   </td>   	 	
+                 </tr>
+              </c:forEach>
+             </table>
+          </div>
          </form:form>
+       </div>
       </div>
+      <script type="text/javascript">
+      function assignInterviewer() {
+    	   var checkBoxGroup = document.forms['form']['interviewerId'];			
+    	   var limit = 1;
+    	   for (var i = 0; i < checkBoxGroup.length; i++) {
+    	       checkBoxGroup[i].onclick = function() {
+    	           var checkedcount = 0;
+    	           for (var i = 0; i < checkBoxGroup.length; i++) {
+    	               checkedcount += (checkBoxGroup[i].checked) ? 1 : 0;
+    	           }
+    	       }
+               if (checkedcount > limit) {			
+                   this.checked = false;
+               }
+    	   }
+    	}  
+      </script>
    </body>
 </html>

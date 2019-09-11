@@ -13,7 +13,7 @@
           <table align="center">
           <tr>
             <form action="searchByName" method="post">
-              <td><input type="text" name="name" required/></td>
+              <td><input type="text" name="name" placeholder="Search By Name" required/></td>
               <td><input type="submit" value=&#128269;></td>
             </form>
             <form action="searchByStatus" method="post">

@@ -29,3 +29,11 @@ a:link {
   .td {
     color:goldenrod;
   }
+  
+  .flex {
+    display:flex;
+    flex-wrap:nowrap;
+  }
+  .box {
+    width:50%;
+  }  

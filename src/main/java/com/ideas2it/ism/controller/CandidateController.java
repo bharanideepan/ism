@@ -6,8 +6,10 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+
 import org.json.JSONArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,7 +46,6 @@ import com.ideas2it.ism.service.CandidateService;
  */
 @Controller
 public class CandidateController {
-	//private static final Logger logger = Logger.getLogger(CandidateController.class);
 	
     @Autowired
 	private CandidateService candidateService;
@@ -60,7 +61,6 @@ public class CandidateController {
      */
     @RequestMapping(value = Constant.ADD_CANDIDATE, method = RequestMethod.GET)  
     public String addCandidateForm(Model model) { 
-    	//logger.info("logger");
         CandidateFormInfo candidateFormInfo = candidateService.getCandidateFormInfo(); 
         model.addAttribute(Constant.CANDIDATE, candidateFormInfo.getCandidate());  
         model.addAttribute(Constant.CANDIDATE_FORM_INFO, candidateFormInfo);  
