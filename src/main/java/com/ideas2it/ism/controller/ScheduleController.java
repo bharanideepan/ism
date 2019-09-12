@@ -150,7 +150,7 @@ public class ScheduleController {
     		@RequestParam(Constant.COMMENT)String comment,
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId,
     		@RequestParam(Constant.CANDIDATE_ID)long candidateId,
-    		@RequestParam(Constant.INTERVIEWER_ID)String interviewerId
+    		@RequestParam(name = Constant.INTERVIEWER_ID, required = false)String interviewerId
     		) {
         model.addAttribute(Constant.SCHEDULE,
         		scheduleService.reschedule(newSchedule, comment,

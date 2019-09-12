@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -10,30 +10,31 @@
 <body id="background">
 <%@ include file="header.jsp" %>  
 <%@ include file="recruiterMenu.jsp" %>
-        <div>
-          <table align="center">
-          <tr>
-            <form action="searchByName" method="post">
-              <td><input type="text" name="name" placeholder="Search By Name" required/></td>
-              <td><input type="submit" value=&#128269;></td>
-            </form>
-            <form action="searchByStatus" method="post">
-              <td><select name="result">
-                    <c:forEach var="result" items="${pagenationInfo.results}" >
-                      <option  value="${result}">${result}</option>                  
-                    </c:forEach>
-                  </select>
-              </td>
-              <td><input type="submit"  value=&#128269;></td>
-            </form>
-          </tr>
-          </table>
-        </div>
-      <c:if test="${pagenationInfo.candidates != null}">
-      	<c:if test="${!pagenationInfo.candidates.isEmpty()}">
       <div>
-        <table id="contentTable" class = "table" align="center" cellpadding = "10">
+         <table align="center">
             <tr>
+               <form action="searchByName" method="post">
+                  <td><input type="text" name="name" placeholder="Search By Name" required/></td>
+                  <td><input type="submit" value=&#128269;></td>
+               </form>
+               <form action="searchByStatus" method="post">
+                  <td>
+                     <select name="result">
+                        <c:forEach var="result" items="${pagenationInfo.results}" >
+                           <option  value="${result}">${result}</option>
+                        </c:forEach>
+                     </select>
+                  </td>
+                  <td><input type="submit"  value=&#128269;></td>
+               </form>
+            </tr>
+         </table>
+      </div>
+      <c:if test="${pagenationInfo.candidates != null}">
+         <c:if test="${!pagenationInfo.candidates.isEmpty()}">
+            <div>
+               <table id="contentTable" class = "table" align="center" cellpadding = "10">
+                <tr>
                 <th>Name</th>
                 <th>Position</th>
                 <th>Email ID:</th>
@@ -110,5 +111,5 @@
 	        </table> 
 	      </c:if>
       <script src="/js/candidatePagenation.js"></script>
-</body>
+   </body>
 </html>

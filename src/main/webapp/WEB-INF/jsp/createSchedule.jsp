@@ -5,9 +5,8 @@
    <head>
       <link rel="stylesheet" href="/css/createSchedule.css">
    <body>
-<%@ include file="header.jsp" %>   
-<%@ include file="recruiterMenu.jsp" %>
-
+      <%@ include file="header.jsp" %>   
+      <%@ include file="recruiterMenu.jsp" %>
       <div id="createScheduleId" class="makeSchedule" align="center">
          <form:form name="form" id="createScheduleFormId" action="createSchedule" method="post" modelAttribute="schedule">
             <table class="table">
@@ -58,6 +57,5 @@
            </div>
          </form:form>
        </div>
-      </div>
    </body>
 </html>
