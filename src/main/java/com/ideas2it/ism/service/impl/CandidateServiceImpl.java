@@ -85,7 +85,7 @@ public class CandidateServiceImpl implements CandidateService {
 	public CandidatePagenationInfo getPagenationInfo() throws IsmException {
 		CandidatePagenationInfo pagenationInfo = new CandidatePagenationInfo();
 		int count =  this.totalCount(Result.New);
-		pagenationInfo.setCandidates(fetchCandidatesByStatus(0, Result.New));
+		pagenationInfo.setCandidates(this.fetchCandidatesByStatus(1, Result.New));
 		pagenationInfo.setTotalCount(count);
 		List<Result> results = new ArrayList<Result>(Arrays.asList(Result.values()));
 		pagenationInfo.setResults(results);
@@ -112,7 +112,7 @@ public class CandidateServiceImpl implements CandidateService {
 	public CandidatePagenationInfo searchByStatus(Result status) throws IsmException {
 		CandidatePagenationInfo pagenationInfo = new CandidatePagenationInfo();
 		int count = this.totalCount(status);
-		pagenationInfo.setCandidates(fetchCandidatesByStatus(0, status));
+		pagenationInfo.setCandidates(this.fetchCandidatesByStatus(1, status));
 		List<Result> results = new ArrayList<Result>(Arrays.asList(Result.values()));
 		if (0 != count) {
 		    List<Integer> pages = CalculatePage.calculatePages(count, Constant.RETRIEVE_LIMIT); 

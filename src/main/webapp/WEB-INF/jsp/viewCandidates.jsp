@@ -5,10 +5,16 @@
 <head>
 <meta charset="UTF-8">
  <link rel="stylesheet" type="text/css" href="/css/viewCandidates.css">
+ <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
 </head>
 <body>
 <%@ include file="header.jsp" %>  
-<%@ include file="recruiterMenu.jsp" %>
+        <div class="navbar">
+            <a href="addCandidate">Add Candidate</a>
+            <a href="viewCandidates">View Candidates</a>
+            <a href="viewSchedules">View Schedules</a>
+            <a href="newSchedules?id=1">Employee</a>
+        </div>
         <div>
           <table align="center">
           <tr>
