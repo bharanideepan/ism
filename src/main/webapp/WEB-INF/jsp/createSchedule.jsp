@@ -30,13 +30,7 @@
                      <tr>
                         <td>Date</td>
                         <td>
-                           <input type="date" name="shdate" required="required"/>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>Time</td>
-                        <td>
-                           <input type="time" name="shtime" required="required"/>
+                           <input type="datetime-local" name="shdate" required="required"/>
                         </td>
                      </tr>
                      <tr>

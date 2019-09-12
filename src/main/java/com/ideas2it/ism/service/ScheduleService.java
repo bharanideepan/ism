@@ -1,6 +1,6 @@
 package com.ideas2it.ism.service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +9,7 @@ import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.entity.Employee;
 import com.ideas2it.ism.entity.Schedule;
+import com.ideas2it.ism.entity.ScheduleInfo;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
 import com.ideas2it.ism.exception.IsmException;
 
@@ -26,8 +27,8 @@ public interface ScheduleService {
 	 * @throws IsmException -
 	 * @return true when the schedule added successfully and id created for that schedule else false
 	 */
-	Schedule addSchedule(Schedule schedule, long candidateId, String date,
-			String time, String interviewerId);
+	Schedule addSchedule(Schedule schedule, long candidateId, String shdate,
+			String time, String interviewerId, Date date);
 	
 	/**
 	 * For the given candidate id the schedules conducted for the particular candidate
@@ -94,6 +95,15 @@ public interface ScheduleService {
 	 * @return schedule - If the id exists, the schedule will be returned else null will be returned
 	 */
 	Schedule getScheduleById(long id);
+	
+	/**
+	 * Gets the schedule having the given ID and converts it into schedule info
+	 * 
+	 * @param id - Schedule ID which should not be null.
+	 * 
+	 * @return scheduleInfo - If the id exists, the scheduleInfo will be returned else null will be returned
+	 */
+	ScheduleInfo getScheduleInfoById(long id);
 	
 	/**
 	 * Updates the schedule status as cancelled.

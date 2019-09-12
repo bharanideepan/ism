@@ -32,6 +32,10 @@
                <td>${schedule.date}</td>
             </tr>
             <tr>
+               <td>Time:</td>
+               <td>${schedule.time}</td>
+            </tr>
+            <tr>
                <td>Schedule Status:</td>
                <td>${schedule.status}</td>
             </tr>

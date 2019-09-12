@@ -23,6 +23,8 @@ public class Constant {
 	public static final String PAGE_NO = "pageNo";
 	public static final int RETRIEVE_LIMIT = 5;
 	public static final String APPLICATION_JSON = "application/json";
+	public static final String DATE = "date";
+	public static final String TIME = "time";
     
 	// Candidate constants.
     public static final  String CANDIDATE = "candidate";
