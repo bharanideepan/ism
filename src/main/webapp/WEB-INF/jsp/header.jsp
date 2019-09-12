@@ -8,10 +8,14 @@
 <title>Home page</title>
 </head>
 <body>
-        <div id="header">
-           	<a id="logo" href="index" ><img src="/image/logo.png" width="100px" height="50px"/></a>
-           	<h2 id="heading">Interview Schedule Management</h2>
+      <div class="flex">
+        <div class="logo">
+           	<a href="index" ><img src="/image/logo.png" width="200px" height="50px"/></a>
         </div>
+        <div id="box" >
+           	<h2 align="justify" >Interview Schedule Management</h2>
+        </div>
+      </div>
 
 </body>
 </html>
