@@ -1,4 +1,4 @@
-package com.ideas2it.ism.entity;
+package com.ideas2it.ism.info;
 
 import java.util.Date;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.entity.Employee;
+import com.ideas2it.ism.entity.ScheduleRejectionTrack;
 import com.ideas2it.ism.common.Constant;
 import com.ideas2it.ism.common.DateTimeUtil;
 import com.ideas2it.ism.common.InterviewType;
@@ -65,6 +66,7 @@ public class ScheduleInfo {
 			Employee interviewer,
 			int round,
 			List<ScheduleRejectionTrack> scheduleRejectionTracks) {
+		this.id = id;
     	this.interviewType = interviewType;
     	this.setDateAndTime(dateTime);
     	this.interviewFeedback = interviewFeedback;
