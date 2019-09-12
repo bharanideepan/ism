@@ -25,6 +25,7 @@ import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.dao.CandidateRepository;
 import com.ideas2it.ism.entity.Candidate;
+import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.info.CandidateFormInfo;
 import com.ideas2it.ism.info.CandidatePagenationInfo;
 import com.ideas2it.ism.service.CandidateService;
@@ -50,7 +51,6 @@ public class CandidateServiceImpl implements CandidateService {
     private CandidateDAO candidateDAO;
     @Autowired
     private ScheduleService scheduleService;
-    
     private final String UPLOAD_DIRECTORY = "/home/ubuntu/resume/";
     private final String PROFILE_PIC_PATH = "http://localhost:8080/resume/";
     
@@ -82,23 +82,26 @@ public class CandidateServiceImpl implements CandidateService {
 		return candidate;   	
     }
     
-	public CandidatePagenationInfo getPagenationInfo() {
+	public CandidatePagenationInfo getPagenationInfo() throws IsmException {
 		CandidatePagenationInfo pagenationInfo = new CandidatePagenationInfo();
-		int count = totalCount();
+		int count = (int) candidateRepository.count();
 		pagenationInfo.setCandidates(candidateDAO.fetchCandidatesByLimit(0));
 		pagenationInfo.setTotalCount(count);
 		List<Result> results = new ArrayList<Result>(Arrays.asList(Result.values()));
 		pagenationInfo.setResults(results);
-		List<Integer> pages = CalculatePage.calculatePages(count, Constant.RETRIEVE_LIMIT); 
-		pagenationInfo.setPages(pages);
-		int lastPage = pages.get(pages.size() - 1); 
-		pagenationInfo.setLastPageNo(lastPage);
+		if (0 != count) {
+		    List<Integer> pages = CalculatePage.calculatePages(count, Constant.RETRIEVE_LIMIT); 
+		    pagenationInfo.setPages(pages);
+		    int lastPage = pages.get(pages.size() - 1); 
+		    pagenationInfo.setLastPageNo(lastPage);
+		}
+		pagenationInfo.setStatus(Result.New);
 		return pagenationInfo;
 	}
 	
 	public CandidatePagenationInfo searchByName(String name) {
 		CandidatePagenationInfo pagenationInfo = new CandidatePagenationInfo();
-		int count = this.totalCount();
+		int count = (int) candidateRepository.count();
 		pagenationInfo.setCandidates(candidateRepository.findCandidateByName(name));
 		List<Result> results = new ArrayList<Result>(Arrays.asList(Result.values()));
 		pagenationInfo.setTotalCount(count);
@@ -106,15 +109,88 @@ public class CandidateServiceImpl implements CandidateService {
 		return pagenationInfo;	
 	}
 	
-	public CandidatePagenationInfo searchByStatus(Result status) {
+	public CandidatePagenationInfo searchByStatus(Result status) throws IsmException {
 		CandidatePagenationInfo pagenationInfo = new CandidatePagenationInfo();
-		int count = this.totalCount();
-		pagenationInfo.setCandidates(candidateRepository.findCandidateByStatus(status));
+		int count = this.totalCount(status);
+		pagenationInfo.setCandidates(fetchCandidatesByStatus(0, status));
 		List<Result> results = new ArrayList<Result>(Arrays.asList(Result.values()));
-		pagenationInfo.setTotalCount(count);
+		if (0 != count) {
+		    List<Integer> pages = CalculatePage.calculatePages(count, Constant.RETRIEVE_LIMIT); 
+		    pagenationInfo.setPages(pages);
+		    int lastPage = pages.get(pages.size() - 1); 
+		    pagenationInfo.setLastPageNo(lastPage);
+		    pagenationInfo.setTotalCount(count);
+		}
 		pagenationInfo.setResults(results);
+		pagenationInfo.setStatus(status);
 		return pagenationInfo;	
 	}
+
+	@Override
+	public void updateCandidateStatus(long candidateId, Result status) {
+		Candidate candidate = candidateRepository.getOne(candidateId);
+		candidate.setStatus(status);
+		candidateRepository.save(candidate);
+	}
+
+	@Override
+	public Candidate updateCandidate(Candidate candidate, MultipartFile resume) throws IOException {
+		candidate = saveCandidateResume(candidate, resume);
+		Candidate candidateToBeUpdated = candidateRepository.getOne(candidate.getId());
+		candidate.setSchedules(candidateToBeUpdated.getSchedules());
+		candidate.setStatus(candidateToBeUpdated.getStatus());
+		return candidateRepository.save(candidate);
+	}
+
+	@Override
+	public JSONArray retrieveAllCandidates(int pageNo, Result candidateResult) throws IsmException {
+        List<Candidate> candidates  = this.fetchCandidatesByStatus(pageNo, candidateResult);
+        JSONArray candidatesInfo = new JSONArray();
+        for (Candidate candidate : candidates) { 
+            JSONObject candidateInfo = new JSONObject();
+            candidateInfo.put(Constant.CANDIDATE_ID, candidate.getId());
+            candidateInfo.put(Constant.CANDIDATE_NAME, candidate.getName());
+            candidateInfo.put(Constant.POSITION, candidate.getPosition());
+            candidateInfo.put(Constant.DEPARTMENT, candidate.getDepartment());
+            candidateInfo.put(Constant.EXPERIENCE, candidate.getExperience());
+            candidateInfo.put(Constant.STATUS, candidate.getStatus());
+            candidatesInfo.put(candidateInfo);
+        }
+        return candidatesInfo;
+	}
+
+	@Override
+	public List<Candidate> getCandidatesByStatus(CandidateStatus status) {
+		return candidateRepository.fetchCandidatesByStatus(status);
+	}
+    
+    /**
+     * List of all candidate object is fetched from DB.
+     * 
+     * @param noOfRecords - Limit of records to be fetched.
+     * @return candidates - List of entities fetched from DB.
+     * @throws IsmException - Thrown when a hibernate exception occurs while retrieving
+     * candidates details from DB. 
+     */
+    private List<Candidate> fetchCandidatesByStatus(int pageNo, Result candidateResult)
+    		throws IsmException {   
+        pageNo = pageNo - 1;
+        pageNo = pageNo * Constant.RETRIEVE_LIMIT; 
+        return candidateDAO.fetchCandidatesByStatus(pageNo, candidateResult);
+    }
+    
+    /**
+	 * get Total count of records for the particular status within DB.
+	 * 
+	 * @param status - Candidates count corresponding status is required.
+	 * @return totalCount - Count of candidates present.
+     * @throws IsmException - Thrown when a hibernate exception occurs while counting
+     * candidates details from DB. 
+     */
+    private int totalCount(Result status) throws IsmException {   
+    	return candidateDAO.getTotalCount(status);
+    }
+    
 	
     /**
      * Resume uploaded by the recruiter is passed as multipart file then it is converted as
@@ -142,64 +218,4 @@ public class CandidateServiceImpl implements CandidateService {
         }
         return candidate;
     }
-
-	@Override
-	public void updateCandidateStatus(long candidateId, Result status) {
-		Candidate candidate = candidateRepository.getOne(candidateId);
-		candidate.setStatus(status);
-		candidateRepository.save(candidate);
-	}
-
-	@Override
-	public Candidate updateCandidate(Candidate candidate, MultipartFile resume) throws IOException {
-		candidate = saveCandidateResume(candidate, resume);
-		Candidate candidateToBeUpdated = candidateRepository.getOne(candidate.getId());
-		candidate.setSchedules(candidateToBeUpdated.getSchedules());
-		candidate.setStatus(candidateToBeUpdated.getStatus());
-		return candidateRepository.save(candidate);
-	}
-	
-    
-    /**
-     * List of all candidate object is fetched from DB.
-     * 
-     * @param noOfRecords - Limit of records to be fetched.
-     * @return candidates - List of entities fetched from DB.
-     */
-    private List<Candidate> fetchCandidates(int pageNo) {   
-        pageNo = pageNo - 1;
-        pageNo = pageNo * Constant.RETRIEVE_LIMIT; 
-    	return candidateDAO.fetchCandidatesByLimit(pageNo);
-    }
-    
-    /**
-     * Total count of the entities present is returned.
-     * 
-     * @return count - COunt of entities present.
-     */
-    private int totalCount() {   
-    	return (int) candidateRepository.count();
-    }
-
-	@Override
-	public JSONArray retrieveAllPlayers(int pageNo) {
-        List<Candidate> candidates  = this.fetchCandidates(pageNo);
-        JSONArray candidatesInfo = new JSONArray();
-        for (Candidate candidate : candidates) { 
-            JSONObject candidateInfo = new JSONObject();
-            candidateInfo.put(Constant.CANDIDATE_ID, candidate.getId());
-            candidateInfo.put(Constant.CANDIDATE_NAME, candidate.getName());
-            candidateInfo.put(Constant.POSITION, candidate.getPosition());
-            candidateInfo.put(Constant.DEPARTMENT, candidate.getDepartment());
-            candidateInfo.put(Constant.EXPERIENCE, candidate.getExperience());
-            candidateInfo.put(Constant.STATUS, candidate.getStatus());
-            candidatesInfo.put(candidateInfo);
-        }
-        return candidatesInfo;
-	}
-
-	@Override
-	public List<Candidate> getCandidatesByStatus(CandidateStatus status) {
-		return candidateRepository.fetchCandidatesByStatus(status);
-	}
 }

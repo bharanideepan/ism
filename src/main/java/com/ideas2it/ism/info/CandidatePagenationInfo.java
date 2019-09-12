@@ -9,6 +9,7 @@ public class CandidatePagenationInfo {
     private int totalCount;
     private int lastPageNo;
     private int pageNo;
+    private Result status; 
 	private List<Candidate> candidates;
 	private List<Result> results;
 	private List<Integer> pages;
@@ -38,6 +39,14 @@ public class CandidatePagenationInfo {
 		this.pageNo = pageNo;
 	}
 	
+	public Result getStatus() {
+		return status;
+	}
+
+	public void setStatus(Result status) {
+		this.status = status;
+	}
+
 	public List<Candidate> getCandidates() {
 		return candidates;
 	}

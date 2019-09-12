@@ -83,7 +83,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleRepository.save(schedule);
 	}
 
-	@Override
 	public void updateResult(String feedBack, long scheduleId, String result) {
 		Schedule schedule = scheduleRepository.getOne(scheduleId);
 		schedule.setInterviewFeedback(feedBack);

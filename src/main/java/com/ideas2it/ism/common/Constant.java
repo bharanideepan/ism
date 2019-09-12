@@ -6,18 +6,19 @@ package com.ideas2it.ism.common;
  * The members of this class remains the same all over the project. 
  */ 
 public class Constant {
+	
 	// General Constants.
     public static final String STATUS = "status";
 	public static final String RESULT = "result";
 	public static final String SCHEDULE = "schedule";
 	public static final String SELECTED = "selected";
 	public static final String FEED_BACK = "feedback";
-    public static final String CREATED = "created";
+    public static final  String CREATED = "created";
 	public static final String UPDATED = "updated";	
 	public static final String ACTION = "action";	
 	public static final String UPDATE = "update";	
-    public static final String ID = "id";
-    public static final String NAME = "name";
+    public static final  String ID = "id";
+    public static final  String NAME = "name";
 	public static final String RESUME = "resume";
 	public static final String PAGE_NO = "pageNo";
 	public static final int RETRIEVE_LIMIT = 5;
@@ -50,6 +51,7 @@ public class Constant {
 
 	// Employee constants.	
 	public static final String EMPLOYEE = "employee";
+	
 	// Schedule constants.
 	public static final String SCHEDULES = "schedules";
 	public static final String SCHEDULED_DATE = "shdate";
@@ -102,6 +104,9 @@ public class Constant {
 	public static final String VIEW_ALL_CANDIDATES = "viewAllCandidates";
 	public static final String VIEW_SCHEDULES_BY_STATUS = "viewSchedulesByStatus";
 	public static final String VIEW_SCHEDULES = "viewSchedules";
+	
+	// Error Constants.
+	public static final String ERROR_RETRIEVING_CANDIDATES = "Error while fetching the Candidiate details";
 	public static final String INDEX = "index";
 }
 

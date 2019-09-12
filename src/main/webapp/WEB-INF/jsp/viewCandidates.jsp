@@ -13,21 +13,83 @@
           <table align="center">
           <tr>
             <form action="searchByName" method="post">
-              <td><input type="text" name="name" required/></td>
+              <td><input type="text" name="name" placeholder="Search By Name" required/></td>
               <td><input type="submit" value=&#128269;></td>
             </form>
             <form action="searchByStatus" method="post">
               <td><select name="result">
                     <c:forEach var="result" items="${pagenationInfo.results}" >
-                      <option value="${result}">${result}</option>                  
+                      <option  value="${result}">${result}</option>                  
                     </c:forEach>
                   </select>
               </td>
-              <td><input type="submit" value=&#128269;></td>
+              <td><input type="submit"  value=&#128269;></td>
             </form>
           </tr>
           </table>
         </div>
+      <div>
+        <table id="contentTable" class = "table" align="center" cellpadding = "10">
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Department</th>
+                <th>Experience</th>
+                <th>Status</th>
+                <th>Schedule</th>
+                <th>Update</th>
+            </tr>
+            <c:forEach var="candidate" items="${pagenationInfo.candidates}">
+                <tr>
+                    <td class = "td"><a href="viewProgress?id=${candidate.id}">${candidate.name}</a></td>
+                    <td class = "td">${candidate.position}</td>
+                    <td class = "td">${candidate.department}</td>
+                    <td class = "td">${candidate.experience}</td>    
+                    <td class = "td">${candidate.status}</td>
+                    <c:if test="${candidate.status == 'Cleared'}">                 
+                      <td class = "td" > 
+                        <button class = "schedule" 
+                            onclick="location.href='scheduleForm?candidateId=${candidate.id}';">&#x1F4C5;
+                        </button></td>
+                    </c:if>  
+                    <c:if test="${candidate.status == 'New'}">                 
+                      <td class = "td" > 
+                        <button class = "schedule" 
+                            onclick="location.href='scheduleForm?candidateId=${candidate.id}';">&#x1F4C5;
+                        </button></td>
+                    </c:if>      
+                    <c:if test="${candidate.status != 'Cleared'}">     
+                      <c:if test="${candidate.status != 'New'}">                 
+                        <td class = "td" > 
+                        </td>
+                      </c:if>              
+                    </c:if>            
+                    <td class = "td">
+                      <button class = "editButton"
+                       onclick="location.href='viewCandidateForUpdate?candidateId=${candidate.id}';">&#x1F58B;</button>      
+                    </td>
+                </tr>
+            </c:forEach>
+          </table>  
+        </div>
+        <div align="center">
+          <div class = "cards">
+            <button value =1  id = "back" 
+               onclick = "pagenation('${pagenationInfo.status}', this.value, '-1', ${pagenationInfo.lastPageNo});"
+               class = "btn">&#10096;</button>
+          </div>
+            <c:forEach var="page" items="${pagenationInfo.pages}">
+            <div class = "cards">
+             <button class = "btn" onclick = "pagenation('${pagenationInfo.status}', ${page}, 'page', ${pagenationInfo.lastPageNo});">
+                 ${page}</button>          
+            </div> 
+           </c:forEach>
+         <div class = "cards">
+           <button value =1 id = "next" class = "btn"  
+               onclick = "pagenation('${pagenationInfo.status}', this.value, '1', ${pagenationInfo.lastPageNo});">
+           &#10097;</button>
+        </div>
+      </div> 
       <c:if test="${pagenationInfo.candidates != null}">
       	<c:if test="${!pagenationInfo.candidates.isEmpty()}">
 	      <div>
@@ -105,7 +167,7 @@
 	        </table> 
 	      </c:if>
       <script type="text/javascript">
-      function pagenation(page, choice, lastpage) {
+      function pagenation(status, page, choice, lastpage) {
           httpRequest = new XMLHttpRequest();
           if (!httpRequest) {
              console.log('Unable to create XMLHTTP instance');
@@ -131,7 +193,8 @@
               pageno = page - 1;
               document.getElementById('back').value = pageno;
           }
-          httpRequest.open('GET', 'viewAllCandidates?pageNo='+pageno);
+          //var status = document.getElementById('result').value;
+          httpRequest.open('GET', 'viewAllCandidates?pageNo='+pageno+"&result="+status);
           httpRequest.responseType = 'json';
           httpRequest.send();
           httpRequest.onreadystatechange = function() {
