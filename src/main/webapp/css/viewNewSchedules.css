@@ -46,7 +46,8 @@
       margin:10px;
       float:left;
    }
-   table, td {
+   .td {
+      heigth: 1000px;
       text-align: center;
       padding: 10px;
    }
