@@ -84,8 +84,8 @@ public class CandidateServiceImpl implements CandidateService {
     
 	public CandidatePagenationInfo getPagenationInfo() throws IsmException {
 		CandidatePagenationInfo pagenationInfo = new CandidatePagenationInfo();
-		int count = (int) candidateRepository.count();
-		pagenationInfo.setCandidates(candidateDAO.fetchCandidatesByLimit(0));
+		int count =  this.totalCount(Result.New);
+		pagenationInfo.setCandidates(fetchCandidatesByStatus(0, Result.New));
 		pagenationInfo.setTotalCount(count);
 		List<Result> results = new ArrayList<Result>(Arrays.asList(Result.values()));
 		pagenationInfo.setResults(results);
