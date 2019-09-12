@@ -11,7 +11,7 @@
       <div class="navbar">
          <a href="viewCandidates">Recruiter</a>
          <a href="viewSchedules">Manager</a>
-         <a href="newSchedules?id=1">Employee</a>
+         <a href="newSchedules">Employee</a>
       </div>
    </body>
 </html>

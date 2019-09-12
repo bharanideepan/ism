@@ -2,13 +2,14 @@
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-   <head>
-      <meta charset="UTF-8">
-      <link rel="stylesheet" type="text/css" href="/css/viewCandidates.css">
-   </head>
-   <body>
-      <%@ include file="header.jsp" %>  
-      <%@ include file="recruiterMenu.jsp" %>
+<head>
+<meta charset="UTF-8">
+ <link rel="stylesheet" type="text/css" href="/css/viewCandidates.css">
+ <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
+</head>
+<body>
+<%@ include file="header.jsp" %>  
+<%@ include file="recruiterMenu.jsp" %>
       <div>
          <table align="center">
             <tr>

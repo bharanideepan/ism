@@ -2,18 +2,18 @@
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-   <head>
-      <meta charset="UTF-8">
-      <link rel="stylesheet" type="text/css" href="/css/viewNewSchedules.css">
-      <link rel="stylesheet" type="text/css" href="/css/popUp.css">
-      <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
-   </head>
-   <body>
-      <%@ include file="header.jsp" %> 
-      <div class="navbar">
-         <a href="newSchedules?id=${employee.id}">New Schedules</a>
-         <a href="pendingSchedules?id=${employee.id}">Pending Schedules</a>
-      </div>
+<head>
+<meta charset="UTF-8">
+ <link rel="stylesheet" type="text/css" href="/css/viewNewSchedules.css">
+    <link rel="stylesheet" type="text/css" href="/css/popUp.css">
+   <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
+</head>
+<body>
+<%@ include file="header.jsp" %> 
+        <div class="navbar">
+            <a href="newSchedules">New Schedules</a>
+            <a href="pendingSchedules">Pending Schedules</a>
+        </div>
       <div>
          <c:if test="${employee.schedules != null}">
             <c:if test="${!employee.schedules.isEmpty()}">

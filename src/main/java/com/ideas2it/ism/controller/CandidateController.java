@@ -150,6 +150,7 @@ public class CandidateController {
         	CandidatePagenationInfo pagenationInfo = 
         			candidateService.getPagenationInfo();
             model.addAttribute(Constant.PAGENATION_INFO, pagenationInfo); 
+            model.addAttribute(Constant.PAGENATION_INFO, pagenationInfo); 
         	model.addAttribute(Constant.CANDIDATE_STATUSES, new ArrayList<CandidateStatus>(Arrays.asList(CandidateStatus.values())));
         } catch (Exception e) {
             System.out.println(e.getMessage());
