@@ -16,8 +16,8 @@
          <a href="logout" style="float:right">Log Out</a>
       </div>
       <div>
-         <c:if test="${employee.schedules != null}">
-            <c:if test="${!employee.schedules.isEmpty()}">
+         <c:if test="${schedules != null}">
+            <c:if test="${!schedules.isEmpty()}">
                <table id="contentTable" class = "table" align="center" cellpadding = "10">
                   <tr>
                      <th>Name</th>
@@ -28,13 +28,15 @@
                      <th>Selected</th>
                      <th>Reject</th>
                   </tr>
-                  <c:forEach var="schedule" items="${employee.schedules}">
+                  <c:forEach var="schedule" items="${schedules}">
                      <tr>
                         <td class = "td"><a href="viewProgress?id=${schedule.candidate.id}">${schedule.candidate.name}</a></td>
                         <td class = "td">${schedule.candidate.position}</td>
                         <td class = "td">${schedule.candidate.department}</td>
                         <td class = "td">${schedule.candidate.experience}</td>
                         <td class = "td">${schedule.candidate.status}</td>
+                        <td class = "td">${schedule.date}</td>
+                        <td class = "td">${schedule.time}</td>
                         <td class = "td" > 
                            <button class = "select" 
                               onclick="getComment('selected','${schedule.id}');">&#10004;
@@ -56,7 +58,7 @@
                   </c:forEach>
                </table>
             </c:if>
-            <c:if test="${employee.schedules.isEmpty()}">
+            <c:if test="${schedules.isEmpty()}">
                <table id="contentTable" class = "table" align="center" cellpadding = "10">
                   <tr>
                      <td>No pending schedules</td>
@@ -64,7 +66,7 @@
                </table>
             </c:if>
          </c:if>
-         <c:if test="${employee.schedules == null}">
+         <c:if test="${schedules == null}">
             <table id="contentTable" class = "table" align="center" cellpadding = "10">
                <tr>
                   <td>No pending schedules</td>

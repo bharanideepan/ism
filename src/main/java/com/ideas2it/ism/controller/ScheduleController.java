@@ -166,7 +166,7 @@ public class ScheduleController {
     			scheduleService.getScheduleInfoAndInterviewersByTechnology(scheduleId);
         model.addAttribute(Constant.SCHEDULE, ScheduleInfoAndInterviewers.get(Constant.SCHEDULE));
         model.addAttribute(Constant.INTERVIEWERS, ScheduleInfoAndInterviewers.get(Constant.INTERVIEWERS));
-        //model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());TODO-reschedule
+        model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
         return Constant.VIEW_SCHEDULE_JSP;
     }
  
@@ -214,6 +214,20 @@ public class ScheduleController {
     	HttpSession session = request.getSession();
     	long managerId = (long) session.getAttribute("employee");
         model.addAttribute(Constant.SCHEDULES, scheduleService.getScheduleInfosByManager(managerId));
+        return Constant.VIEW_SCHEDULES_JSP;
+    }
+    
+    /**
+     * Gets all schedules which are scheduled on the given date.
+     * 
+     * @param date - Date which is entered by the client.
+     * @param model - Used to send schedule objects to jsp.
+     * 
+     * @return VIEW_SCHEDULES_JSP - 
+     */
+    @RequestMapping(value = Constant.SCHEDULES_BY_DATE, method = RequestMethod.POST)  
+    private String getScheduleInfosByDate(@RequestParam(Constant.SCHEDULED_DATE)String date, Model model) {
+        model.addAttribute(Constant.SCHEDULES, scheduleService.getScheduleInfosByDate(date));
         return Constant.VIEW_SCHEDULES_JSP;
     }
 }

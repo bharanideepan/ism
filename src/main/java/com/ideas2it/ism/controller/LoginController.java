@@ -48,6 +48,7 @@ public class LoginController {
     @RequestMapping(value="/")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response, HttpSession session)
 		                 throws ServletException, IOException {
+    	System.out.println("\n\nbefore index\n\n");
         ModelAndView model = new ModelAndView();
         String role = (String) session.getAttribute("role");
         if(null != session.getAttribute("user")) {
@@ -69,12 +70,16 @@ public class LoginController {
     @RequestMapping(value="/loginUser")
     public ModelAndView loginUser(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException, IsmException {
+    	System.out.println("\n\nbefore login\n\n");
         ModelAndView model = new ModelAndView();
     	HttpSession session = request.getSession();
     	User loginUser = userService.getUserByName(user.getName());
 	    session.setAttribute("role", loginUser.getRole().getName());
+    	System.out.println("\n\n"+loginUser.getName()+"\n\n");
+    	System.out.println("\n\n"+loginUser.getRole().getName()+"\n\n");
         try {
 	        if(userService.checkUser(user.getName(), user.getPassword())) {
+	        	System.out.println("\n\ninside if\n\n");
 	        	session.setAttribute("user", loginUser.getName());
 	        	session.setAttribute("employee", loginUser.getEmployee().getId());
 	        	System.out.println("Role"+ session.getAttribute("role"));

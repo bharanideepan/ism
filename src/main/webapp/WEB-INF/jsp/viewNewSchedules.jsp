@@ -16,8 +16,8 @@
             <a href="logout" style="float:right">Log Out</a>
         </div>
       <div>
-         <c:if test="${employee.schedules != null}">
-            <c:if test="${!employee.schedules.isEmpty()}">
+         <c:if test="${schedules != null}">
+            <c:if test="${!schedules.isEmpty()}">
                <table id="contentTable" class = "table" align="center" cellpadding = "10">
                   <tr>
                      <th>Name</th>
@@ -28,21 +28,28 @@
                      <th>Accept</th>
                      <th>Reject</th>
                   </tr>
-                  <c:forEach var="schedule" items="${employee.schedules}">
+                  <c:forEach var="schedule" items="${schedules}">
                      <tr>
-                        <td class = "td"><a href="viewProgress?id=${schedule.candidate.id}">${schedule.candidate.name}</a></td>
-                        <td class = "td">${schedule.candidate.position}</td>
-                        <td class = "td">${schedule.candidate.department}</td>
-                        <td class = "td">${schedule.candidate.experience}</td>
-                        <td class = "td">${schedule.candidate.status}</td>
-                        <td class = "td" > 
+                        <td><a href="viewProgress?id=${schedule.candidate.id}">${schedule.candidate.name}</a></td>
+                        <td>${schedule.candidate.position}</td>
+                        <td>${schedule.candidate.department}</td>
+                        <td>${schedule.candidate.experience}</td>
+                        <c:if test="${schedule.candidate.status != 'New'}">
+                        <td>Cleared ${schedule.round-1}st round</td>
+                        </c:if>
+                        <c:if test="${schedule.candidate.status == 'New'}">
+                        <td>${schedule.candidate.status}</td>
+                        </c:if>
+                        <td>${schedule.date}</td>
+                        <td>${schedule.time}</td>
+                        <td > 
                            <button class = "accept" 
-                              onclick="location.href='acceptSchedule?scheduleId=${schedule.id}&candidateId=${schedule.candidate.id}&id=${employee.id}';">&#10004;
+                              onclick="location.href='acceptSchedule?scheduleId=${schedule.id}&candidateId=${schedule.candidate.id}&id=${schedule.interviewer.id}';">&#10004;
                            </button>
                         </td>
-                        <td class = "td">
+                        <td>
                            <button class = "reject"
-                              onclick="getComment('${employee.id}', '${schedule.id}', '${schedule.candidate.id}')">&times;
+                              onclick="getComment('${schedule.interviewer.id}', '${schedule.id}', '${schedule.candidate.id}')">&times;
                            </button>
                         </td>
                      </tr>
@@ -56,7 +63,7 @@
                   </div>
                </div>
             </c:if>
-            <c:if test="${employee.schedules.isEmpty()}">
+            <c:if test="${schedules.isEmpty()}">
                <table id="contentTable" class = "table" align="center" cellpadding = "10">
                   <tr>
                      <td>No new schedules</td>
@@ -64,7 +71,7 @@
                </table>
             </c:if>
          </c:if>
-         <c:if test="${employee.schedules == null}">
+         <c:if test="${schedules == null}">
             <table id="contentTable" class = "table" align="center" cellpadding = "10">
                <tr>
                   <td>No new schedules</td>

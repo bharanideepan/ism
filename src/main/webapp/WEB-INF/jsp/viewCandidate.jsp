@@ -32,8 +32,8 @@
             <tr>
                <th colspan="4" align="center">Interview Details</th>
             </tr>
-            <c:if test="${candidate.schedules != null}">
-               <c:if test="${!candidate.schedules.isEmpty()}">
+            <c:if test="${schedules != null}">
+               <c:if test="${!schedules.isEmpty()}">
                   <tr>
                      <th>SI.No</th>
                      <th>Round</th>
@@ -42,7 +42,7 @@
                      <th>Comment</th>
                   </tr>
                   <c:set var="siNo" value="1" scope="page"/>
-                  <c:forEach var="schedule" items="${candidate.schedules}">
+                  <c:forEach var="schedule" items="${schedules}">
                      <tr>
                         <td>${siNo}</td>
                         <td>${schedule.round}</td>
@@ -56,15 +56,15 @@
                      <c:set var="siNo" value="${siNo + 1}" scope="page"/>
                   </c:forEach>
                   <c:if test="${check != 1}">
-                     <tr>
+                    <!-- <tr>
                         <th><button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">
                            &#x1F4C5;
                            </button>
                         </th>
-                     </tr>
+                     </tr> --> 
                   </c:if>
                </c:if>
-               <c:if test="${candidate.schedules.isEmpty()}">
+               <c:if test="${schedules.isEmpty()}">
                   <tr>
                      <th>
                         <button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">
@@ -74,7 +74,7 @@
                   </tr>
                </c:if>
             </c:if>
-            <c:if test="${candidate.schedules == null}">
+            <c:if test="${schedules == null}">
                <tr>
                   <th>
                      <button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">

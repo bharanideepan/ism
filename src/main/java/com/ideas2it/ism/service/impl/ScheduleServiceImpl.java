@@ -239,4 +239,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 				scheduleInfo.getScheduleRejectionTracks());
 	}
 
+    /**
+     * {@inheritDoc}
+     */	
+	public List<ScheduleInfo> getScheduleInfosByDate(String date) {
+		return this.getScheduleInfosBySchedules(scheduleRepository.getSchedulesByDate(date));
+	}
+
 }

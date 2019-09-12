@@ -6,7 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,6 +30,7 @@ import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.info.CandidateFormInfo;
 import com.ideas2it.ism.info.CandidatePagenationInfo;
+import com.ideas2it.ism.info.ScheduleInfo;
 import com.ideas2it.ism.service.CandidateService;
 import com.ideas2it.ism.service.ScheduleService;
 import com.ideas2it.ism.util.CalculatePage;
@@ -75,10 +78,11 @@ public class CandidateServiceImpl implements CandidateService {
     	return candidateRepository.getOne(candidateId);
     }
     
-    public Candidate getCandidateProgress(long candidateId) {
-    	Candidate candidate = candidateRepository.getOne(candidateId);
-    	candidate.setSchedules(scheduleService.fetchSchedulesByCandidateId(candidateId));
-		return candidate;   	
+    public Map<String, Object> getCandidateAndProgress(long candidateId) {
+    	Map<String, Object> candidateAndProgress = new HashMap<String, Object>();
+    	candidateAndProgress.put(Constant.CANDIDATE, this.fetchCandidateById(candidateId)); 
+    	candidateAndProgress.put(Constant.SCHEDULES, scheduleService.fetchScheduleInfosByCandidateId(candidateId)); 
+		return candidateAndProgress;   	
     }
     
 	public CandidatePagenationInfo getPagenationInfo() throws IsmException {
