@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-//import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
     /**
      * Get the Role object by user name
      *
-     * @param userId - A key to check existance of user
+     * @param userId - A key to check existence of user
      * @throws IsmException 
      */
     public User getUserByName(String userName) throws IsmException {
@@ -97,16 +96,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean checkUser(String userName, String password, String role) throws IsmException {
+	public boolean checkUser(String userName, String password) throws IsmException {
 		User user = getUserByName(userName);
-		System.out.println("CHeck User");
-		System.out.println(password);
-		System.out.println(user.getPassword());
-		List<String> roles = new ArrayList<String>(); 
-		for(Role userRole : user.getRoles()) {
-			roles.add(userRole.getName());
-		}
- 		if(encrypt(password).equals(user.getPassword()) && roles.contains(role)) {
+ 		if(encrypt(password).equals(user.getPassword())) {
+ 			System.out.println(password);
 			return Boolean.TRUE;
 		}
 		throw new IsmException("Bad User Credentials");
