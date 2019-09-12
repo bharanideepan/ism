@@ -9,12 +9,7 @@
 </head>
 <body>
 <%@ include file="header.jsp" %>  
-        <div class="navbar">
-            <a href="addCandidate">Add Candidate</a>
-            <a href="viewCandidates">View Candidates</a>
-            <a href="viewSchedules">View Schedules</a>
-            <a href="newSchedules?id=1">Employee</a>
-        </div>
+<%@ include file="recruiterMenu.jsp" %>
         <div>
           <table align="center">
           <tr>

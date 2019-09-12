@@ -53,7 +53,7 @@ public class LoginController {
         if(null != session.getAttribute("user")) {
         	long employeeId = (long) session.getAttribute("employee");
         	if(role.equals("ROLE_ADMIN")) {
-        		model.setViewName("redirect:/newSchedules?id="+employeeId);
+        		model.setViewName("redirect:/newSchedules");
         		//model.setViewName("redirect:/index"); 
         	} else if(role.equals("ROLE_MANAGER")) {
         		model.setViewName("redirect:/viewSchedules");

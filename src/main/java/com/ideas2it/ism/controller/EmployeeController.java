@@ -1,5 +1,8 @@
 package com.ideas2it.ism.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,9 +33,10 @@ public class EmployeeController {
      * @return VIEW_CANDIDATES_JSP - Display all the fetched candidates information.
      */
     @RequestMapping(value = Constant.NEW_SCHEDULES, method = RequestMethod.GET)  
-    private String viewNewSchedules(@RequestParam(name = Constant.ID) long employeeId, 
-    		Model model) {
+    private String viewNewSchedules(HttpServletRequest request, Model model) {
         try { 
+        	HttpSession session = request.getSession();
+        	long employeeId = (long) session.getAttribute("employee");
             Employee employee = employeeService.getEmployeeWithNewSchedulesById(employeeId);
             model.addAttribute(Constant.EMPLOYEE, employee); 
         } catch (Exception e) {
@@ -81,9 +85,10 @@ public class EmployeeController {
      * @return VIEW_CANDIDATES_JSP - Display all the fetched candidates information.
      */
     @RequestMapping(value = Constant.PENDING_SCHEDULES, method = RequestMethod.GET)  
-    private String viewPendingSchedules(@RequestParam(name = Constant.ID) long employeeId, 
-    		Model model) {
+    private String viewPendingSchedules(HttpServletRequest request, Model model) {
         try { 
+        	HttpSession session = request.getSession();
+        	long employeeId = (long) session.getAttribute("employee");
             Employee employee = employeeService.getEmployeeWithPendingSchedulesById(employeeId);
             model.addAttribute(Constant.EMPLOYEE, employee); 
         } catch (Exception e) {
