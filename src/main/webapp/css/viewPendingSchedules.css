@@ -39,8 +39,8 @@
    
    .table {
       margin: auto;
-      width:400px;
-      height:500px;
+      margin-top: 3%;
+      width:60%;
       border: none;
       border-radius: 20px;
       box-shadow: 10px 10px 5px grey; 

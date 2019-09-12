@@ -87,3 +87,8 @@
   function onEdit(id) {
 	  location.href="viewProgress?id="+id;
   }
+  
+  function getByStatus() {
+	  var result = document.getElementById("candidateStatus").value;
+	  location.href="searchByStatus?result="+result;
+  }

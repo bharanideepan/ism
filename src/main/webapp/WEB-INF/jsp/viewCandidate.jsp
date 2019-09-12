@@ -30,7 +30,7 @@
                <td>${candidate.status}</td>
             </tr>
             <tr>
-               <th colspan="4">Interview Details</th>
+               <th colspan="4" align="center">Interview Details</th>
             </tr>
             <c:if test="${candidate.schedules != null}">
                <c:if test="${!candidate.schedules.isEmpty()}">

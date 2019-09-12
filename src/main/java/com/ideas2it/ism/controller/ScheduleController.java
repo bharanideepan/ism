@@ -202,7 +202,7 @@ public class ScheduleController {
      * 
      * @return VIEW_SCHEDULE_JSP - 
      */
-    @RequestMapping(value = Constant.ASSIGN_INTERVIEWER, method = RequestMethod.POST)  
+    @RequestMapping(value = Constant.ASSIGN_INTERVIEWER, method = RequestMethod.GET)  
     private String assignInterviewer(Model model,
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId,
     		@RequestParam(Constant.INTERVIEWER_ID)long employeeId) {

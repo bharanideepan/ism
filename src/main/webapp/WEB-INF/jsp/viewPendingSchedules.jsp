@@ -8,11 +8,12 @@
       <link rel="stylesheet" type="text/css" href="/css/popUp.css">
       <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
    </head>
-   <body>
+   <body id="background">
       <%@ include file="header.jsp" %>   
       <div class="navbar">
          <a href="newSchedules">New Schedules</a>
          <a href="pendingSchedules">Pending Schedules</a>
+         <a href="logout" style="float:right">Log Out</a>
       </div>
       <div>
          <c:if test="${employee.schedules != null}">

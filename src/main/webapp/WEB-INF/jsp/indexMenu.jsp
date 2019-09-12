@@ -12,6 +12,7 @@
          <a href="viewCandidates">Recruiter</a>
          <a href="viewSchedules">Manager</a>
          <a href="newSchedules">Employee</a>
+         <a href="logout" style="float:right">Log Out</a>
       </div>
    </body>
 </html>

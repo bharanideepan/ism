@@ -4,7 +4,7 @@
 <html>
    <head>
       <link rel="stylesheet" href="/css/createSchedule.css">
-   <body>
+   <body id="background">
       <%@ include file="header.jsp" %>   
       <%@ include file="recruiterMenu.jsp" %>
       <div id="createScheduleId" class="makeSchedule" align="center">

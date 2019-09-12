@@ -187,27 +187,6 @@ public class CandidateController {
      * @param model - Used to send candidate object along with request to jsp.
      * @return
      */
-    @RequestMapping(value = Constant.SEARCH_BY_STATUS, method = RequestMethod.POST)  
-    private String searchByStatus(@RequestParam(name = Constant.RESULT) Result status,
-    		Model model) {
-        try { 
-        	CandidatePagenationInfo pagenationInfo = 
-        			candidateService.searchByStatus(status);
-            model.addAttribute(Constant.PAGENATION_INFO, pagenationInfo); 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return Constant.VIEW_CANDIDATES_JSP;
-    }
-    
-    /**
-     * Recruiter entered informations are obtained as an object.
-     * Then the object is passed to the DAO layer to store it in DB.
-     * 
-     * @param candidate - Created object.
-     * @param model - Used to send candidate object along with request to jsp.
-     * @return
-     */
     @RequestMapping(value = Constant.VIEW_PROGRESS, method = RequestMethod.GET)  
     private String viewCandidateProgress(@RequestParam(name = Constant.ID) long candidateId,
     		Model model) {

@@ -21,12 +21,14 @@
 }
      .table {
         margin: 20px;
+        margin-top: 5%;
         width:200px;
         height:300px;
         border: none;
         border-radius: 20px;
         box-shadow: 10px 10px 5px grey; 
         background:linear-gradient(to top, #dad299, #b0dab9); 
+        padding: 20px;
      }
 
    #login{

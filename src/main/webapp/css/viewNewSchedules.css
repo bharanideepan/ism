@@ -27,8 +27,8 @@
 }
    .table {
       margin: auto;
-      width:400px;
-      height:500px;
+      margin-top: 3%;
+      width:60%;
       border: none;
       border-radius: 20px;
       box-shadow: 10px 10px 5px grey; 
@@ -46,11 +46,12 @@
       margin:10px;
       float:left;
    }
-   .td {
-      heigth: 1000px;
+   
+   table, td {
       text-align: center;
       padding: 10px;
    }
+   
    
    input[type=button] {
      width: 100%;

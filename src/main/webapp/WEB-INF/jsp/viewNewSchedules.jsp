@@ -13,6 +13,7 @@
         <div class="navbar">
             <a href="newSchedules">New Schedules</a>
             <a href="pendingSchedules">Pending Schedules</a>
+            <a href="logout" style="float:right">Log Out</a>
         </div>
       <div>
          <c:if test="${employee.schedules != null}">
