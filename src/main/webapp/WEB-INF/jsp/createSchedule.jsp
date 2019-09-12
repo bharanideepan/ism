@@ -59,7 +59,7 @@
                    <td align="center">${interviewer.name}</td>
 	               <td align="center">${interviewer.department}</td>
 	               <td align="center"><input type = "radio" 
-                       onclick = 'assignInterviewer();' name="interviewerId" value="${interviewer.id}"/>
+                       name="interviewerId" value="${interviewer.id}"/>
                    </td>   	 	
                  </tr>
               </c:forEach>
@@ -68,22 +68,5 @@
          </form:form>
        </div>
       </div>
-      <script type="text/javascript">
-      function assignInterviewer() {
-    	   var checkBoxGroup = document.forms['form']['interviewerId'];			
-    	   var limit = 1;
-    	   for (var i = 0; i < checkBoxGroup.length; i++) {
-    	       checkBoxGroup[i].onclick = function() {
-    	           var checkedcount = 0;
-    	           for (var i = 0; i < checkBoxGroup.length; i++) {
-    	               checkedcount += (checkBoxGroup[i].checked) ? 1 : 0;
-    	           }
-    	       }
-               if (checkedcount > limit) {			
-                   this.checked = false;
-               }
-    	   }
-    	}  
-      </script>
    </body>
 </html>

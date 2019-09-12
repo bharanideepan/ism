@@ -184,17 +184,10 @@ public class ScheduleController {
     @RequestMapping(value = Constant.GET_SCHEDULE_WITH_INTERVIEWERS, method = RequestMethod.GET)  
     private String getInterviewersByTechnology(Model model,
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId) {
-    	Map<String, Object> scheduleAndInterviewers= scheduleService.getScheduleAndInterviewersByTechnology(scheduleId);
+    	Map<String, Object> scheduleAndInterviewers= 
+    			scheduleService.getScheduleAndInterviewersByTechnology(scheduleId);
         model.addAttribute(Constant.SCHEDULE, scheduleAndInterviewers.get(Constant.SCHEDULE));
         model.addAttribute(Constant.INTERVIEWERS, scheduleAndInterviewers.get(Constant.INTERVIEWERS));
-        Schedule schedule = (Schedule)scheduleAndInterviewers.get(Constant.SCHEDULE);
-        List<ScheduleRejectionTrack> srts = schedule.getScheduleRejectionTracks();
-        if(srts != null) {
-        	for(ScheduleRejectionTrack srt: srts) {
-                System.out.println("\n\n"+srt.getEmployee().getName()+"\n\n");
-                System.out.println("\n\n"+srt.getComment()+"\n\n");
-        	}
-        }
         model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
         return Constant.VIEW_SCHEDULE_JSP;
     }
@@ -224,7 +217,7 @@ public class ScheduleController {
      * @return VIEW_SCHEDULES_JSP - 
      */
     @RequestMapping(value = Constant.VIEW_SCHEDULES, method = RequestMethod.GET)  
-    private String assignInterviewer(Model model) {
+    private String getAllSchedules(Model model) {
         model.addAttribute(Constant.SCHEDULES, scheduleService.getAllSchedules());
         return Constant.VIEW_SCHEDULES_JSP;
     }
