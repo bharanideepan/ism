@@ -38,7 +38,7 @@
                       var column = row[i].cells;
                       var name = array[j].candidateName;
                       var candidateId = array[j].candidateId;
-                      var view = name.link("viewProgress?id=" + candidateId);
+                      var view = name.link("viewCandidateForUpdate?candidateId=" + candidateId);
                       column[0].innerHTML = view;
                       column[1].innerHTML = array[j].position;
                       column[2].innerHTML = array[j].department;
@@ -58,7 +58,7 @@
                       column[6].innerHTML =''; 
                       var editBtn = document.createElement("BUTTON");
                       editBtn.id ='ebtn';
-                      editBtn.innerHTML = "&#x1F58B;";
+                      editBtn.innerHTML = "&#128065";
                       editBtn.setAttribute("class", "editButton");
                       editBtn.setAttribute("onclick", "onEdit("+candidateId+");");
                       column[6].appendChild(editBtn); 
@@ -85,5 +85,5 @@
 	  location.href="scheduleForm?candidateId="+id;
   }
   function onEdit(id) {
-	  location.href="viewCandidateForUpdate?candidateId="+id;
+	  location.href="viewProgress?id="+id;
   }

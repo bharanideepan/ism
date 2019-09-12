@@ -2,17 +2,17 @@
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-   <head>
-      <meta charset="UTF-8">
-      <title>View Candidate</title>
-      <link rel="stylesheet" type="text/css" href="/css/viewCandidate.css">
-      <link rel="stylesheet" type="text/css" href="/css/popUp.css">
-   </head>
-   <body onload="currentStatus('${status}');">
-      <%@ include file="header.jsp" %>  
-      <%@ include file="recruiterMenu.jsp" %>
-      <div>
-         <table class="table">
+<head>
+<meta charset="UTF-8">
+<title>View Candidate</title>
+ <link rel="stylesheet" type="text/css" href="/css/viewCandidate.css">
+  <link rel="stylesheet" type="text/css" href="/css/popUp.css">
+</head>
+<body onload="currentStatus('${status}');" id="background">
+<%@ include file="header.jsp" %>  
+<%@ include file="recruiterMenu.jsp" %>
+    <div>
+        <table class="table">
             <tr>
                <td>Name:</td>
                <td>${candidate.name}</td>

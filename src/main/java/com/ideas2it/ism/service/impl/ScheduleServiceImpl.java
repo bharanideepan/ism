@@ -13,6 +13,7 @@ import com.ideas2it.ism.common.Constant;
 import com.ideas2it.ism.common.InterviewType;
 import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.ScheduleStatus;
+import com.ideas2it.ism.dao.ScheduleDAO;
 import com.ideas2it.ism.dao.ScheduleRepository;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.entity.Employee;
@@ -46,7 +47,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		candidate.setStatus(Result.Pending);
 		schedule.setCandidate(candidate);
     	schedule.setDateTime(date);
-    	if(null != interviewerId) {
+    	if((null != interviewerId) && (!interviewerId.isEmpty())) {
 			schedule.setInterviewer(employeeService.getEmployeeById(Long.parseLong(interviewerId)));
 			mailSender.sendMail("manibharathi@ideas2it.com", "Testing", "Success");
     	}
@@ -166,6 +167,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 		candidateAndInterviewers.put(Constant.INTERVIEWERS,
 				employeeService.getEmployeesByTechnology(candidate.getTechnology()));
 		return candidateAndInterviewers;
+	}
+
+	@Override
+	public List<Schedule> getSchedulesByManager(long managerId) {
+		Employee employee = employeeService.getEmployeeById(managerId);
+		return scheduleRepository.fetchSchedulesByTechnology(employee.getTechnology());
 	}
 
 }

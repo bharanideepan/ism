@@ -1,21 +1,22 @@
 @charset "UTF-8"; 
-html, body {
-    background:white;
-  }
-  
   #heading{
-  	position:relative;
-  	top:-50px;
+  	top:-20px;
   	left:400px;
   }
   
-  #logo{
-  	position:relative;
-  	top:20px;
-  	left:0px;
+  .logo{
+  	width:20%;
   }
   
   #header{
   	height:75px;
   	font-size:20px;
   }
+  
+ .flex {
+    display:flex;
+    flex-wrap:nowrap;
+  }
+  .box {
+    width:80%;
+  } 

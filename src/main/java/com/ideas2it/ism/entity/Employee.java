@@ -45,7 +45,7 @@ public class Employee {
 	private Department department;
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="candidate_id")
+    @JoinColumn(name="employee_id")
 	private List<Schedule> schedules;
 
     @Override

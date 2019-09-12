@@ -33,6 +33,17 @@
                            <input type="datetime-local" name="shdate" required="required"/>
                         </td>
                      </tr>
+               <tr>
+                  <td>Assign Interviewer</td>
+                  <td>
+                  	 <select name="interviewerId">
+                  	     <option value="">None</option>
+                  	     <c:forEach var="interviewer" items="${interviewers}">
+                             <option value="${interviewer.id}">${interviewer.name}</option>
+                         </c:forEach>
+                  	 </select>
+                  </td>
+               </tr>
                      <tr>
                         <td><input type="reset" value="Clear"></td>
                         <td>

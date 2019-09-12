@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -235,6 +236,23 @@ public class ScheduleController {
     @RequestMapping(value = Constant.VIEW_SCHEDULES, method = RequestMethod.GET)  
     private String getAllSchedules(Model model) {
         model.addAttribute(Constant.SCHEDULES, scheduleService.getAllSchedules());
+        return Constant.VIEW_SCHEDULES_JSP;
+    }
+    
+    /**
+     * Gets all schedules corresponding to the managers department.
+     * 
+     * @param request - An HttpServletRequest object that contains the request
+     * the client has made of the servlet
+     * @param model - Used to send schedule objects to jsp.
+     * 
+     * @return VIEW_SCHEDULES_JSP - 
+     */
+    @RequestMapping(value = Constant.VIEW_SCHEDULES_MANAGER, method = RequestMethod.GET)  
+    private String getSchedulesByManager(HttpServletRequest request, Model model) {
+    	HttpSession session = request.getSession();
+    	long managerId = (long) session.getAttribute("employee");
+        model.addAttribute(Constant.SCHEDULES, scheduleService.getSchedulesByManager(managerId));
         return Constant.VIEW_SCHEDULES_JSP;
     }
 }

@@ -11,8 +11,8 @@
    <body>
       <%@ include file="header.jsp" %>   
       <div class="navbar">
-         <a href="newSchedules?id=${employee.id}">New Schedules</a>
-         <a href="pendingSchedules?id=${employee.id}">Pending Schedules</a>
+         <a href="newSchedules">New Schedules</a>
+         <a href="pendingSchedules">Pending Schedules</a>
       </div>
       <div>
          <c:if test="${employee.schedules != null}">

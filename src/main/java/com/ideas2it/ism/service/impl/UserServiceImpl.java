@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-//import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
     /**
      * Get the Role object by user name
      *
-     * @param userId - A key to check existance of user
+     * @param userId - A key to check existence of user
      * @throws IsmException 
      */
     public User getUserByName(String userName) throws IsmException {
@@ -45,10 +44,11 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-	public void create(User user, String[] roleIds) {
-        //user.setCreatedDate(new Date());
+	public void create(User user, String roleId) {
 		System.out.println("user create");
-        assignRole(roleIds, user);
+		int id = Integer.parseInt(roleId);
+        Role role = roleService.getRoleById(id);
+        user.setRole(role);
         String password = encrypt(user.getPassword());
         System.out.println(password+"pass");
         user.setPassword(password);
@@ -76,37 +76,12 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findAll();
 	}
 
-    /**
-     * Assign roles to particular user by roleId
-     *
-     * @param roleIds - A array of role id which is to be assigned to the user
-     * @param user - Object to hold user details
-     */
-    public void assignRole(String[] roleIds, User user) {
-        Set<Role> roles = new HashSet<Role>();
-        for(String id : roleIds) {
-            int roleId = Integer.parseInt(id);
-            Role role = roleService.getRoleById(roleId);
-            roles.add(role);
-        }
-        user.setRoles(roles);
-    }
-
-	public void create(User user, String roleIds) {
-		// TODO Auto-generated method stub
-	}
 
 	@Override
-	public boolean checkUser(String userName, String password, String role) throws IsmException {
+	public boolean checkUser(String userName, String password) throws IsmException {
 		User user = getUserByName(userName);
-		System.out.println("CHeck User");
-		System.out.println(password);
-		System.out.println(user.getPassword());
-		List<String> roles = new ArrayList<String>(); 
-		for(Role userRole : user.getRoles()) {
-			roles.add(userRole.getName());
-		}
- 		if(encrypt(password).equals(user.getPassword()) && roles.contains(role)) {
+ 		if(encrypt(password).equals(user.getPassword())) {
+ 			System.out.println(password);
 			return Boolean.TRUE;
 		}
 		throw new IsmException("Bad User Credentials");

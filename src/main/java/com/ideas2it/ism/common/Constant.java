@@ -106,6 +106,7 @@ public class Constant {
 	public static final String VIEW_ALL_CANDIDATES = "viewAllCandidates";
 	public static final String VIEW_SCHEDULES_BY_STATUS = "viewSchedulesByStatus";
 	public static final String VIEW_SCHEDULES = "viewSchedules";
+	public static final String VIEW_SCHEDULES_MANAGER = "viewSchedulesByManager";
 	
 	// Error Constants.
 	public static final String ERROR_RETRIEVING_CANDIDATES = "Error while fetching the Candidiate details";
