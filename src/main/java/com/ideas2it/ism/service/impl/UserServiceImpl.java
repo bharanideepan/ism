@@ -44,10 +44,11 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-	public void create(User user, String[] roleIds) {
-        //user.setCreatedDate(new Date());
+	public void create(User user, String roleId) {
 		System.out.println("user create");
-        assignRole(roleIds, user);
+		int id = Integer.parseInt(roleId);
+        Role role = roleService.getRoleById(id);
+        user.setRole(role);
         String password = encrypt(user.getPassword());
         System.out.println(password+"pass");
         user.setPassword(password);
@@ -75,25 +76,6 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findAll();
 	}
 
-    /**
-     * Assign roles to particular user by roleId
-     *
-     * @param roleIds - A array of role id which is to be assigned to the user
-     * @param user - Object to hold user details
-     */
-    public void assignRole(String[] roleIds, User user) {
-        Set<Role> roles = new HashSet<Role>();
-        for(String id : roleIds) {
-            int roleId = Integer.parseInt(id);
-            Role role = roleService.getRoleById(roleId);
-            roles.add(role);
-        }
-        user.setRoles(roles);
-    }
-
-	public void create(User user, String roleIds) {
-		// TODO Auto-generated method stub
-	}
 
 	@Override
 	public boolean checkUser(String userName, String password) throws IsmException {

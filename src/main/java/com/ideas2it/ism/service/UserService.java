@@ -13,7 +13,7 @@ public interface UserService {
      * 
      * @param user - A object which has new user details to be saved
      */
-	public void create(User user, String[] roleIds);
+	public void create(User user, String roleId);
 
 	/**
 	 * Get the existing user by using the user Id

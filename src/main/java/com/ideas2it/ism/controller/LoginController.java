@@ -56,7 +56,7 @@ public class LoginController {
         	if(role.contains("Admin")) {
         		model.setViewName("redirect:/newSchedules");
         	} else if(role.contains("Manager")) {
-        		model.setViewName("redirect:/viewSchedules");
+        		model.setViewName("redirect:/viewSchedulesByManager");
         	} else if(role.contains("Recruiter")) {
         		model.setViewName("redirect:/viewCandidates");
         	} else {
@@ -74,9 +74,7 @@ public class LoginController {
         ModelAndView model = new ModelAndView();
     	HttpSession session = request.getSession();
     	User loginUser = userService.getUserByName(user.getName());
-		for(Role userRole : loginUser.getRoles()) {
-			session.setAttribute("role", userRole.getName());
-		}
+	    session.setAttribute("role", loginUser.getRole().getName());
         try {
 	        if(userService.checkUser(user.getName(), user.getPassword())) {
 	        	session.setAttribute("user", loginUser.getName());

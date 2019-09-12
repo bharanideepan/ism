@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -44,17 +45,14 @@ public class User implements Serializable {
     @Column (name = "password")
     private String password;
     
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable (name = "user_role", joinColumns = {@JoinColumn(name = "user_id")},
-                inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    @Column (name = "user_role")
-    private Set<Role> roles;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Role role;
     
     @OneToOne(fetch = FetchType.EAGER)
     private Employee employee;
     
     public String toString() {
-        return name + password + roles;
+        return name + password + role;
     }
 
     public void setId(int id) {
@@ -81,12 +79,12 @@ public class User implements Serializable {
         return password;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
     
     public void setEmployee(Employee employee) {

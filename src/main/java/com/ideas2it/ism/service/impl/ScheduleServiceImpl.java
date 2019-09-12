@@ -31,8 +31,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Autowired
 	private ScheduleRepository scheduleRepository;
 	@Autowired
-	private ScheduleDAO scheduleDAO;
-	@Autowired
 	private CandidateService candidateService;
 	@Autowired
 	private EmployeeService employeeService;
@@ -163,7 +161,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public List<Schedule> getSchedulesByManager(long managerId) {
 		Employee employee = employeeService.getEmployeeById(managerId);
-		return scheduleRepository.fetchSchedulesByDepartment(employee.getDepartment());
+		return scheduleRepository.fetchSchedulesByTechnology(employee.getTechnology());
 	}
 
 }

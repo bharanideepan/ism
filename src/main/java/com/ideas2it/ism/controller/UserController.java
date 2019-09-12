@@ -82,9 +82,9 @@ public class UserController {
 		                 throws ServletException, IOException {
         ModelAndView model = new ModelAndView();
         try {
-        	String roleIds[] = request.getParameterValues("UserRoles");
+        	String roleId = request.getParameter("userRoles");
         	System.out.println("user" +user);
-            userService.create(user, roleIds);
+            userService.create(user, roleId);
             model.setViewName("redirect:/login");
         } catch (Exception e) {
             model.addObject("errorMessage", e);

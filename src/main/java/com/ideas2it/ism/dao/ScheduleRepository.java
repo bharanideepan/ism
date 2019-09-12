@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ideas2it.ism.common.Department;
 import com.ideas2it.ism.common.ScheduleStatus;
+import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.entity.Schedule;
 
 /**
@@ -76,6 +77,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 	 * 
 	 * @return schedules - List of schedules having the given department.
 	 */
-	@Query("SELECT s FROM Schedule s WHERE department = :department")
-	List<Schedule> fetchSchedulesByDepartment(@Param("department")Department department);
+	@Query("SELECT s FROM Schedule s inner join s.candidate c WHERE c.technology = :technology")
+	List<Schedule> fetchSchedulesByTechnology(@Param("technology")Technology technology);
 }

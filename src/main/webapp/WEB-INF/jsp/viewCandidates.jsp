@@ -36,6 +36,8 @@
             <tr>
                 <th>Name</th>
                 <th>Position</th>
+                <th>Email ID:</th>
+                <th>Phone No:</th>
                 <th>Department</th>
                 <th>Experience</th>
                 <th>Candidate Status</th>
@@ -46,6 +48,8 @@
                 <tr>
                     <td class = "td"><a href="viewCandidateForUpdate?candidateId=${candidate.id}">${candidate.name}</a></td>
                     <td class = "td">${candidate.position}</td>
+                    <td class = "td">${candidate.emailId}</td>
+                    <td class = "td">${candidate.phoneNumber}</td>
                     <td class = "td">${candidate.department}</td>
                     <td class = "td">${candidate.experience}</td>    
                     <td class = "td">${candidate.status}</td>
