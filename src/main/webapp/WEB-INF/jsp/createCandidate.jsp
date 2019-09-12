@@ -9,7 +9,7 @@
 <title>Create Candidate</title>
  <link rel="stylesheet" type="text/css" href="/css/createCandidate.css">
 </head>
-<body>
+<body id="background">
 <%@ include file="header.jsp" %> 
 <%@ include file="recruiterMenu.jsp" %> 
  <form:form name ="form" action="saveCandidate" method="post" modelAttribute="candidate" enctype = "multipart/form-data"> 
@@ -17,7 +17,7 @@
         <form:input type="hidden" path="id" value="${candidate.id}"/>
         <form:input type="hidden" path="resumeFilePath" value="${candidate.resumeFilePath}"/>
         <tr> <td colspan = "3">Candidate Information </td> 
-        <tr><td >Name:</td>
+        <tr><td >Name * :</td>
           <td>
             <form:input type="text" path="name" required="required"></form:input>
           </td>
@@ -27,19 +27,19 @@
           <form:input type ="tel"  maxlength="10" value="${candidate.phoneNumber}" path="phoneNumber"/>
           </td>
         </tr>
-        <tr><td>Email Id:</td>
+        <tr><td>Email Id * :</td>
           <td>
           <form:input type ="email" value="${candidate.emailId}" path="emailId" required="required"/>
           </td>
         </tr>
-        <tr><td>Position:</td>
+        <tr><td>Position * :</td>
           <td>
           <form:input type ="text" value="${candidate.position}" path="position" required="required"/>
           </td>
         </tr>
         <tr><td>Department:</td>
           <td>
-          <form:select path="department" value="${candidate.department}" items="${candidateFormInfo.departments}"/>
+          <form:select required="required" path="department" value="${candidate.department}" items="${candidateFormInfo.departments}"/>
           </td>
         </tr>
         <tr><td>Technology:</td>
@@ -52,8 +52,8 @@
           <form:input type ="text" value="${candidate.experience}" path="experience"/>
           </td>
         </tr>
-        <tr><td>Resume:</td>
-          <td> <input name="resume" type="file" />
+        <tr><td>Resume * :</td>
+          <td> <input name="resume" type="file" required="required"/>
         </td></tr>  
         <tr>
           <c:if test="${update == action}">

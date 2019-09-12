@@ -8,7 +8,7 @@
    <link rel="stylesheet" type="text/css" href="/css/popUp.css">
    <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
 </head>
-<body>
+<body id="background">
 <%@ include file="header.jsp" %>   
         <div class="navbar">
             <a href="newSchedules?id=${employee.id}">New Schedules</a>

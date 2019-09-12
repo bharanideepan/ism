@@ -9,8 +9,6 @@
 <%@ include file="recruiterMenu.jsp" %>
 
       <div id="createScheduleId" class="makeSchedule" align="center">
-      <div class= "flex">
-        <div class="box">
          <form:form name="form" id="createScheduleFormId" action="createSchedule" method="post" modelAttribute="schedule">
             <table class="table">
                <input type="hidden" name="candidateId" value="${candidate.id}"/>
@@ -42,29 +40,22 @@
                   </td>
                </tr>
                <tr>
+                  <td>Assign Interviewer</td>
+                  <td>
+                  	 <select name="interviewerId">
+                  	     <option value="">None</option>
+                  	     <c:forEach var="interviewer" items="${interviewers}">
+                             <option value="${interviewer.id}">${interviewer.name}</option>
+                         </c:forEach>
+                  	 </select>
+                  </td>
+               </tr>
+               <tr>
                   <td><input type="reset" value="Clear"></td>
                   <td><input type="submit" value="Submit"></td>
                </tr>
             </table>
            </div>
-           <div class="box"> 
-            <table  class="table">
-               <tr>
-                   <th>Name</th>
-                   <th>Department</th>
-                   <th>Assign</th>
-               </tr>
-               <c:forEach var="interviewer" items="${interviewers}">
-                 <tr>
-                   <td align="center">${interviewer.name}</td>
-	               <td align="center">${interviewer.department}</td>
-	               <td align="center"><input type = "radio" 
-                       name="interviewerId" value="${interviewer.id}"/>
-                   </td>   	 	
-                 </tr>
-              </c:forEach>
-             </table>
-          </div>
          </form:form>
        </div>
       </div>

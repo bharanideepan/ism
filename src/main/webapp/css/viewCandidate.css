@@ -58,4 +58,10 @@
   .sidebar {padding-top: 15px;}
   .sidebar a {font-size: 18px;}
 }
+
+   #background{
+       background-image: url("/image/login1.jpeg");
+       background-repeat: no-repeat;
+       background-size: 100% 700px;
+   }
     

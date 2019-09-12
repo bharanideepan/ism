@@ -52,12 +52,12 @@ public class LoginController {
         String role = (String) session.getAttribute("role");
         if(null != session.getAttribute("user")) {
         	long employeeId = (long) session.getAttribute("employee");
-        	if(role.equals("ROLE_ADMIN")) {
+
+        	if(role.contains("Admin")) {
         		model.setViewName("redirect:/newSchedules");
-        		//model.setViewName("redirect:/index"); 
-        	} else if(role.equals("ROLE_MANAGER")) {
+        	} else if(role.contains("Manager")) {
         		model.setViewName("redirect:/viewSchedules");
-        	} else if(role.equals("ROLE_RECRUITER")) {
+        	} else if(role.contains("Recruiter")) {
         		model.setViewName("redirect:/viewCandidates");
         	} else {
         		model.setViewName("/viewNewSchedules?id="+employeeId);
@@ -71,15 +71,17 @@ public class LoginController {
     @RequestMapping(value="/loginUser")
     public ModelAndView loginUser(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException, IsmException {
-    	String role = request.getParameter("role");
-    	User loginUser = userService.getUserByName(user.getName());
         ModelAndView model = new ModelAndView();
+    	HttpSession session = request.getSession();
+    	User loginUser = userService.getUserByName(user.getName());
+		for(Role userRole : loginUser.getRoles()) {
+			session.setAttribute("role", userRole.getName());
+		}
         try {
-        	HttpSession session = request.getSession();
-	        if(userService.checkUser(user.getName(), user.getPassword(), role)) {
-	        	session.setAttribute("user", user.getName());
-	        	session.setAttribute("role", request.getParameter("role"));
+	        if(userService.checkUser(user.getName(), user.getPassword())) {
+	        	session.setAttribute("user", loginUser.getName());
 	        	session.setAttribute("employee", loginUser.getEmployee().getId());
+	        	System.out.println("Role"+ session.getAttribute("role"));
 	        }
 	        model.setViewName("redirect:/");
         } catch (IsmException e) {

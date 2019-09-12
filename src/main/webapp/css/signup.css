@@ -20,13 +20,14 @@
   transform: translateY(4px);
 }
      .table {
-        margin: 20px;
-        width:200px;
-        height:300px;
+        margin: auto;
+        width:300px;
+        height:400px;
         border: none;
         border-radius: 20px;
         box-shadow: 10px 10px 5px grey; 
-        background:linear-gradient(to top, #dad299, #b0dab9); 
+        background:linear-gradient(to top, #dad299, #b0dab9);
+        padding: 10px; 
      }
 
    #login{
@@ -49,4 +50,4 @@
   #header{
   	height:75px;
   	font-size:20px;
-  }
+  }@charset "UTF-8";

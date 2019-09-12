@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.ideas2it.ism.common.Department;
 import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.entity.Schedule;
 
@@ -67,4 +68,14 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 	 */
 	@Query("SELECT s FROM Schedule s WHERE status = :status")
 	List<Schedule> getSchedulesByStatus(@Param("status")ScheduleStatus status);
+
+	/**
+	 * Fetch List of schedules having the given department
+	 * 
+	 * @param department - Schedules assigned for the this department should be fetched.
+	 * 
+	 * @return schedules - List of schedules having the given department.
+	 */
+	@Query("SELECT s FROM Schedule s WHERE department = :department")
+	List<Schedule> fetchSchedulesByDepartment(@Param("department")Department department);
 }

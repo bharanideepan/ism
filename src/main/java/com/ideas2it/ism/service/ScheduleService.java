@@ -168,4 +168,13 @@ public interface ScheduleService {
 	 * @return candidateAndInterviewers - After assigning with the interviewer
 	 */
 	Map<String, Object> getCandidateAndInterviewersByTechnology(long candidateId);
+
+	/**
+	 * Schedules of certain manager are retrieved based on his department.
+	 * From the id the manager object is fetched and the department is obtained
+	 * and corresponding schedules are retrieved. 
+	 * @param managerId - Id of the manager whose department schedules to be fetched.
+	 * @return schedules - List of schedules for the manager.
+	 */
+	List<Schedule> getSchedulesByManager(long managerId);
 }

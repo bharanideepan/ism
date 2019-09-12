@@ -8,7 +8,7 @@
  <link rel="stylesheet" type="text/css" href="/css/viewCandidate.css">
   <link rel="stylesheet" type="text/css" href="/css/popUp.css">
 </head>
-<body onload="currentStatus('${status}');">
+<body onload="currentStatus('${status}');" id="background">
 <%@ include file="header.jsp" %>  
 <%@ include file="recruiterMenu.jsp" %>
     <div>

@@ -7,7 +7,7 @@
  <link rel="stylesheet" type="text/css" href="/css/viewCandidates.css">
  <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
 </head>
-<body>
+<body id="background">
 <%@ include file="header.jsp" %>  
 <%@ include file="recruiterMenu.jsp" %>
         <div>
@@ -40,11 +40,11 @@
                 <th>Experience</th>
                 <th>Candidate Status</th>
                 <th>Schedule</th>
-                <th>Update</th>
+                <th>History</th>
             </tr>
             <c:forEach var="candidate" items="${pagenationInfo.candidates}">
                 <tr>
-                    <td class = "td"><a href="viewProgress?id=${candidate.id}">${candidate.name}</a></td>
+                    <td class = "td"><a href="viewCandidateForUpdate?candidateId=${candidate.id}">${candidate.name}</a></td>
                     <td class = "td">${candidate.position}</td>
                     <td class = "td">${candidate.department}</td>
                     <td class = "td">${candidate.experience}</td>    
@@ -69,7 +69,7 @@
                     </c:if>            
                     <td class = "td">
                       <button class = "editButton"
-                       onclick="location.href='viewCandidateForUpdate?candidateId=${candidate.id}';">&#x1F58B;</button>      
+                       onclick="location.href='viewProgress?id=${candidate.id}';">&#128065;</button>      
                     </td>
                 </tr>
             </c:forEach>

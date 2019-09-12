@@ -48,5 +48,5 @@ public interface UserService {
 	
 	//public void assignassignRole(String[] roleIds, User user);
 
-	public boolean checkUser(String userName, String password, String role) throws IsmException;
+	public boolean checkUser(String userName, String password) throws IsmException;
 }
