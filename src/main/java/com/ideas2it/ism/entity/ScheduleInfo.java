@@ -2,23 +2,12 @@ package com.ideas2it.ism.entity;
 
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import java.util.Map;
 
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.entity.Employee;
-import com.ideas2it.ism.common.InterviewLevel;
+import com.ideas2it.ism.common.Constant;
+import com.ideas2it.ism.common.DateTimeUtil;
 import com.ideas2it.ism.common.InterviewType;
 import com.ideas2it.ism.common.ScheduleStatus;
 
@@ -33,86 +22,69 @@ import com.ideas2it.ism.common.ScheduleStatus;
  * @author-Bharani Deepan K
  * @date-4/09/19
  */
-@Entity
-@Table(name="schedule")
-public class Schedule {
+public class ScheduleInfo {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
     private long id;
     
-    @Enumerated(EnumType.STRING)
-    @Column(name = "interview_level")
-    private InterviewLevel interviewLevel;
-    
-    @Enumerated(EnumType.STRING)
-    @Column(name = "interview_type")
     private InterviewType interviewType;
     
-    @Column(name = "date")
-    private Date date;
+    private String date;
     
-    @Column(name = "time")
-    private Date time;
+    private String time;
     
-    @Column(name = "interview_feedback")
     private String interviewFeedback;
     
-    @Column(name = "cancellation_comment")
     private String cancellationComment;
     
-    @Column(name = "reshedule_comment")
     private String rescheduleComment;
     
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
     private ScheduleStatus status;
     
-    @ManyToOne
-    @JoinColumn(name = "candidate_id")
     private Candidate candidate;
-    
-    public Date getDateTime() {
-		return dateTime;
-	}
 
-	public void setDateTime(Date dateTime) {
-		this.dateTime = dateTime;
-	}
-
-	@ManyToOne
-    @JoinColumn(name = "employee_id")
     private Employee interviewer;
     
-    @Column(name = "round")
     private int round;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="schedule_id")
 	private List<ScheduleRejectionTrack> scheduleRejectionTracks;
     
-    @Column(name = "date_time")
     private Date dateTime;
-    
-    public List<ScheduleRejectionTrack> getScheduleRejectionTracks() {
-		return scheduleRejectionTracks;
-	}
 
-	public void setScheduleRejectionTracks(List<ScheduleRejectionTrack> scheduleRejectionTracks) {
-		this.scheduleRejectionTracks = scheduleRejectionTracks;
-	}
-
-	public Schedule() {
+	public ScheduleInfo() {
     	this.status = ScheduleStatus.New;
     }
-    
-    @Override
-    public String toString() {
-    	return this.interviewType.toString();
+
+	public ScheduleInfo(long id,
+			InterviewType interviewType,
+			Date dateTime,
+			String interviewFeedback,
+			String cancellationComment,
+			String rescheduleComment,
+			ScheduleStatus status,
+			Candidate candidate,
+			Employee interviewer,
+			int round,
+			List<ScheduleRejectionTrack> scheduleRejectionTracks) {
+    	this.interviewType = interviewType;
+    	this.setDateAndTime(dateTime);
+    	this.interviewFeedback = interviewFeedback;
+    	this.cancellationComment = cancellationComment;
+    	this.rescheduleComment = rescheduleComment;
+    	this.status = status;
+    	this.candidate = candidate;
+    	this.interviewer = interviewer;
+    	this.round = round;
+    	this.scheduleRejectionTracks = scheduleRejectionTracks;
+    	this.dateTime = dateTime;
     }
     
-    // Getters and Setter 
+    private void setDateAndTime(Date dateTime) {
+    	Map<String, String> dateAndTime = DateTimeUtil.getDateAndTimeInStringFormat(dateTime);
+    	this.date = dateAndTime.get(Constant.DATE);
+    	this.time = dateAndTime.get(Constant.TIME);
+	}
+
+	// Getters and Setter 
     public long getId() {
         return this.id;
     }
@@ -121,36 +93,28 @@ public class Schedule {
         this.id = id;
     }
     
-    public InterviewLevel getInterviewLevel() {
-        return this.interviewLevel;
-    }
-    
-    public void setInterviewLevel(InterviewLevel interviewLevel) {
-        this.interviewLevel = interviewLevel;
-    }
-    
     public InterviewType getInterviewType() {
         return this.interviewType;
     }
     
-    public void setInterviewType(InterviewType interviewType) {
+    public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public void setInterviewType(InterviewType interviewType) {
         this.interviewType = interviewType;
-    }
-    
-    public Date getDate() {
-        return this.date;
-    }
-    
-    public void setDate(Date date) {
-        this.date = date;
-    }
-    
-    public Date getTime() {
-        return this.time;
-    }
-    
-    public void setTime(Date time) {
-        this.time = time;
     }
     
     public String getInterviewFeedback() {
@@ -209,4 +173,20 @@ public class Schedule {
     public void setRound(int round) {
         this.round = round;
     }
+    
+    public List<ScheduleRejectionTrack> getScheduleRejectionTracks() {
+		return scheduleRejectionTracks;
+	}
+
+	public void setScheduleRejectionTracks(List<ScheduleRejectionTrack> scheduleRejectionTracks) {
+		this.scheduleRejectionTracks = scheduleRejectionTracks;
+	}
+    
+    public Date getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
 }

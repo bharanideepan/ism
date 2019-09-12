@@ -2,6 +2,7 @@ package com.ideas2it.ism.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +24,7 @@ import com.ideas2it.ism.common.InterviewType;
 import com.ideas2it.ism.common.CandidateStatus;
 import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.entity.Schedule;
+import com.ideas2it.ism.entity.ScheduleInfo;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
 import com.ideas2it.ism.service.ScheduleService;
 
@@ -76,12 +79,16 @@ public class ScheduleController {
      */ 
 	@RequestMapping(value = Constant.CREATE_SCHEDULE, method = RequestMethod.POST)
     public String createSchedule(HttpServletRequest request, 
-    		@ModelAttribute(Constant.SCHEDULE)Schedule schedule, Model model) {
+    		@ModelAttribute(Constant.SCHEDULE)Schedule schedule, Model model,
+    		@RequestParam(Constant.SCHEDULED_DATE)@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")Date date) {
     	long candidateId = Integer.parseInt(request.getParameter(Constant.CANDIDATE_ID));
+    	
+    	System.out.println("\n\n"+date+"\n");
+    	
     	scheduleService.addSchedule(schedule, candidateId,
     			    request.getParameter(Constant.SCHEDULED_DATE),
     			    request.getParameter(Constant.SCHEDULED_TIME),
-    			    request.getParameter(Constant.INTERVIEWER_ID));
+    			    request.getParameter(Constant.INTERVIEWER_ID), date);
     	model.addAttribute(Constant.SCHEDULE, new Schedule());
         return Constant.REDIRECT + Constant.VIEW_SCHEDULES + "?status=New";
     }
@@ -96,7 +103,11 @@ public class ScheduleController {
      */
     @RequestMapping(value = Constant.GET_SCHEDULE, method = RequestMethod.GET)  
     private String getScheduleById(@RequestParam(name = Constant.SCHEDULE_ID) long scheduleId, Model model) {
-        model.addAttribute(Constant.SCHEDULE, scheduleService.getScheduleById(scheduleId));
+    	Schedule schedule = scheduleService.getScheduleById(scheduleId);
+        model.addAttribute(Constant.SCHEDULE, schedule); 
+    	
+    	System.out.println("\n\n"+schedule.getDateTime()+"\n");
+    	       
         model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
         return Constant.VIEW_SCHEDULE_JSP;
     }
@@ -189,6 +200,11 @@ public class ScheduleController {
     			scheduleService.getScheduleAndInterviewersByTechnology(scheduleId);
         model.addAttribute(Constant.SCHEDULE, scheduleAndInterviewers.get(Constant.SCHEDULE));
         model.addAttribute(Constant.INTERVIEWERS, scheduleAndInterviewers.get(Constant.INTERVIEWERS));
+        
+        ScheduleInfo scheduleInfo = (ScheduleInfo)scheduleAndInterviewers.get(Constant.SCHEDULE);
+    	
+    	System.out.println("\n\n"+ scheduleInfo.getInterviewType()+"\n");
+    	       
         model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
         return Constant.VIEW_SCHEDULE_JSP;
     }

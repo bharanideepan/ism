@@ -1,6 +1,6 @@
 package com.ideas2it.ism.service.impl;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +18,7 @@ import com.ideas2it.ism.dao.ScheduleRepository;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.entity.Employee;
 import com.ideas2it.ism.entity.Schedule;
+import com.ideas2it.ism.entity.ScheduleInfo;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
 import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.service.CandidateService;
@@ -41,11 +42,11 @@ public class ScheduleServiceImpl implements ScheduleService {
      * {@inheritDoc}
      */	
 	public Schedule addSchedule(Schedule schedule, long candidateId,
-			String date, String time, String interviewerId) {
+			String shdate, String time, String interviewerId, Date date) {
 		Candidate candidate = candidateService.fetchCandidateById(candidateId);
 		candidate.setStatus(Result.Pending);
 		schedule.setCandidate(candidate);
-    	schedule.setDate(Date.valueOf(date));
+    	schedule.setDateTime(date);
     	if((null != interviewerId) && (!interviewerId.isEmpty())) {
 			schedule.setInterviewer(employeeService.getEmployeeById(Long.parseLong(interviewerId)));
 			mailSender.sendMail("manibharathi@ideas2it.com", "Testing", "Success");
@@ -65,6 +66,16 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleRepository.getOne(id);
 	}
 
+	public ScheduleInfo getScheduleInfoById(long id) {
+		Schedule schedule = scheduleRepository.getOne(id); 
+		return new ScheduleInfo(schedule.getId(), schedule.getInterviewType(),
+				schedule.getDateTime(), schedule.getInterviewFeedback(),
+				schedule.getCancellationComment(), schedule.getRescheduleComment(),
+				schedule.getStatus(), schedule.getCandidate(),
+				schedule.getInterviewer(), schedule.getRound(),
+				schedule.getScheduleRejectionTracks());
+	}
+	
 	public List<Schedule> getEmployeeNewSchedulesById(long employeeId) {
 		return scheduleRepository.fetchEmployeeNewSchedulesById(employeeId);
 	}
@@ -118,7 +129,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		schedule.setRescheduleComment(comment);
 		schedule.setStatus(ScheduleStatus.Rescheduled);
 		scheduleRepository.save(schedule);
-		return this.addSchedule(newSchedule, candidateId, date, time, interviewerId);
+		return null;//this.addSchedule(newSchedule, candidateId, date, time, interviewerId);
 	}
 
 	public List<Schedule> getSchedulesByStatus(ScheduleStatus status) {
@@ -127,10 +138,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	public Map<String, Object> getScheduleAndInterviewersByTechnology(long scheduleId) {
 		Map<String, Object> scheduleAndInterviewers = new HashMap<String, Object>();
-		Schedule schedule = this.getScheduleById(scheduleId);
-		scheduleAndInterviewers.put(Constant.SCHEDULE, schedule);
+		ScheduleInfo scheduleInfo = this.getScheduleInfoById(scheduleId);
+		scheduleAndInterviewers.put(Constant.SCHEDULE, scheduleInfo);
 		scheduleAndInterviewers.put(Constant.INTERVIEWERS,
-				employeeService.getEmployeesByTechnology(schedule.getCandidate().getTechnology()));
+				employeeService.getEmployeesByTechnology(scheduleInfo.getCandidate().getTechnology()));
 		return scheduleAndInterviewers;
 	}
 
