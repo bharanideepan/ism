@@ -6,13 +6,11 @@
 <html>
    <head>
       <meta charset="UTF-8">
-      <link rel="stylesheet" type="text/css" href="/css/createCandidate.css">
+      <link rel="stylesheet" type="text/css" href="/css/viewSchedule.css">
       <title>View schedule</title>
    </head>
-   <body>
-   </body>
+   <body id="background">
    <%@ include file="header.jsp" %> 
-   <div class="flex">
       <div class ="box">
          <table class="table" id="scheduleForm">
             <tr>
@@ -40,12 +38,33 @@
                <td>${schedule.status}</td>
             </tr>
             <tr>
-               <td>Interviewer:</td>
                <c:if test="${schedule.interviewer != null}">
+               <td>Interviewer:</td>
                <td>${schedule.interviewer.name}</td>
+                 <c:if test="${schedule.status == 'New'}">
+                  <td>change Interviewer:</td>
+                  <td>
+                  	 <select id="assigned" name="interviewerId" onclick="assignInterviewer('${schedule.id}')">
+                  	     <option value="">None</option>
+                  	     <c:forEach var="interviewer" items="${interviewers}">
+                             <option  
+                             value="${interviewer.id}">${interviewer.name}</option>
+                         </c:forEach>
+                  	 </select>
+                  </td>
+                 </c:if>
                </c:if>
                <c:if test="${schedule.interviewer == null}">
-               <td>Not assigned</td>
+                  <td>Assign Interviewer:</td>
+                  <td>
+                  	 <select id="assigned" name="interviewerId" onclick="assignInterviewer('${schedule.id}')">
+                  	     <option value="">None</option>
+                  	     <c:forEach var="interviewer" items="${interviewers}">
+                             <option  
+                             value="${interviewer.id}">${interviewer.name}</option>
+                         </c:forEach>
+                  	 </select>
+                  </td>
                </c:if>
             </tr>
             <c:if test="${schedule.status == 'Declined'}">
@@ -76,10 +95,10 @@
             <c:choose>
                <c:when test="${schedule.status != 'Rescheduled' && schedule.status != 'Cancelled'
                   && schedule.status != 'Selected' && schedule.status != 'Rejected'}">
-                  <tr>
+                  <!--<tr>
                      <td><input id="reshdl" type="button" onclick="getCommentBox(this.value)" value="Reschedule"></td>
-                     <!--<td><input id="cancel" type="button" onclick="getCommentBox(this.value)" value="Cancel Schedule"></td>-->
-                  </tr>
+                     <td><input id="cancel" type="button" onclick="getCommentBox(this.value)" value="Cancel Schedule"></td>
+                  </tr>-->
                </c:when>
                <c:otherwise>
                   <tr>
@@ -145,37 +164,12 @@
             </form:form>
          </table>
       </div>
-      <c:if test="${schedule.interviewer == null}">
-         <div class="box" id="assign">
-            <form action="assignInterviewer" method="post">
-               <table  class="table">
-                  <tr>
-                     <th>Name</th>
-                     <th>Department</th>
-                     <th>Select</th>
-                  </tr>
-                  <c:forEach var="interviewer" items="${interviewers}">
-                     <tr>
-                        <td align="center">${interviewer.name}</td>
-                        <td align="center">${interviewer.department}</td>
-                        <td align="center"><input type = "radio" 
-                           name="interviewerId" value="${interviewer.id}"/>
-                        </td>
-                     </tr>
-                  </c:forEach>
-                  <tr>
-                     <td colspan="3">
-                        <input type="hidden" name="scheduleId" value="${schedule.id}"/>
-                        <input type="submit" value="assign"/>
-                     </td>
-                  </tr>
-               </table>
-            </form>
-         </div>
-      </c:if>
-   </div>
    </body>
    <script>
+      function assignInterviewer(scheduleId) {
+    	  var id = document.getElementById("assigned").value;
+    	  location.href="assignInterviewer?scheduleId="+scheduleId+"&interviewerId="+id;  
+      }
       function getCommentBox(value) {
            if(value === "Reschedule") {
                document.getElementById("rescheduleForm").style.display="block";

@@ -12,8 +12,8 @@
         <div class="logo">
            	<a href="index" ><img src="/image/logo.png" width="200px" height="50px"/></a>
         </div>
-        <div id="box" >
-           	<h2 align="justify" >Interview Schedule Management</h2>
+        <div class="box" >
+           	<h2 align="center" >Interview Schedule Management</h2>
         </div>
       </div>
 

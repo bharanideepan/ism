@@ -11,13 +11,13 @@ a:link {
      }
      .table {
         margin: auto;
-        width:400px;
-        height:500px;
+        margin-top: 3%;
+        width: 30%;
         border: none;
         border-radius: 20px;
         box-shadow: 10px 10px 5px grey; 
         background:linear-gradient(to top, #dad299, #b0dab9); 
-        padding: 10px;
+        padding: 20px;
      }
     
   #save {
@@ -26,8 +26,8 @@ a:link {
     width:100px;
   }
   
-  .td {
-    color:goldenrod;
+  td {
+    padding: 10px;
   }
 
   #home {

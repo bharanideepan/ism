@@ -6,6 +6,7 @@
   
   .logo{
   	width:20%;
+  	display: inline;
   }
   
   #header{
@@ -13,10 +14,12 @@
   	font-size:20px;
   }
   
- .flex {
+ .flex { 
     display:flex;
     flex-wrap:nowrap;
   }
   .box {
-    width:80%;
+    text-align: center;
+    width:60%;
+    display: inline;
   } 

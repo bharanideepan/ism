@@ -7,10 +7,7 @@
     <link rel="stylesheet" href="/css/user.css"/>
 </head>
 <body class="bg" id="login">
-        <div id="header">
-           	<img src="/image/logo.png" width="100px" height="50px"/>
-           	<h2 id="heading">Interview Schedule Management</h2>
-        </div>
+   <%@ include file="header.jsp" %> 
         <div >
           <table class="table" align="right">
             <form:form method="post" action="loginUser" modelAttribute="user">

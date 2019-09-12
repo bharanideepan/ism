@@ -7,10 +7,7 @@
     <link rel="stylesheet" href="/css/signup.css"/>
 </head>
 <body class="bg" id="login">
-        <div id="header">
-           	<img src="/image/logo.png" width="100px" height="50px"/>
-           	<h2 id="heading">Interview Schedule Management</h2>
-        </div>
+   <%@ include file="header.jsp" %> 
     <form:form method="post" action="saveUser" modelAttribute="user">
         <table class="table">
             <tr><td align="center" colspan="2"><h2 style="color:green">Sign Up</h2></td></tr>

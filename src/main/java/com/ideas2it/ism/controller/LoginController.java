@@ -51,8 +51,6 @@ public class LoginController {
         ModelAndView model = new ModelAndView();
         String role = (String) session.getAttribute("role");
         if(null != session.getAttribute("user")) {
-        	long employeeId = (long) session.getAttribute("employee");
-
         	if(role.contains("Admin")) {
         		model.setViewName("redirect:/newSchedules");
         	} else if(role.contains("Manager")) {
@@ -60,7 +58,7 @@ public class LoginController {
         	} else if(role.contains("Recruiter")) {
         		model.setViewName("redirect:/viewCandidates");
         	} else {
-        		model.setViewName("/viewNewSchedules?id="+employeeId);
+        		model.setViewName("redirect:/newSchedules");
         	}
         } else {
         	model.setViewName("redirect:/login");
