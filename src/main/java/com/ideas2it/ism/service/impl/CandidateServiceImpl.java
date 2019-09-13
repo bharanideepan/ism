@@ -51,8 +51,8 @@ public class CandidateServiceImpl implements CandidateService {
     private CandidateDAO candidateDAO;
     @Autowired
     private ScheduleService scheduleService;
-    private final String UPLOAD_DIRECTORY = "/home/ubuntu/resume/";
-    private final String PROFILE_PIC_PATH = "http://localhost:8080/resume/";
+    private final String UPLOAD_DIRECTORY = "/home/ubuntu/Desktop/ism/src/main/webapp/image/resume/";
+    private final String PROFILE_PIC_PATH = "/image/";
     
 	public CandidateFormInfo getCandidateFormInfo() {
 		CandidateFormInfo candidateFormInfo = new CandidateFormInfo();

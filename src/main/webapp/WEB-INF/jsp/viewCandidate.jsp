@@ -30,6 +30,9 @@
                <td>${candidate.status}</td>
             </tr>
             <tr>
+               <td>Resume:</td>
+               <td><img src="${candidate.resumeFilePath}" />
+            <tr>
                <th colspan="4" align="center">Interview Details</th>
             </tr>
             <c:if test="${candidate.schedules != null}">

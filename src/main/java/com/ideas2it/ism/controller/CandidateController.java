@@ -73,7 +73,7 @@ public class CandidateController {
      * 
      * @param candidate - Created object.
      * @param model - Used to send candidate object along with request to jsp.
-     * @return
+     * @return VIEW_CANDIDATES - All candidates page is redirected.
      */
     @RequestMapping(value = Constant.SAVE_CANDIDATE, method = RequestMethod.POST)  
     private String saveCandidate(@ModelAttribute(Constant.CANDIDATE) Candidate 
@@ -96,7 +96,7 @@ public class CandidateController {
      * 
      * @param candidateId - Id of the candidate to be updated.
      * @param model - Used to send candidate object along with request to jsp.
-     * @return
+     * @return CREATE_CANDIDATE - To modify the candidate object information.
      */
     @RequestMapping(value = Constant.VIEW_CANDIDATE_FOR_UPDATE, method = RequestMethod.GET)  
     private String viewCandidateForUpdate(@RequestParam(name = Constant.CANDIDATE_ID)
@@ -120,7 +120,7 @@ public class CandidateController {
      * 
      * @param candidateId - Id of the candidate to be updated.
      * @param model - Used to send candidate object along with request to jsp.
-     * @return
+     * @return VIEW_CANDIDATE - The informations of the candidates are viewed.
      */
     @RequestMapping(value = Constant.UPDATE_CANDIDATE, method = RequestMethod.POST)  
     private String updateCandidate(@ModelAttribute(Constant.CANDIDATE) Candidate candidate, 
@@ -164,7 +164,7 @@ public class CandidateController {
      * 
      * @param candidate - Created object.
      * @param model - Used to send candidate object along with request to jsp.
-     * @return
+     * @return VIEW_CANDIDATES - Candidates objects of particular name are passed to jsp.
      */
     @RequestMapping(value = Constant.SEARCH_BY_NAME, method = RequestMethod.POST)  
     private String searchByName(@RequestParam(name = Constant.NAME) String name, 
@@ -185,7 +185,7 @@ public class CandidateController {
      * 
      * @param candidate - Created object.
      * @param model - Used to send candidate object along with request to jsp.
-     * @return
+     * @return VIEW_CANDIDATE - The informations of the candidates are viewed.
      */
     @RequestMapping(value = Constant.VIEW_PROGRESS, method = RequestMethod.GET)  
     private String viewCandidateProgress(@RequestParam(name = Constant.ID) long candidateId,
@@ -233,7 +233,7 @@ public class CandidateController {
      * 
      * @param candidate - Created object.
      * @param model - Used to send candidate object along with request to jsp.
-     * @return
+     * @return VIEW_CANDIDATES - Candidates objects of particular status are passed to jsp.
      */
     @RequestMapping(value = Constant.GET_CANDIDATES_BY_STATUS, method = RequestMethod.POST)  
     private String getCandidatesByStatus(@RequestParam(name = Constant.CANDIDATE_STATUS) CandidateStatus status, Model model) {
@@ -252,7 +252,7 @@ public class CandidateController {
      * 
      * @param candidate - Created object.
      * @param model - Used to send candidate object along with request to jsp.
-     * @return
+     * @return VIEW_CANDIDATES - Candidates objects of particular status are passed to jsp.
      */
     @RequestMapping(value = Constant.SEARCH_BY_STATUS, method = RequestMethod.GET)  
     private String searchCandidateByStatus(@RequestParam(name = Constant.RESULT) Result status,
