@@ -5,8 +5,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <link rel="stylesheet" href="/css/user.css"/>
+      <link rel="stylesheet" type="text/css" href="/css/popUp.css">
 </head>
-<body class="bg" id="login" >
+<body class="bg" id="login" onload="currentStatus('${status}');">
    <%@ include file="header.jsp" %> 
         <div >
           <table class="table">
@@ -29,5 +30,39 @@
               <tr><td><a href="createUser" color="green">create new user ?</a></td></tr>
           </table>
         </div><br>
+       <div id="pass">
+         <div class="modal-content">
+            <div id="created">Signed in Successfully</div>
+            <br>
+            <div id="updated">Bad Credentials</div>
+            <br>
+            <span class="close">&times;</span>
+         </div>
+      </div>
+      <script type="text/javascript">
+         function currentStatus(status) {
+             if (status === "created") {
+                 var modal = document.getElementById("pass");
+                 var created = document.getElementById("created");
+                 var span = document.getElementsByClassName("close")[0];
+                 modal.style.display = "block";
+                 created.style.display = "block"
+                 span.onclick = function() {
+                     modal.style.display = "none";
+                     created.style.display = "none"; 
+                  }
+             } else if (status === "badCredential") {
+                 var modal = document.getElementById("pass");
+                 var updated = document.getElementById("updated");
+                 var span = document.getElementsByClassName("close")[0];
+                 modal.style.display = "block";
+                 updated.style.display = "block"; 
+                 span.onclick = function() {
+                     modal.style.display = "none";
+                     updated.style.display = "none"; 
+                 }
+             }
+         }
+      </script>
 </body>
 </html>

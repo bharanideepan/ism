@@ -83,10 +83,13 @@ public class CandidateController {
             candidate = candidateService.saveCandidate(candidate, resume);
             model.addAttribute(Constant.STATUS, Constant.CREATED); 
             model.addAttribute(Constant.CANDIDATE, candidate); 
+        	CandidatePagenationInfo pagenationInfo = 
+        			candidateService.searchByStatus(Result.New);
+            model.addAttribute(Constant.PAGENATION_INFO, pagenationInfo); 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return Constant.REDIRECT + Constant.SEARCH_BY_STATUS + "?" + Constant.RESULT + "=New";
+        return Constant.VIEW_CANDIDATES_JSP;
     }
     
     /**

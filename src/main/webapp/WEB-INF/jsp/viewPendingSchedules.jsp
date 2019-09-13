@@ -25,6 +25,8 @@
                      <th>Department</th>
                      <th>Experience</th>
                      <th>Status</th>
+                     <th>Date</th>
+                     <th>Time</th>
                      <th>Selected</th>
                      <th>Reject</th>
                   </tr>

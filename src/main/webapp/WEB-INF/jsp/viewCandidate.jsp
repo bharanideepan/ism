@@ -26,16 +26,24 @@
                <td>${candidate.department}</td>
             </tr>
             <tr>
-               <td>Candidate status:</td>
-               <c:if test="${candidate.status != 'New'}">
+               <!--<td>Candidate status:</td>
+               <c:if test="${candidate.status != 'New' && candidate.status != 'Pending'}">
                   <c:forEach var="schedule" items="${schedules}">
-                     <c:set var="status" value="${schedule.round + 1}" scope="page"/>
+                     <c:set var="status" value="${schedule.round}" scope="page"/>
                   </c:forEach>
                <td>Cleared round ${status}</td>
                </c:if>
-               <c:if test="${candidate.status == 'New'}">
-               <td>${candidate.status}</td>
-               </c:if>
+               <c:if test="${candidate.status == 'New' || candidate.status == 'Pending'}">
+                   <c:if test="${schedule.round == '0'}">  
+                     <td>${candidate.status}</td>
+                   </c:if>
+                   <c:if test="${schedule.round != '0'}">
+                     <c:forEach var="schedule" items="${schedules}">
+                       <c:set var="status" value="${schedule.round}" scope="page"/>
+                     </c:forEach>
+                     <td>Cleared round ${status}</td>
+                   </c:if>
+               </c:if>-->
             </tr>
             <tr>
                <td>Experience:</td>
@@ -47,7 +55,7 @@
             </tr>
             <tr>
                <td>Resume:</td>
-               <td><a href="${candidate.resumeFilePath}" alt="resume">View Resume</a></td>
+               <td><a href="${candidate.resumeFilePath}" target="_blank">View Resume</a></td>
             <tr>
                <th colspan="4" align="center">Interview Details</th>
             </tr>

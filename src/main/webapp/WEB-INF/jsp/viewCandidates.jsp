@@ -13,14 +13,9 @@
       <div>
          <table align="center">
             <tr>
-               <!--<form action="searchByName" method="post">
-                  <td><input type="text" name="name" placeholder="Search By Name" required/></td>
-                  <td><input type="submit" value=&#128269;></td>
-               </form>
-               <form action="searchByStatus" method="post">-->
                   <td class="info">Search By Status</td>
                   <td>
-                     <select class="status" id="candidateStatus" name="result"  onclick="getByStatus();">
+                     <select value="{pagenationInfo.status}" class="status" id="candidateStatus" name="result"  onclick="getByStatus();">
                         <c:forEach var="result" items="${pagenationInfo.results}" >
                            <option value="${result}">${result}</option>
                         </c:forEach>
@@ -38,8 +33,8 @@
                 <tr>
                 <th>Name</th>
                 <th>Position</th>
-                <th>Email ID:</th>
-                <th>Phone No:</th>
+                <th>Email ID</th>
+                <th>Phone No</th>
                 <th>Department</th>
                 <th>Experience</th>
                 <th>Candidate Status</th>
@@ -94,8 +89,8 @@
             </div> 
            </c:forEach>
          <div class = "cards">
-           <button value =1 id = "next" class = "btn"  
-               onclick = "pagenation('${pagenationInfo.status}', this.value, '1', ${pagenationInfo.lastPageNo});">
+           <button value =1 id = "next" class = "btn" 
+              onclick = "pagenation('${pagenationInfo.status}', this.value, '1', ${pagenationInfo.lastPageNo});">
            &#10097;</button>
         </div>
       </div> 

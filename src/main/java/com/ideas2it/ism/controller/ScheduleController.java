@@ -74,6 +74,7 @@ public class ScheduleController {
     		@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")Date date,
     		@RequestParam(Constant.INTERVIEWER_ID)String interviewerId,
     		@RequestParam(Constant.CANDIDATE_ID)long candidateId) {
+        model.addAttribute(Constant.STATUS, Constant.CREATED);
     	scheduleService.addSchedule(scheduleInfo, candidateId, interviewerId, date);
         return Constant.REDIRECT + Constant.VIEW_SCHEDULES + "?status=New";
     }
