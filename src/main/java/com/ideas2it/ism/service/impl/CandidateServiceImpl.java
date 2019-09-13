@@ -67,7 +67,6 @@ public class CandidateServiceImpl implements CandidateService {
    
 	public Candidate saveCandidate(Candidate candidate, MultipartFile resume) 
 			throws IOException {
-		System.out.println(candidate);
 		candidate = saveCandidateResume(candidate, resume);
 		return candidateRepository.save(candidate);
 	}
@@ -84,8 +83,8 @@ public class CandidateServiceImpl implements CandidateService {
     
 	public CandidatePagenationInfo getPagenationInfo() throws IsmException {
 		CandidatePagenationInfo pagenationInfo = new CandidatePagenationInfo();
-		int count = (int) candidateRepository.count();
-		pagenationInfo.setCandidates(candidateDAO.fetchCandidatesByLimit(0));
+		int count =  this.totalCount(Result.New);
+		pagenationInfo.setCandidates(this.fetchCandidatesByStatus(1, Result.New));
 		pagenationInfo.setTotalCount(count);
 		List<Result> results = new ArrayList<Result>(Arrays.asList(Result.values()));
 		pagenationInfo.setResults(results);
@@ -112,7 +111,7 @@ public class CandidateServiceImpl implements CandidateService {
 	public CandidatePagenationInfo searchByStatus(Result status) throws IsmException {
 		CandidatePagenationInfo pagenationInfo = new CandidatePagenationInfo();
 		int count = this.totalCount(status);
-		pagenationInfo.setCandidates(fetchCandidatesByStatus(0, status));
+		pagenationInfo.setCandidates(this.fetchCandidatesByStatus(1, status));
 		List<Result> results = new ArrayList<Result>(Arrays.asList(Result.values()));
 		if (0 != count) {
 		    List<Integer> pages = CalculatePage.calculatePages(count, Constant.RETRIEVE_LIMIT); 
@@ -153,6 +152,8 @@ public class CandidateServiceImpl implements CandidateService {
             candidateInfo.put(Constant.POSITION, candidate.getPosition());
             candidateInfo.put(Constant.DEPARTMENT, candidate.getDepartment());
             candidateInfo.put(Constant.EXPERIENCE, candidate.getExperience());
+            candidateInfo.put(Constant.PHONE_NUMBER, candidate.getPhoneNumber());
+            candidateInfo.put(Constant.EMAIL_ID, candidate.getEmailId());
             candidateInfo.put(Constant.STATUS, candidate.getStatus());
             candidatesInfo.put(candidateInfo);
         }

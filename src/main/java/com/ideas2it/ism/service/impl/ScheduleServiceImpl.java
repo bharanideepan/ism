@@ -1,7 +1,7 @@
 package com.ideas2it.ism.service.impl;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +15,8 @@ import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.dao.ScheduleRepository;
 import com.ideas2it.ism.entity.Candidate;
-import com.ideas2it.ism.entity.Employee;
 import com.ideas2it.ism.entity.Schedule;
+import com.ideas2it.ism.info.ScheduleInfo;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
 import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.service.CandidateService;
@@ -39,43 +39,65 @@ public class ScheduleServiceImpl implements ScheduleService {
     /**
      * {@inheritDoc}
      */	
-	public Schedule addSchedule(Schedule schedule, long candidateId,
-			String date, String time, String interviewerId) {
+	public Schedule addSchedule(ScheduleInfo scheduleInfo, long candidateId, String interviewerId, Date date) {
 		Candidate candidate = candidateService.fetchCandidateById(candidateId);
 		candidate.setStatus(Result.Pending);
-		schedule.setCandidate(candidate);
-    	schedule.setDate(Date.valueOf(date));
-    	if(null != interviewerId) {
-			schedule.setInterviewer(employeeService.getEmployeeById(Long.parseLong(interviewerId)));
+		scheduleInfo.setCandidate(candidate);
+    	scheduleInfo.setDateTime(date);
+    	if((null != interviewerId) && (!interviewerId.isEmpty())) {
+			scheduleInfo.setInterviewer(employeeService.getEmployeeById(Long.parseLong(interviewerId)));
 			mailSender.sendMail("manibharathi@ideas2it.com", "Testing", "Success");
     	}
-		return scheduleRepository.save(schedule);
-	}
-	
-	public List<Schedule> fetchSchedulesByCandidateId(long candidateId) {
-		return scheduleRepository.getSchedulesByCandidateId(candidateId);
-	}
-	
-	public List<Schedule> getAllSchedules() {
-		return scheduleRepository.findAll();
+		return scheduleRepository.save(this.getScheduleByScheduleInfo(scheduleInfo));
 	}
 
+    /**
+     * {@inheritDoc}
+     */	
+	public List<ScheduleInfo> fetchScheduleInfosByCandidateId(long candidateId) {
+		return this.getScheduleInfosBySchedules(scheduleRepository.getSchedulesByCandidateId(candidateId));
+	}
+
+    /**
+     * {@inheritDoc}
+     */	
+	public List<ScheduleInfo> getAllScheduleInfos() {
+		return this.getScheduleInfosBySchedules(scheduleRepository.findAll());
+	}
+
+    /**
+     * {@inheritDoc}
+     */	
 	public Schedule getScheduleById(long id) {
 		return scheduleRepository.getOne(id);
 	}
 
-	public List<Schedule> getEmployeeNewSchedulesById(long employeeId) {
-		return scheduleRepository.fetchEmployeeNewSchedulesById(employeeId);
-	}
-	
-	@Override
-	public List<Schedule> getEmployeePendingSchedulesById(long employeeId) {
-		return scheduleRepository.fetchEmployeePendingSchedulesById(employeeId);
+    /**
+     * {@inheritDoc}
+     */	
+	public ScheduleInfo getScheduleInfoById(long id) {
+		return this.getScheduleInfoBySchedule(scheduleRepository.getOne(id));
 	}
 
-	@Override
+    /**
+     * {@inheritDoc}
+     */	
+	public List<ScheduleInfo> getEmployeeNewScheduleInfosById(long employeeId) {
+		return this.getScheduleInfosBySchedules(scheduleRepository.fetchEmployeeNewSchedulesById(employeeId));
+	}
+
+    /**
+     * {@inheritDoc}
+     */	
+	public List<ScheduleInfo> getEmployeePendingScheduleInfosById(long employeeId) {
+		return this.getScheduleInfosBySchedules(scheduleRepository.fetchEmployeePendingSchedulesById(employeeId));
+	}
+
+    /**
+     * {@inheritDoc}
+     */	
 	public Schedule updateScheduleStatus(long scheduleId, ScheduleStatus status) {
-		Schedule schedule = scheduleRepository.getOne(scheduleId);
+		Schedule schedule = this.getScheduleById(scheduleId);
 		schedule.setStatus(status);
 		if(status.equals(ScheduleStatus.Declined)) {
 			schedule.setInterviewer(null);
@@ -83,57 +105,73 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleRepository.save(schedule);
 	}
 
+    /**
+     * {@inheritDoc}
+     */	
 	public void updateResult(String feedBack, long scheduleId, String result) {
 		Schedule schedule = scheduleRepository.getOne(scheduleId);
 		schedule.setInterviewFeedback(feedBack);
-		if (result.equals(Constant.SELECTED)) {
+		if (Constant.SELECTED.equals(result)) {
 			schedule.setStatus(ScheduleStatus.Selected);
-			if(schedule.getInterviewType().equals(InterviewType.Final)) {
+			schedule.getCandidate().setStatus(
+					schedule.getInterviewType().equals(InterviewType.Final)
+					? Result.Selected
+					: Result.Cleared);
+			
+			/*if(schedule.getInterviewType().equals(InterviewType.Final)) {
 				schedule.getCandidate().setStatus(Result.Selected);
-				//candidateService.updateCandidateStatus(schedule.getCandidate().getId(), Result.Selected);
 			} else {
 				schedule.getCandidate().setStatus(Result.Cleared);
-				//candidateService.updateCandidateStatus(schedule.getCandidate().getId(), Result.Cleared);
-			}
+			}*/
+			
 		} else {
 			schedule.setStatus(ScheduleStatus.Rejected);
 			schedule.getCandidate().setStatus(Result.Rejected);	
-			//candidateService.updateCandidateStatus(schedule.getCandidate().getId(), Result.Rejected);
 		}
 		scheduleRepository.save(schedule);
 	}
   
-	public boolean cancelSchedule(Schedule scheduleInfo) {
+	//TODO-cancelSchedule
+	/*public boolean cancelSchedule(Schedule scheduleInfo) {
 		Schedule schedule = scheduleRepository.getOne(scheduleInfo.getId());
 		schedule.setCancellationComment(scheduleInfo.getCancellationComment());
 		schedule.setStatus(ScheduleStatus.Cancelled);
 		schedule = scheduleRepository.save(schedule);
 		return schedule.getStatus().equals(ScheduleStatus.Cancelled);
-	}
+	}*/
 
-	public Schedule reschedule(Schedule newSchedule, String comment,
+	//TODO-reschedule
+	/*public Schedule reschedule(Schedule newSchedule, String comment,
 			long scheduleId, long candidateId, String date, String time, String interviewerId) {
 		Schedule schedule = scheduleRepository.getOne(scheduleId);
 		schedule.setRescheduleComment(comment);
 		schedule.setStatus(ScheduleStatus.Rescheduled);
 		scheduleRepository.save(schedule);
 		return this.addSchedule(newSchedule, candidateId, date, time, interviewerId);
+	}*/
+
+    /**
+     * {@inheritDoc}
+     */	
+	public List<ScheduleInfo> getScheduleInfosByStatus(ScheduleStatus status) {
+		return this.getScheduleInfosBySchedules(scheduleRepository.getSchedulesByStatus(status));
 	}
 
-	public List<Schedule> getSchedulesByStatus(ScheduleStatus status) {
-		return scheduleRepository.getSchedulesByStatus(status);
+    /**
+     * {@inheritDoc}
+     */	
+	public Map<String, Object> getScheduleInfoAndInterviewersByTechnology(long scheduleId) {
+		Map<String, Object> scheduleInfoAndInterviewers = new HashMap<String, Object>();
+		ScheduleInfo scheduleInfo = this.getScheduleInfoById(scheduleId);
+		scheduleInfoAndInterviewers.put(Constant.SCHEDULE, scheduleInfo);
+		scheduleInfoAndInterviewers.put(Constant.INTERVIEWERS,
+				employeeService.getEmployeesByTechnology(scheduleInfo.getCandidate().getTechnology()));
+		return scheduleInfoAndInterviewers;
 	}
 
-	public Map<String, Object> getScheduleAndInterviewersByTechnology(long scheduleId) {
-		Map<String, Object> scheduleAndInterviewers = new HashMap<String, Object>();
-		Schedule schedule = this.getScheduleById(scheduleId);
-		scheduleAndInterviewers.put(Constant.SCHEDULE, schedule);
-		scheduleAndInterviewers.put(Constant.INTERVIEWERS,
-				employeeService.getEmployeesByTechnology(schedule.getCandidate().getTechnology()));
-		return scheduleAndInterviewers;
-	}
-
-	@Override
+    /**
+     * {@inheritDoc}
+     */	
 	public Schedule assignSchedule(long scheduleId, long employeeId) {
 		Schedule schedule = this.getScheduleById(scheduleId);
 		schedule.setInterviewer(employeeService.getEmployeeById(employeeId));
@@ -142,19 +180,65 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleRepository.save(schedule);
 	}
 
-	@Override
-	public Candidate getcandidateById(long candidateId) {
-		return candidateService.fetchCandidateById(candidateId);
-	}
-
-	@Override
+    /**
+     * {@inheritDoc}
+     */	
 	public Map<String, Object> getCandidateAndInterviewersByTechnology(long candidateId) {
 		Map<String, Object> candidateAndInterviewers = new HashMap<String, Object>();
-		Candidate candidate = this.getcandidateById(candidateId);
+		Candidate candidate = candidateService.fetchCandidateById(candidateId);
 		candidateAndInterviewers.put(Constant.CANDIDATE, candidate);
 		candidateAndInterviewers.put(Constant.INTERVIEWERS,
 				employeeService.getEmployeesByTechnology(candidate.getTechnology()));
 		return candidateAndInterviewers;
+	}
+
+    /**
+     * {@inheritDoc}
+     */	
+	public List<ScheduleInfo> getScheduleInfosByManager(long managerId) {
+		return this.getScheduleInfosBySchedules(scheduleRepository.fetchSchedulesByTechnology(
+				employeeService.getEmployeeById(managerId).getTechnology()));
+	}
+
+    /**
+     * {@inheritDoc}
+     */	
+	private List<ScheduleInfo> getScheduleInfosBySchedules(List<Schedule> schedules) {
+		List<ScheduleInfo> scheduleInfos = new ArrayList<ScheduleInfo>();
+		for(Schedule schedule : schedules) {
+			scheduleInfos.add(new ScheduleInfo(schedule.getId(), schedule.getInterviewType(),
+				schedule.getDateTime(), schedule.getInterviewFeedback(),
+				schedule.getCancellationComment(), schedule.getRescheduleComment(),
+				schedule.getStatus(), schedule.getCandidate(),
+				schedule.getInterviewer(), schedule.getRound(),
+				schedule.getScheduleRejectionTracks()));
+		}
+		return scheduleInfos;
+	}
+
+    /**
+     * {@inheritDoc}
+     */	
+	private ScheduleInfo getScheduleInfoBySchedule(Schedule schedule) {
+		return new ScheduleInfo(schedule.getId(), schedule.getInterviewType(),
+				schedule.getDateTime(), schedule.getInterviewFeedback(),
+				schedule.getCancellationComment(), schedule.getRescheduleComment(),
+				schedule.getStatus(), schedule.getCandidate(),
+				schedule.getInterviewer(), schedule.getRound(),
+				schedule.getScheduleRejectionTracks());
+	}
+
+    /**
+     * {@inheritDoc}
+     */	
+	private Schedule getScheduleByScheduleInfo(ScheduleInfo scheduleInfo) {
+		return new Schedule(
+				scheduleInfo.getId(), scheduleInfo.getInterviewType(),
+				scheduleInfo.getDateTime(), scheduleInfo.getInterviewFeedback(),
+				scheduleInfo.getCancellationComment(), scheduleInfo.getRescheduleComment(),
+				scheduleInfo.getStatus(), scheduleInfo.getCandidate(),
+				scheduleInfo.getInterviewer(), scheduleInfo.getRound(),
+				scheduleInfo.getScheduleRejectionTracks());
 	}
 
 }
