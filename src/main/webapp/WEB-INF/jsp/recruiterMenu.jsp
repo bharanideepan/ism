@@ -12,7 +12,6 @@
             <a href="addCandidate">Add Candidate</a>
             <a href="viewCandidates">View Candidates</a>
             <a href="viewSchedules">View Schedules</a>
-            <a href="newSchedules">Employee</a>
             <a href="logout" style="float:right">Log Out</a>
         </div>
 </body>

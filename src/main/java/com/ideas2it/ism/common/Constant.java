@@ -116,6 +116,7 @@ public class Constant {
 	// Error Constants.
 	public static final String ERROR_RETRIEVING_CANDIDATES = "Error while fetching the Candidiate details";
 	public static final String INDEX = "index";
+	public static final String UPDATE_SCHEDULE = "updateSchedule";
 }
 
    

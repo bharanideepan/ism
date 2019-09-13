@@ -8,9 +8,27 @@
       <meta charset="UTF-8">
       <title>View schedules</title>
       <link rel="stylesheet" type="text/css" href="/css/viewSchedules.css">
+         <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
+      
    </head>
    <body>
       <%@ include file="header.jsp" %> 
+      <c:if test="${role == 'Manager'}">
+        <div class="navbar">
+            <a href="newSchedules">New Schedules</a>
+            <a href="pendingSchedules">Pending Schedules</a>
+            <a href="viewSchedulesByManager">View Schedules</a>
+            <a href="logout" style="float:right">Log Out</a>
+        </div>
+      </c:if>
+      <c:if test="${role == 'Recruiter'}">
+        <div class="navbar">
+            <a href="addCandidate">Add Candidate</a>
+            <a href="viewCandidates">View Candidates</a>
+            <a href="viewSchedules">View Schedules</a>
+            <a href="logout" style="float:right">Log Out</a>
+        </div>
+      </c:if>
       <div id="dateSearch"  align="center">
       <form method="post" action="schedulesByDate">
       	<input type="date" name="shdate" required/>
@@ -30,6 +48,7 @@
                      <th>Time</th>
                      <th>Schedule Status</th>
                      <th>Interviewer</th>
+                     <th>Records</th>
                   </tr>
                   <c:set var="sNumber" value="1" scope="page"/>
                   <c:forEach var="schedule" items="${schedules}">
@@ -40,7 +59,7 @@
                         <td>${schedule.interviewType}</td>
                         <td>${schedule.date}</td>
                         <td>${schedule.time}</td>
-                        <td><a href="getScheduleWithInterviewers?scheduleId=${schedule.id}">${schedule.status}</a></td>
+                        <td>${schedule.status}</td>
                         <c:choose>
                            <c:when test="${schedule.interviewer != null}">
                               <td>${schedule.interviewer.name}</td>
@@ -49,6 +68,7 @@
                               <td>Not assigned</td>
                            </c:otherwise>
                         </c:choose>
+                        <td><a href="getScheduleWithInterviewers?scheduleId=${schedule.id}">More</a></td>
                      </tr>
                      <c:set var="sNumber" value="${sNumber+1}" scope="page"/>
                   </c:forEach>
