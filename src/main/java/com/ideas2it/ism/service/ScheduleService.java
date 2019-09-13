@@ -22,7 +22,7 @@ public interface ScheduleService {
 	 * 
 	 * @return true when the schedule added successfully and id created for that schedule else false
 	 */
-	ScheduleInfo addSchedule(ScheduleInfo scheduleInfo, long candidateId, String interviewerId, Date date);
+	Schedule addSchedule(ScheduleInfo scheduleInfo, long candidateId, String interviewerId, Date date);
 	
 	/**
 	 * For the given candidate id the schedules conducted for the particular candidate

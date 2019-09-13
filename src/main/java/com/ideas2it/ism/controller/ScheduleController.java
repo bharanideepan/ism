@@ -74,7 +74,13 @@ public class ScheduleController {
     		@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")Date date,
     		@RequestParam(Constant.INTERVIEWER_ID)String interviewerId,
     		@RequestParam(Constant.CANDIDATE_ID)long candidateId) {
+    	
+    	System.out.println("\ncontroller\n");
+    	
     	scheduleService.addSchedule(scheduleInfo, candidateId, interviewerId, date);
+    	
+    	System.out.println("\ncontroller\n");
+    	
         return Constant.REDIRECT + Constant.VIEW_SCHEDULES_BY_STATUS + "?status=New";
     }
     

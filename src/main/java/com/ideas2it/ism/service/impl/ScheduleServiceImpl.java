@@ -39,7 +39,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     /**
      * {@inheritDoc}
      */	
-	public ScheduleInfo addSchedule(ScheduleInfo scheduleInfo, long candidateId, String interviewerId, Date date) {
+	public Schedule addSchedule(ScheduleInfo scheduleInfo, long candidateId, String interviewerId, Date date) {
 		Candidate candidate = candidateService.fetchCandidateById(candidateId);
 		candidate.setStatus(Result.Pending);
 		scheduleInfo.setCandidate(candidate);
@@ -48,7 +48,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 			scheduleInfo.setInterviewer(employeeService.getEmployeeById(Long.parseLong(interviewerId)));
 			mailSender.sendMail("manibharathi@ideas2it.com", "Testing", "Success");
     	}
-		return this.getScheduleInfoBySchedule(scheduleRepository.save(this.getScheduleByScheduleInfo(scheduleInfo)));
+		return scheduleRepository.save(this.getScheduleByScheduleInfo(scheduleInfo));
 	}
 
     /**
