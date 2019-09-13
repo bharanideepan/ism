@@ -41,27 +41,29 @@
                       var view = name.link("viewCandidateForUpdate?candidateId=" + candidateId);
                       column[0].innerHTML = view;
                       column[1].innerHTML = array[j].position;
-                      column[2].innerHTML = array[j].department;
-                      column[3].innerHTML = array[j].experience; 
-                      column[4].innerHTML = array[j].status
-                      column[5].style.display =''; 
-                      column[6].style.display =''; 
-                      column[5].innerHTML =''; 
+                      column[2].innerHTML = array[j].emailId;
+                      column[3].innerHTML = array[j].phoneNumber;
+                      column[4].innerHTML = array[j].department;
+                      column[5].innerHTML = array[j].experience; 
+                      column[6].innerHTML = array[j].status
+                      column[7].style.display =''; 
+                      column[8].style.display =''; 
+                      column[7].innerHTML =''; 
                       if(('New' == array[j].status) || ('Cleared' == array[j].status)) { 
                           var scheduleBtn = document.createElement("BUTTON");
                           scheduleBtn.id ='dbtn';
                           scheduleBtn.innerHTML = "&#x1F4C5";
                           scheduleBtn.setAttribute("class", "schedule");
                           scheduleBtn.setAttribute("onclick", "scheduleCandidate("+candidateId+");");
-                          column[5].appendChild(scheduleBtn);
+                          column[7].appendChild(scheduleBtn);
                       }
-                      column[6].innerHTML =''; 
+                      column[8].innerHTML =''; 
                       var editBtn = document.createElement("BUTTON");
                       editBtn.id ='ebtn';
                       editBtn.innerHTML = "&#128065";
                       editBtn.setAttribute("class", "editButton");
                       editBtn.setAttribute("onclick", "onEdit("+candidateId+");");
-                      column[6].appendChild(editBtn); 
+                      column[8].appendChild(editBtn); 
                       j = j + 1;
                    }
                    for (var i=array.length+1 ; i<=5; i++) {
@@ -72,8 +74,10 @@
                       column[2].innerHTML = "";
                       column[3].innerHTML = "";
                       column[4].innerHTML = "";
-                      column[5].style.display ='none'; 
-                      column[6].style.display ='none'; 
+                      column[5].innerHTML = "";
+                      column[6].innerHTML = "";
+                      column[7].style.display ='none'; 
+                      column[8].style.display ='none'; 
                    }   
               } else {
                    console.log('Something went wrong..!!');

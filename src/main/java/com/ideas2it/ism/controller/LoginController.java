@@ -77,7 +77,6 @@ public class LoginController {
 	        if(userService.checkUser(user.getName(), user.getPassword())) {
 	        	session.setAttribute("user", loginUser.getName());
 	        	session.setAttribute("employee", loginUser.getEmployee().getId());
-	        	System.out.println("Role"+ session.getAttribute("role"));
 	        }
 	        model.setViewName("redirect:/");
         } catch (IsmException e) {

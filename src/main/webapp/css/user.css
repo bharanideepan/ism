@@ -1,6 +1,7 @@
 
 .button {
-  padding: 8px 20px;
+  width: 80px;
+  padding: 10px;
   font-size: 14px;
   text-align: center;
   cursor: pointer;
@@ -8,8 +9,7 @@
   color: #fff;
   background-color: #4CAF50;
   border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px #999;
+  box-shadow: 10px 10px 5px grey;
 }
 
 .button:hover {background-color: #3e8e41}
@@ -19,13 +19,25 @@
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+
+.info {
+	width: 200px;
+	font-family: verdana;
+}
+.ans{
+	width:200px;
+	border: none;
+}
+.data {
+	heigth: 300px;
+	padding: 10px;
+}
      .table {
-        margin: 20px;
+        margin: auto;
         margin-top: 5%;
         width:200px;
         height:300px;
         border: none;
-        border-radius: 20px;
         box-shadow: 10px 10px 5px grey; 
         background:linear-gradient(to top, #dad299, #b0dab9); 
         padding: 20px;

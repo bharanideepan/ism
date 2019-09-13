@@ -26,6 +26,10 @@ a:link {
     width:100px;
   }
   
+  #assigned{
+    border: none;
+  }
+  
   td {
     text-align: left;
     padding: 10px;

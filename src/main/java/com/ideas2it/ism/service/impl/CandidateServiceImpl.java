@@ -152,6 +152,8 @@ public class CandidateServiceImpl implements CandidateService {
             candidateInfo.put(Constant.POSITION, candidate.getPosition());
             candidateInfo.put(Constant.DEPARTMENT, candidate.getDepartment());
             candidateInfo.put(Constant.EXPERIENCE, candidate.getExperience());
+            candidateInfo.put(Constant.PHONE_NUMBER, candidate.getPhoneNumber());
+            candidateInfo.put(Constant.EMAIL_ID, candidate.getEmailId());
             candidateInfo.put(Constant.STATUS, candidate.getStatus());
             candidatesInfo.put(candidateInfo);
         }

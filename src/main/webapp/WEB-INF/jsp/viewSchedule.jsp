@@ -44,8 +44,8 @@
                  <c:if test="${schedule.status == 'New'}">
                   <td>change Interviewer:</td>
                   <td>
-                  	 <select id="assigned" name="interviewerId" onclick="assignInterviewer('${schedule.id}')">
-                  	     <option value="">None</option>
+                  	 <select id="assigned" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
+                  	     <option value="0">None</option>
                   	     <c:forEach var="interviewer" items="${interviewers}">
                              <option  
                              value="${interviewer.id}">${interviewer.name}</option>
@@ -57,8 +57,8 @@
                <c:if test="${schedule.interviewer == null}">
                   <td>Assign Interviewer:</td>
                   <td>
-                  	 <select id="assigned" name="interviewerId" onclick="assignInterviewer('${schedule.id}')">
-                  	     <option value="">None</option>
+                  	 <select id="assigned" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
+                  	     <option value="0">None</option>
                   	     <c:forEach var="interviewer" items="${interviewers}">
                              <option  
                              value="${interviewer.id}">${interviewer.name}</option>
@@ -168,7 +168,9 @@
    <script>
       function assignInterviewer(scheduleId) {
     	  var id = document.getElementById("assigned").value;
-    	  location.href="assignInterviewer?scheduleId="+scheduleId+"&interviewerId="+id;  
+    	  if (id != "0") {
+    	      location.href="assignInterviewer?scheduleId="+scheduleId+"&interviewerId="+id;
+    	  }
       }
       function getCommentBox(value) {
            if(value === "Reschedule") {

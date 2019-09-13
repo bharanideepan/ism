@@ -51,8 +51,8 @@
                <div id="pass">
                   <div class="modal-content">
                      <div>Comment</div>
-                     <input type="text" id="feedback" name="feedback" /><br>
-                     <input type="submit" id="saveComment" value="submit"/>
+                     <textarea id="feedback"/></textarea><br>
+                     <input type="submit" id="saveComment" value="ok"/>
                   </div>
                </div>
             </c:if>

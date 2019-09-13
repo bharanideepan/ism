@@ -18,7 +18,7 @@ import com.ideas2it.ism.dao.ScheduleRepository;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.entity.Employee;
 import com.ideas2it.ism.entity.Schedule;
-import com.ideas2it.ism.entity.ScheduleInfo;
+import com.ideas2it.ism.info.ScheduleInfo;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
 import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.service.CandidateService;

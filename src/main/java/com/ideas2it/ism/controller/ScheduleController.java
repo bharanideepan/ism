@@ -24,7 +24,7 @@ import com.ideas2it.ism.common.InterviewType;
 import com.ideas2it.ism.common.CandidateStatus;
 import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.entity.Schedule;
-import com.ideas2it.ism.entity.ScheduleInfo;
+import com.ideas2it.ism.info.ScheduleInfo;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
 import com.ideas2it.ism.service.ScheduleService;
 
