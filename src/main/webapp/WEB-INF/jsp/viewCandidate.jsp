@@ -46,6 +46,9 @@
                <td>${candidate.technology}</td>
             </tr>
             <tr>
+               <td>Resume:</td>
+               <td><a href="${candidate.resumeFilePath}" alt="resume">View Resume</a></td>
+            <tr>
                <th colspan="4" align="center">Interview Details</th>
             </tr>
             <c:if test="${schedules != null}">

@@ -11,10 +11,12 @@
    </head>
    <body>
       <%@ include file="header.jsp" %> 
+      <div id="dateSearch"  align="center">
       <form method="post" action="schedulesByDate">
       	<input type="date" name="shdate" required/>
       	<button type="submit">Search</button>
       </form>
+      </div>
       <div>
          <c:if test="${schedules != null}">
             <c:if test="${!schedules.isEmpty()}">
@@ -28,7 +30,6 @@
                      <th>Time</th>
                      <th>Schedule Status</th>
                      <th>Interviewer</th>
-                     <th>More</th>
                   </tr>
                   <c:set var="sNumber" value="1" scope="page"/>
                   <c:forEach var="schedule" items="${schedules}">
