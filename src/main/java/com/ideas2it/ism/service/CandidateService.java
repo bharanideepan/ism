@@ -2,6 +2,7 @@ package com.ideas2it.ism.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.info.CandidateFormInfo;
 import com.ideas2it.ism.info.CandidatePagenationInfo;
+import com.ideas2it.ism.info.ScheduleInfo;
 
 /**
  * All the request passed from jsp are recieved at controller,
@@ -75,9 +77,9 @@ public interface CandidateService {
 	 * The schedules assigned for the particular candidate is fetched from DB and updated in 
 	 * the candidate. 
 	 * @param candidateId - Id of the candidate whose schedules to be fetched. 
-	 * @return candidate - Candidate object with updated schedule.
+	 * @return scheduleInfos - List of Schedule info of the candidate.
 	 */
-	Candidate getCandidateProgress(long candidateId);
+	Map<String, Object> getCandidateAndProgress(long candidateId);
 
 	/**
 	 * The candidate object is fetched from DB and the given status is updated.

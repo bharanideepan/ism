@@ -1,5 +1,8 @@
 package com.ideas2it.ism.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,14 +33,11 @@ public class EmployeeController {
      * @return VIEW_CANDIDATES_JSP - Display all the fetched candidates information.
      */
     @RequestMapping(value = Constant.NEW_SCHEDULES, method = RequestMethod.GET)  
-    private String viewNewSchedules(@RequestParam(name = Constant.ID) long employeeId, 
-    		Model model) {
-        try { 
-            Employee employee = employeeService.getEmployeeWithNewSchedulesById(employeeId);
-            model.addAttribute(Constant.EMPLOYEE, employee); 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    private String viewNewSchedules(HttpServletRequest request, Model model) {
+    	System.out.println("\n\ninside\n\n");
+        model.addAttribute(Constant.SCHEDULES,
+        		employeeService.getEmployeeNewScheduleInfosById(
+        				(long) request.getSession().getAttribute("employee"))); 
         return Constant.VIEW_NEW_SCHEDULES_JSP;
     }
     
@@ -52,7 +52,7 @@ public class EmployeeController {
     private String acceptSchedule(@RequestParam(name = Constant.SCHEDULE_ID) long scheduleId, 
     		@RequestParam(name = Constant.ID) long employeeId, 
     		@RequestParam(name = Constant.CANDIDATE_ID) long candidateId, Model model) {
-        model.addAttribute(Constant.EMPLOYEE, employeeService.acceptSchedule(candidateId, 
+        model.addAttribute(Constant.SCHEDULES, employeeService.acceptAndGetNewScheduleInfos(candidateId, 
         		employeeId, scheduleId));
         return Constant.VIEW_NEW_SCHEDULES_JSP;
     }
@@ -69,7 +69,7 @@ public class EmployeeController {
     		@RequestParam(name = Constant.ID) long employeeId, 
     		@RequestParam(name = Constant.CANDIDATE_ID) long candidateId,
     		@RequestParam(name = Constant.COMMENT) String comment ,Model model) {
-        model.addAttribute(Constant.EMPLOYEE, employeeService.rejectSchedule(candidateId, 
+        model.addAttribute(Constant.SCHEDULES, employeeService.rejectAndGetNewScheduleInfos(candidateId, 
         		employeeId, scheduleId, comment));
         return Constant.VIEW_NEW_SCHEDULES_JSP;
     }
@@ -81,11 +81,11 @@ public class EmployeeController {
      * @return VIEW_CANDIDATES_JSP - Display all the fetched candidates information.
      */
     @RequestMapping(value = Constant.PENDING_SCHEDULES, method = RequestMethod.GET)  
-    private String viewPendingSchedules(@RequestParam(name = Constant.ID) long employeeId, 
-    		Model model) {
+    private String viewPendingSchedules(HttpServletRequest request, Model model) {
         try { 
-            Employee employee = employeeService.getEmployeeWithPendingSchedulesById(employeeId);
-            model.addAttribute(Constant.EMPLOYEE, employee); 
+            model.addAttribute(Constant.SCHEDULES,
+            		employeeService.getEmployeePendingScheduleInfosById(
+            				(long)request.getSession().getAttribute("employee"))); 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

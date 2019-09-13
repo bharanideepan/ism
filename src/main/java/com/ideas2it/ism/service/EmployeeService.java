@@ -4,24 +4,29 @@ import java.util.List;
 
 import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.entity.Employee;
+import com.ideas2it.ism.info.ScheduleInfo;
 
 public interface EmployeeService {
 	
 	/**
 	 * Newly assigned interview schedules for the particular employee
 	 * are fetched from the DB. Add the list of schedule is set into the employee.
+	 * 
 	 * @param employeeId  -Id of the employee whose schedules to be fetched.
-	 * @return employee - Employee along with newly assigned schedules. 
+	 * 
+	 * @return scheduleInfos - Employee along with newly assigned schedules. 
 	 */
-	Employee getEmployeeWithNewSchedulesById(long employeeId);
+	List<ScheduleInfo> getEmployeeNewScheduleInfosById(long employeeId);
 
 	/**
 	 * Pending schedules for the particular employee are fetched from the DB. 
 	 * Add the list of schedule is set into the employee.
+	 * 
 	 * @param employeeId  -Id of the employee whose schedules to be fetched.
-	 * @return employee - Employee along with newly assigned schedules. 
+	 * 
+	 * @return scheduleInfos -  
 	 */
-	Employee getEmployeeWithPendingSchedulesById(long employeeId);
+	List<ScheduleInfo> getEmployeePendingScheduleInfosById(long employeeId);
 
 	/**
 	 * When the employee accepts the assigned schedule the status of the schedule
@@ -33,7 +38,7 @@ public interface EmployeeService {
 	 * @param candidateId - Id of the candidate whose status to be updated.
 	 * @return employee - Employee along with updated schedules. 
 	 */
-	Employee acceptSchedule(long candidateId, long employeeId, long scheduleId);
+	List<ScheduleInfo> acceptAndGetNewScheduleInfos(long candidateId, long employeeId, long scheduleId);
 
 	/**
 	 * When the employee declained the assigned schedule the status of the schedule
@@ -46,7 +51,7 @@ public interface EmployeeService {
 	 * @param comment - Reason entered by the employee while declining schedule.
 	 * @return employee - Employee along with updated schedules. 
 	 */
-	Employee rejectSchedule(long candidateId, long employeeId, long scheduleId, String comment);
+	List<ScheduleInfo> rejectAndGetNewScheduleInfos(long candidateId, long employeeId, long scheduleId, String comment);
  
 	/**
 	 * Employees working in the particular technology who are interested to take 

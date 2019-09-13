@@ -6,12 +6,14 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+
 import org.json.JSONArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,7 +46,6 @@ import com.ideas2it.ism.service.CandidateService;
  */
 @Controller
 public class CandidateController {
-	//private static final Logger logger = Logger.getLogger(CandidateController.class);
 	
     @Autowired
 	private CandidateService candidateService;
@@ -60,7 +61,6 @@ public class CandidateController {
      */
     @RequestMapping(value = Constant.ADD_CANDIDATE, method = RequestMethod.GET)  
     public String addCandidateForm(Model model) { 
-    	//logger.info("logger");
         CandidateFormInfo candidateFormInfo = candidateService.getCandidateFormInfo(); 
         model.addAttribute(Constant.CANDIDATE, candidateFormInfo.getCandidate());  
         model.addAttribute(Constant.CANDIDATE_FORM_INFO, candidateFormInfo);  
@@ -150,6 +150,7 @@ public class CandidateController {
         	CandidatePagenationInfo pagenationInfo = 
         			candidateService.getPagenationInfo();
             model.addAttribute(Constant.PAGENATION_INFO, pagenationInfo); 
+            model.addAttribute(Constant.PAGENATION_INFO, pagenationInfo); 
         	model.addAttribute(Constant.CANDIDATE_STATUSES, new ArrayList<CandidateStatus>(Arrays.asList(CandidateStatus.values())));
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -186,33 +187,13 @@ public class CandidateController {
      * @param model - Used to send candidate object along with request to jsp.
      * @return
      */
-    @RequestMapping(value = Constant.SEARCH_BY_STATUS, method = RequestMethod.POST)  
-    private String searchByStatus(@RequestParam(name = Constant.RESULT) Result status,
-    		Model model) {
-        try { 
-        	CandidatePagenationInfo pagenationInfo = 
-        			candidateService.searchByStatus(status);
-            model.addAttribute(Constant.PAGENATION_INFO, pagenationInfo); 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return Constant.VIEW_CANDIDATES_JSP;
-    }
-    
-    /**
-     * Recruiter entered informations are obtained as an object.
-     * Then the object is passed to the DAO layer to store it in DB.
-     * 
-     * @param candidate - Created object.
-     * @param model - Used to send candidate object along with request to jsp.
-     * @return
-     */
     @RequestMapping(value = Constant.VIEW_PROGRESS, method = RequestMethod.GET)  
     private String viewCandidateProgress(@RequestParam(name = Constant.ID) long candidateId,
     		Model model) {
         try { 
-        	Candidate candidate = candidateService.getCandidateProgress(candidateId);
-            model.addAttribute(Constant.CANDIDATE, candidate); 
+        	Map<String, Object> candidateAndProgress = candidateService.getCandidateAndProgress(candidateId);
+            model.addAttribute(Constant.CANDIDATE, candidateAndProgress.get(Constant.CANDIDATE)); 
+            model.addAttribute(Constant.SCHEDULES, candidateAndProgress.get(Constant.SCHEDULES)); 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
