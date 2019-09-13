@@ -2995,3 +2995,20 @@ java.sql.SQLSyntaxErrorException: Unknown column 'schedule0_.date' in 'field lis
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_222]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.24.jar:9.0.24]
 	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_222]
+2019-09-13 13:00:56,502 INFO com.zaxxer.hikari.HikariDataSource [Thread-1483] HikariPool-243 - Shutdown initiated...
+2019-09-13 13:00:56,504 INFO com.zaxxer.hikari.HikariDataSource [Thread-1483] HikariPool-243 - Shutdown completed.
+2019-09-13 13:00:56,810 INFO com.ideas2it.ism.IsmApplication [restartedMain] Starting IsmApplication on ubuntu-OptiPlex-990 with PID 14332 (/home/ubuntu/Arun/ism/target/classes started by ubuntu in /home/ubuntu/Arun/ism)
+2019-09-13 13:00:56,810 INFO com.ideas2it.ism.IsmApplication [restartedMain] No active profile set, falling back to default profiles: default
+2019-09-13 13:00:57,010 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2019-09-13 13:00:57,011 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.24]
+2019-09-13 13:00:57,032 INFO org.apache.jasper.servlet.TldScanner [restartedMain] At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2019-09-13 13:00:57,033 INFO org.apache.catalina.core.ContainerBase.[Tomcat-18].[localhost].[/] [restartedMain] Initializing Spring embedded WebApplicationContext
+2019-09-13 13:00:57,063 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-244 - Starting...
+2019-09-13 13:00:57,063 WARN com.zaxxer.hikari.util.DriverDataSource [restartedMain] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2019-09-13 13:00:57,066 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-244 - Start completed.
+2019-09-13 13:00:57,069 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-09-13 13:00:57,074 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2019-09-13 13:00:57,135 INFO org.hibernate.hql.internal.QueryTranslatorFactoryInitiator [restartedMain] HHH000397: Using ASTQueryTranslatorFactory
+2019-09-13 13:00:57,261 INFO com.ideas2it.ism.IsmApplication [restartedMain] Started IsmApplication in 0.467 seconds (JVM running for 62905.207)
