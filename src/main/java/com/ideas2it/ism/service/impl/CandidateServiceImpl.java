@@ -6,7 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,9 +27,11 @@ import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.dao.CandidateRepository;
 import com.ideas2it.ism.entity.Candidate;
+import com.ideas2it.ism.entity.Schedule;
 import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.info.CandidateFormInfo;
 import com.ideas2it.ism.info.CandidatePagenationInfo;
+import com.ideas2it.ism.info.ScheduleInfo;
 import com.ideas2it.ism.service.CandidateService;
 import com.ideas2it.ism.service.ScheduleService;
 import com.ideas2it.ism.util.CalculatePage;
@@ -51,8 +55,8 @@ public class CandidateServiceImpl implements CandidateService {
     private CandidateDAO candidateDAO;
     @Autowired
     private ScheduleService scheduleService;
-    private final String UPLOAD_DIRECTORY = "/home/ubuntu/resume/";
-    private final String PROFILE_PIC_PATH = "http://localhost:8080/resume/";
+    private final String UPLOAD_DIRECTORY = "/home/ubuntu/Desktop/ism/src/main/webapp/image/";
+    private final String PROFILE_PIC_PATH = "/image/";
     
 	public CandidateFormInfo getCandidateFormInfo() {
 		CandidateFormInfo candidateFormInfo = new CandidateFormInfo();
@@ -67,7 +71,6 @@ public class CandidateServiceImpl implements CandidateService {
    
 	public Candidate saveCandidate(Candidate candidate, MultipartFile resume) 
 			throws IOException {
-		System.out.println(candidate);
 		candidate = saveCandidateResume(candidate, resume);
 		return candidateRepository.save(candidate);
 	}
@@ -76,16 +79,17 @@ public class CandidateServiceImpl implements CandidateService {
     	return candidateRepository.getOne(candidateId);
     }
     
-    public Candidate getCandidateProgress(long candidateId) {
-    	Candidate candidate = candidateRepository.getOne(candidateId);
-    	candidate.setSchedules(scheduleService.fetchSchedulesByCandidateId(candidateId));
-		return candidate;   	
+    public Map<String, Object> getCandidateAndProgress(long candidateId) {
+    	Map<String, Object> candidateAndProgress = new HashMap<String, Object>();
+    	candidateAndProgress.put(Constant.CANDIDATE, this.fetchCandidateById(candidateId)); 
+    	candidateAndProgress.put(Constant.SCHEDULES, scheduleService.fetchScheduleInfosByCandidateId(candidateId)); 
+		return candidateAndProgress;   	
     }
     
 	public CandidatePagenationInfo getPagenationInfo() throws IsmException {
 		CandidatePagenationInfo pagenationInfo = new CandidatePagenationInfo();
-		int count = (int) candidateRepository.count();
-		pagenationInfo.setCandidates(candidateDAO.fetchCandidatesByLimit(0));
+		int count =  this.totalCount(Result.New);
+		pagenationInfo.setCandidates(this.fetchCandidatesByStatus(1, Result.New));
 		pagenationInfo.setTotalCount(count);
 		List<Result> results = new ArrayList<Result>(Arrays.asList(Result.values()));
 		pagenationInfo.setResults(results);
@@ -112,7 +116,7 @@ public class CandidateServiceImpl implements CandidateService {
 	public CandidatePagenationInfo searchByStatus(Result status) throws IsmException {
 		CandidatePagenationInfo pagenationInfo = new CandidatePagenationInfo();
 		int count = this.totalCount(status);
-		pagenationInfo.setCandidates(fetchCandidatesByStatus(0, status));
+		pagenationInfo.setCandidates(this.fetchCandidatesByStatus(1, status));
 		List<Result> results = new ArrayList<Result>(Arrays.asList(Result.values()));
 		if (0 != count) {
 		    List<Integer> pages = CalculatePage.calculatePages(count, Constant.RETRIEVE_LIMIT); 
@@ -137,6 +141,9 @@ public class CandidateServiceImpl implements CandidateService {
 	public Candidate updateCandidate(Candidate candidate, MultipartFile resume) throws IOException {
 		candidate = saveCandidateResume(candidate, resume);
 		Candidate candidateToBeUpdated = candidateRepository.getOne(candidate.getId());
+		for(Schedule schedule : candidateToBeUpdated.getSchedules()) {
+			System.out.println(schedule);
+		}
 		candidate.setSchedules(candidateToBeUpdated.getSchedules());
 		candidate.setStatus(candidateToBeUpdated.getStatus());
 		return candidateRepository.save(candidate);
@@ -153,6 +160,8 @@ public class CandidateServiceImpl implements CandidateService {
             candidateInfo.put(Constant.POSITION, candidate.getPosition());
             candidateInfo.put(Constant.DEPARTMENT, candidate.getDepartment());
             candidateInfo.put(Constant.EXPERIENCE, candidate.getExperience());
+            candidateInfo.put(Constant.PHONE_NUMBER, candidate.getPhoneNumber());
+            candidateInfo.put(Constant.EMAIL_ID, candidate.getEmailId());
             candidateInfo.put(Constant.STATUS, candidate.getStatus());
             candidatesInfo.put(candidateInfo);
         }

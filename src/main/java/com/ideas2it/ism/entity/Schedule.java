@@ -73,7 +73,7 @@ public class Schedule {
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
     
-    @ManyToOne
+	@ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee interviewer;
     
@@ -84,16 +84,35 @@ public class Schedule {
     @JoinColumn(name="schedule_id")
 	private List<ScheduleRejectionTrack> scheduleRejectionTracks;
     
-    public List<ScheduleRejectionTrack> getScheduleRejectionTracks() {
-		return scheduleRejectionTracks;
-	}
-
-	public void setScheduleRejectionTracks(List<ScheduleRejectionTrack> scheduleRejectionTracks) {
-		this.scheduleRejectionTracks = scheduleRejectionTracks;
-	}
+    @Column(name = "date_time")
+    private Date dateTime;
 
 	public Schedule() {
     	this.status = ScheduleStatus.New;
+    }
+
+	public Schedule(long id,
+			InterviewType interviewType,
+			Date dateTime,
+			String interviewFeedback,
+			String cancellationComment,
+			String rescheduleComment,
+			ScheduleStatus status,
+			Candidate candidate,
+			Employee interviewer,
+			int round,
+			List<ScheduleRejectionTrack> scheduleRejectionTracks) {
+		this.id = id;
+    	this.interviewType = interviewType;
+    	this.interviewFeedback = interviewFeedback;
+    	this.cancellationComment = cancellationComment;
+    	this.rescheduleComment = rescheduleComment;
+    	this.status = status;
+    	this.candidate = candidate;
+    	this.interviewer = interviewer;
+    	this.round = round;
+    	this.scheduleRejectionTracks = scheduleRejectionTracks;
+    	this.dateTime = dateTime;
     }
     
     @Override
@@ -198,4 +217,21 @@ public class Schedule {
     public void setRound(int round) {
         this.round = round;
     }
+    
+    public List<ScheduleRejectionTrack> getScheduleRejectionTracks() {
+		return scheduleRejectionTracks;
+	}
+
+	public void setScheduleRejectionTracks(List<ScheduleRejectionTrack> scheduleRejectionTracks) {
+		this.scheduleRejectionTracks = scheduleRejectionTracks;
+	}
+	
+    public Date getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
+
 }

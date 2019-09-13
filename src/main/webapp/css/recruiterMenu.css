@@ -2,7 +2,6 @@
 
 .navbar{
   list-style-type: none;
-  width: 100%;
   overflow: hidden;
   background-color: #333;
 }
@@ -26,28 +25,3 @@
   color: white;
 }
 
-.navbar .search-container {
-  float: right;
-}
-
-.navbar input[type=text] {
-  padding: 5px;
-  margin-top: 8px;
-  font-size: 17px;
-  border: none;
-}
-
-.navbar .search-container button {
-  float: right;
-  padding: 5px 15px;
-  margin-top: 8px;
-  margin-right: 16px;
-  font-size: 17px;
-  border: none;
-  cursor: pointer;
-  background: #ccc;
-}
-
-.navbar .search-container button:hover {
-  background: #3b87d6;
-}
