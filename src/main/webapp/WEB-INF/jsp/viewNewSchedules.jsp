@@ -13,6 +13,9 @@
         <div class="navbar">
             <a href="newSchedules">New Schedules</a>
             <a href="pendingSchedules">Pending Schedules</a>
+      <c:if test="${role == 'Manager'}">
+            <a href="viewSchedulesByManager">View Schedules</a>
+      </c:if>
             <a href="logout" style="float:right">Log Out</a>
         </div>
       <div>

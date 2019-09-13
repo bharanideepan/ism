@@ -75,7 +75,7 @@ public class ScheduleController {
     		@RequestParam(Constant.INTERVIEWER_ID)String interviewerId,
     		@RequestParam(Constant.CANDIDATE_ID)long candidateId) {
     	scheduleService.addSchedule(scheduleInfo, candidateId, interviewerId, date);
-        return Constant.REDIRECT + Constant.VIEW_SCHEDULES + "?status=New";
+        return Constant.REDIRECT + Constant.VIEW_SCHEDULES_BY_STATUS + "?status=New";
     }
     
     /**
@@ -121,38 +121,60 @@ public class ScheduleController {
      * @param model - Used to send schedule object to jsp.
      * 
      * @return VIEW_SCHEDULE_JSP - 
-     
+     */
     @RequestMapping(value = Constant.RESCHEDULE, method = RequestMethod.POST)  
     private String reschedule(Model model,
-    		@ModelAttribute(Constant.SCHEDULE)Schedule newSchedule,
-    		@RequestParam(Constant.SCHEDULED_DATE)String date,
-    		@RequestParam(Constant.SCHEDULED_TIME)String time,
+    		@ModelAttribute(Constant.NEW_SCHEDULE)ScheduleInfo scheduleInfo,
     		@RequestParam(Constant.COMMENT)String comment,
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId,
-    		@RequestParam(Constant.CANDIDATE_ID)long candidateId,
-    		@RequestParam(name = Constant.INTERVIEWER_ID, required = false)String interviewerId
-    		) {
-        model.addAttribute(Constant.SCHEDULE,
-        		scheduleService.reschedule(newSchedule, comment,
-				scheduleId, candidateId, date, time, interviewerId));
-        model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
-        return Constant.VIEW_SCHEDULE_JSP;
-    }*/
- 
+    		@RequestParam(name = Constant.INTERVIEWER_ID,
+			required = false)String interviewerId,
+    		@RequestParam(Constant.SCHEDULED_DATE)
+    				@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")Date date) {
+    	
+		scheduleService.reschedule(scheduleInfo, comment, scheduleId, date, interviewerId);
+        return "redirect:/viewSchedulesByStatus?status=New";
+    }
+
     /**
-     * Gets all pending schedules.
+     * Updates the schedule .
      * 
-     * @param ModelAttribute schedule - Needs to be cancelled.
-     * @param RequestParam comment - Comment given by the client for cancelling.
+     * @param scheduleInfo - Needs to be updated.
+     * @param RequestParam comment - Comment given by the client for rescheduling.
      * @param model - Used to send schedule object to jsp.
      * 
+     * @return VIEW_SCHEDULE_JSP - 
+     */
+    @RequestMapping(value = Constant.UPDATE_SCHEDULE, method = RequestMethod.POST)  
+    private String updateSchedule(Model model,
+    		@ModelAttribute(Constant.SCHEDULE)ScheduleInfo scheduleInfo,
+    		@RequestParam(Constant.SCHEDULE_ID)long scheduleId,
+    		@RequestParam(name = Constant.INTERVIEWER_ID,
+    				required = false)String interviewerId,
+    		@RequestParam(Constant.SCHEDULED_DATE)
+    				@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")Date date) {
+    	
+        model.addAttribute(Constant.SCHEDULE,
+        		scheduleService.updateSchedule(scheduleInfo ,scheduleId, date, interviewerId));
+        model.addAttribute(Constant.NEW_SCHEDULE, new ScheduleInfo());
+        return "redirect:/viewSchedulesByStatus?status=New";
+    }
+ 
+    /**
+     * Cancels the schedule
+     * 
+     * @param scheduleId - Id of the schedule needs to be cancelled.
+     * @param RequestParam comment - Comment given by the client for cancelling.
+     * 
      * @return GET_RECRUITER_OPERATIONS - 
-     *
+     */
     @RequestMapping(value = Constant.CANCEL_SCHEDULE, method = RequestMethod.POST)  
-    private String cancelSchedule(Model model, @ModelAttribute(Constant.SCHEDULE)Schedule schedule) {
-    	scheduleService.cancelSchedule(schedule);
-        return "redirect:/schedulesByStatus?status=New";
-    }*/
+    private String cancelSchedule(@RequestParam(Constant.SCHEDULE_ID)long scheduleId,
+    		@RequestParam(Constant.COMMENT)String comment) {
+    	
+    	scheduleService.cancelSchedule(scheduleId, comment);
+        return "redirect:/viewSchedulesByStatus?status=New";
+    }
  
     /**
      * Gets interviewers available for that schedule
@@ -170,6 +192,7 @@ public class ScheduleController {
         model.addAttribute(Constant.SCHEDULE, ScheduleInfoAndInterviewers.get(Constant.SCHEDULE));
         model.addAttribute(Constant.INTERVIEWERS, ScheduleInfoAndInterviewers.get(Constant.INTERVIEWERS));
         model.addAttribute(Constant.NEW_SCHEDULE, new ScheduleInfo());
+    	model.addAttribute(Constant.TYPES, new ArrayList<InterviewType>(Arrays.asList(InterviewType.values())));
         return Constant.VIEW_SCHEDULE_JSP;
     }
  

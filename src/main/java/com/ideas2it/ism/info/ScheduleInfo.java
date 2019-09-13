@@ -82,8 +82,10 @@ public class ScheduleInfo {
     
     private void setDateAndTime(Date dateTime) {
     	Map<String, String> dateAndTime = DateTimeUtil.getDateAndTimeInStringFormat(dateTime);
-    	this.date = dateAndTime.get(Constant.DATE);
-    	this.time = dateAndTime.get(Constant.TIME);
+    	if(null != dateAndTime) {
+	    	this.date = dateAndTime.get(Constant.DATE);
+	    	this.time = dateAndTime.get(Constant.TIME);
+    	}
 	}
 
 	// Getters and Setter 
