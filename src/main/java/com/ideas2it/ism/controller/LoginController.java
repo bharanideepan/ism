@@ -46,8 +46,9 @@ public class LoginController {
     }
 
     @RequestMapping(value="/")
-    public ModelAndView index(HttpServletRequest request, HttpServletResponse response, HttpSession session)
-		                 throws ServletException, IOException {
+    public ModelAndView index(HttpServletRequest request,
+    		HttpServletResponse response, HttpSession session)
+    				throws ServletException, IOException {
         ModelAndView model = new ModelAndView();
         String role = (String) session.getAttribute("role");
         if(null != session.getAttribute("user")) {
@@ -67,7 +68,8 @@ public class LoginController {
     }
     
     @RequestMapping(value="/loginUser")
-    public ModelAndView loginUser(HttpServletRequest request, HttpServletResponse response, User user)
+    public ModelAndView loginUser(HttpServletRequest request,
+    		HttpServletResponse response, User user)
             throws ServletException, IOException, IsmException {
         ModelAndView model = new ModelAndView();
     	HttpSession session = request.getSession();

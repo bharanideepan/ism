@@ -11,6 +11,12 @@
    </head>
    <body>
       <%@ include file="header.jsp" %> 
+      <div id="dateSearch"  align="center">
+      <form method="post" action="schedulesByDate">
+      	<input type="date" name="shdate" required/>
+      	<button type="submit">Search</button>
+      </form>
+      </div>
       <div>
          <c:if test="${schedules != null}">
             <c:if test="${!schedules.isEmpty()}">
@@ -24,18 +30,17 @@
                      <th>Time</th>
                      <th>Schedule Status</th>
                      <th>Interviewer</th>
-                     <th>More</th>
                   </tr>
                   <c:set var="sNumber" value="1" scope="page"/>
                   <c:forEach var="schedule" items="${schedules}">
                      <tr>
                         <td>${sNumber}</td>
-                        <td>${schedule.candidate.name}</td>
+                        <td><a href="viewProgress?id=${schedule.candidate.id}">${schedule.candidate.name}</a></td>
                         <td>${schedule.round}</td>
                         <td>${schedule.interviewType}</td>
                         <td>${schedule.date}</td>
                         <td>${schedule.time}</td>
-                        <td>${schedule.status}</td>
+                        <td><a href="getScheduleWithInterviewers?scheduleId=${schedule.id}">${schedule.status}</a></td>
                         <c:choose>
                            <c:when test="${schedule.interviewer != null}">
                               <td>${schedule.interviewer.name}</td>
@@ -44,7 +49,6 @@
                               <td>Not assigned</td>
                            </c:otherwise>
                         </c:choose>
-                        <td><a href="getScheduleWithInterviewers?scheduleId=${schedule.id}">Click here</a></td>
                      </tr>
                      <c:set var="sNumber" value="${sNumber+1}" scope="page"/>
                   </c:forEach>

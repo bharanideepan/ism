@@ -79,4 +79,15 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 	 */
 	@Query("SELECT s FROM Schedule s inner join s.candidate c WHERE c.technology = :technology")
 	List<Schedule> fetchSchedulesByTechnology(@Param("technology")Technology technology);
+
+	
+	/**
+	 * Fetch List of schedules which are scheduled on given date
+	 * 
+	 * @param date - Date given by the client
+	 * 
+	 * @return schedules - List of schedules which are scheduled on the given date
+	 */
+	@Query("SELECT s FROM Schedule s WHERE date_time like :date%")
+	List<Schedule> getSchedulesByDate(String date);
 }
