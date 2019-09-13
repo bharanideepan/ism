@@ -38,8 +38,8 @@
                         <td>${schedule.candidate.department}</td>
                         <td>${schedule.candidate.experience}</td>
                         <td>${schedule.candidate.technology}</td>
-                        <c:if test="${schedule.candidate.status != 'New'}">
-                        <td>Cleared ${schedule.round-1}st round</td>
+                        <c:if test="${schedule.candidate.status == 'Cleared'}">
+                        <td>Cleared round ${schedule.round-1}</td>
                         </c:if>
                         <c:if test="${schedule.candidate.status == 'New'}">
                         <td>${schedule.candidate.status}</td>
@@ -62,8 +62,8 @@
                <div id="pass">
                   <div class="modal-content">
                      <div>Comment</div>
-                     <input type="text" id="feedback" name="feedback" /><br>
-                     <input type="submit" id="saveComment" value="submit"/>
+                     <textarea id="feedback"/></textarea><br>
+                     <input type="submit" id="saveComment" value="ok"/>
                   </div>
                </div>
             </c:if>

@@ -18,9 +18,9 @@
                   <td><input type="submit" value=&#128269;></td>
                </form>
                <form action="searchByStatus" method="post">-->
-                  <td>Search By Status</td>
+                  <td class="info">Search By Status</td>
                   <td>
-                     <select id="candidateStatus" name="result"  onclick="getByStatus();">
+                     <select class="status" id="candidateStatus" name="result"  onclick="getByStatus();">
                         <c:forEach var="result" items="${pagenationInfo.results}" >
                            <option value="${result}">${result}</option>
                         </c:forEach>

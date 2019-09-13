@@ -19,6 +19,20 @@
         background:linear-gradient(to top, #dad299, #b0dab9); 
         padding: 20px;
      }
+     
+     .info {
+        width: 200px;
+        margin: 50px;
+     }
+     
+     .status{
+        width: 100px;
+        margin: 50px;
+        border: none;
+        box-shadow: 5px 5px 5px grey; 
+        border-radius: 3px;
+     }
+     
     #container { width:100%; font-size: 0;}
 
 

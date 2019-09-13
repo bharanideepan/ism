@@ -38,6 +38,8 @@ public class Constant {
 	public static final String PAGENATION_INFO = "pagenationInfo";
 	public static final String CANDIDATE_ID = "candidateId";
 	public static final String CANDIDATES = "candidate";
+	public static final String PHONE_NUMBER = "phoneNumber";
+	public static final String EMAIL_ID = "emailId";
     
     // Candidate mapping constants. 
     public final static String ADD_CANDIDATE = "addCandidate";

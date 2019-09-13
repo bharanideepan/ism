@@ -53,8 +53,8 @@
                  <c:if test="${schedule.status == 'New'}">
                   <td>change Interviewer:</td>
                   <td>
-                  	 <select id="assigned" name="interviewerId" onclick="assignInterviewer('${schedule.id}')">
-                  	     <option value="">None</option>
+                  	 <select id="assigned" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
+                  	     <option value="0">None</option>
                   	     <c:forEach var="interviewer" items="${interviewers}">
                              <option  
                              value="${interviewer.id}">${interviewer.name}</option>
@@ -66,8 +66,8 @@
                <c:if test="${schedule.interviewer == null}">
                   <td>Assign Interviewer:</td>
                   <td>
-                  	 <select id="assigned" name="interviewerId" onclick="assignInterviewer('${schedule.id}')">
-                  	     <option value="">None</option>
+                  	 <select id="assigned" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
+                  	     <option value="0">None</option>
                   	     <c:forEach var="interviewer" items="${interviewers}">
                              <option  
                              value="${interviewer.id}">${interviewer.name}</option>
@@ -81,13 +81,11 @@
                   <td>Declined By:</td><td>Reason:</td>
                </tr>
                <c:forEach var="scheduleRejectionTrack" items="${schedule.scheduleRejectionTracks}">
-                  <c:set var="employeeName" value="${scheduleRejectionTrack.employee.name}"/>
-                  <c:set var="comment" value="${scheduleRejectionTrack.comment}"/>
+	              <tr>
+	                 <td>${scheduleRejectionTrack.employee.name}</td>
+	                 <td>${scheduleRejectionTrack.comment}</td>
+	              </tr>
                </c:forEach>
-                  <td>${employeeName}</td>
-               <tr>
-                  <td>${comment}</td>
-               </tr>
             </c:if>
             <form:form action="cancelSchedule" method="post" modelAttribute="schedule">
                <tr>
@@ -122,7 +120,9 @@
    <script>
       function assignInterviewer(scheduleId) {
     	  var id = document.getElementById("assigned").value;
-    	  location.href="assignInterviewer?scheduleId="+scheduleId+"&interviewerId="+id;  
+    	  if (id != "0") {
+    	      location.href="assignInterviewer?scheduleId="+scheduleId+"&interviewerId="+id;
+    	  }
       }
       function getCommentBox(value) {
            if(value === "Reschedule") {

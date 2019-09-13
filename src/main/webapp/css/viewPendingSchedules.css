@@ -3,6 +3,7 @@
   align: center;
   font-size: 20px;
   font-weight: bold;
+  border: none;
 }
 
 .reject:hover,
@@ -17,6 +18,7 @@
   align: center;
   font-size: 20px;
   font-weight: bold;
+  border: none;
 }
 
 .select:hover,
