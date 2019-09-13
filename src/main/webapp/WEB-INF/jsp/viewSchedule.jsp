@@ -11,11 +11,20 @@
    </head>
    <body id="background">
    <%@ include file="header.jsp" %> 
+   
       <div class ="box">
          <table class="table" id="scheduleForm">
             <tr>
                <td>Candidate Name:</td>
                <td>${schedule.candidate.name}</td>
+            </tr>
+            <tr>
+               <td>Candidate Experience:</td>
+               <td>${schedule.candidate.experience}</td>
+            </tr>
+            <tr>
+               <td>Technology:</td>
+               <td>${schedule.candidate.technology}</td>
             </tr>
             <tr>
                <td>Interview Type:</td>
@@ -68,16 +77,15 @@
                </c:if>
             </tr>
             <c:if test="${schedule.status == 'Declined'}">
+               <tr>
+                  <td>Declined By:</td><td>Reason:</td>
+               </tr>
                <c:forEach var="scheduleRejectionTrack" items="${schedule.scheduleRejectionTracks}">
                   <c:set var="employeeName" value="${scheduleRejectionTrack.employee.name}"/>
                   <c:set var="comment" value="${scheduleRejectionTrack.comment}"/>
                </c:forEach>
-               <tr>
-                  <td>Declined By:</td>
                   <td>${employeeName}</td>
-               </tr>
                <tr>
-                  <td>Reason:</td>
                   <td>${comment}</td>
                </tr>
             </c:if>
@@ -108,61 +116,7 @@
                </c:otherwise>
             </c:choose>
          </table>
-         <table class="table" id="rescheduleForm" style="display:none">
-            <form:form action="reschedule" method="post" modelAttribute="newSchedule">
-               <tr>
-                  <td>Candidate Name:</td>
-                  <td>${schedule.candidate.name}</td>
-               </tr>
-               <tr>
-                  <td>Interview Type</td>
-                  <td>
-                     <form:input value="${schedule.interviewType}" path="interviewType" readonly="true"/>
-                  </td>
-               </tr>
-               <tr>
-                  <td>Interview Level:</td>
-                  <td>
-                     <form:input value="${schedule.round}" path="round" readonly="true"/>
-                  </td>
-               </tr>
-               <tr>
-                  <td>Date:</td>
-                  <td><input type="date" name="shdate" required/></td>
-               </tr>
-               <tr>
-                  <td>Time:</td>
-                  <td ><input type="time" name="shtime" required/></td>
-               </tr>
-               <tr>
-                  <td>Comment:</td>
-                  <td><input name="comment" required/></td>
-               </tr>
-               <tr>
-                  <th>Select interviewer</th>
-               </tr>
-               <tr>
-                  <th>Name</th>
-                  <th>Department</th>
-                  <th>Select</th>
-               </tr>
-               <c:forEach var="interviewer" items="${interviewers}">
-                  <tr>
-                     <td align="center">${interviewer.name}</td>
-                     <td align="center">${interviewer.department}</td>
-                     <td align="center"><input type = "radio" name="interviewerId" value="${interviewer.id}"/></td>
-                  </tr>
-               </c:forEach>
-               <tr>
-                  <td></td>
-                  <td><input type="hidden" name="scheduleId" value="${schedule.id}"/>
-                     <input value="${schedule.candidate.id}" name="candidateId" type="hidden"/>
-                     <input type="submit" value="Confirm"/>
-                     <input type="reset" onclick="getCommentBox(this.value)" value="Cancel">
-                  </td>
-               </tr>
-            </form:form>
-         </table>
+         
       </div>
    </body>
    <script>

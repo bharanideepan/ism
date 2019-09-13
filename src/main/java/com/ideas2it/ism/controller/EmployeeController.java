@@ -85,7 +85,7 @@ public class EmployeeController {
         try { 
             model.addAttribute(Constant.SCHEDULES,
             		employeeService.getEmployeePendingScheduleInfosById(
-            				(long) request.getSession().getAttribute("employee"))); 
+            				(long)request.getSession().getAttribute("employee"))); 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

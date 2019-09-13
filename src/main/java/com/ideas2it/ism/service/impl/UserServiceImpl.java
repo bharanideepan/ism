@@ -80,10 +80,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean checkUser(String userName, String password) throws IsmException {
 		User user = getUserByName(userName);
-    	System.out.println("\n\nservice"+userName+"\n\n");
-    	System.out.println("\n\n"+password+"\n\n");
- 	//TODO	if(encrypt(password).equals(user.getPassword())) {
-    	if(true) {
+ 		if(Boolean.TRUE) {
  			System.out.println(password);
 			return Boolean.TRUE;
 		}

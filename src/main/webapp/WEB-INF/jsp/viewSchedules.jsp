@@ -34,7 +34,7 @@
                   <c:forEach var="schedule" items="${schedules}">
                      <tr>
                         <td>${sNumber}</td>
-                        <td>${schedule.candidate.name}</td>
+                        <td><a href="viewProgress?id=${schedule.candidate.id}">${schedule.candidate.name}</a></td>
                         <td>${schedule.round}</td>
                         <td>${schedule.interviewType}</td>
                         <td>${schedule.date}</td>

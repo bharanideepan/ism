@@ -26,12 +26,15 @@ import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.entity.Schedule;
 import com.ideas2it.ism.info.ScheduleInfo;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
+import com.ideas2it.ism.service.EmployeeService;
 import com.ideas2it.ism.service.ScheduleService;
 
 @Controller
 public class ScheduleController {
 	@Autowired
     private ScheduleService scheduleService;
+	@Autowired
+	EmployeeService employeeService;
 
     /**
      * Dispatches the create schedule page.
@@ -160,13 +163,13 @@ public class ScheduleController {
      * @return ASSIGN_INTERVIEWER_JSP - 
      */
     @RequestMapping(value = Constant.GET_SCHEDULE_WITH_INTERVIEWERS, method = RequestMethod.GET)  
-    private String getInterviewersByTechnology(Model model,
+    private String getInterviewersByTechnology(HttpServletRequest request, Model model,
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId) {
     	Map<String, Object> ScheduleInfoAndInterviewers= 
     			scheduleService.getScheduleInfoAndInterviewersByTechnology(scheduleId);
         model.addAttribute(Constant.SCHEDULE, ScheduleInfoAndInterviewers.get(Constant.SCHEDULE));
         model.addAttribute(Constant.INTERVIEWERS, ScheduleInfoAndInterviewers.get(Constant.INTERVIEWERS));
-        model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
+        model.addAttribute(Constant.NEW_SCHEDULE, new ScheduleInfo());
         return Constant.VIEW_SCHEDULE_JSP;
     }
  
@@ -184,7 +187,7 @@ public class ScheduleController {
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId,
     		@RequestParam(Constant.INTERVIEWER_ID)long employeeId) {
         model.addAttribute(Constant.SCHEDULE, scheduleService.assignSchedule(scheduleId, employeeId));
-        return Constant.REDIRECT + Constant.GET_SCHEDULE_WITH_INTERVIEWERS + "?" + Constant.SCHEDULE_ID + "=" + scheduleId;
+        return Constant.REDIRECT_SCHEDULE_WITH_INTERVIEWER + scheduleId;
     }
  
     /**
@@ -211,9 +214,9 @@ public class ScheduleController {
      */
     @RequestMapping(value = Constant.VIEW_SCHEDULES_MANAGER, method = RequestMethod.GET)  
     private String getScheduleInfosByManager(HttpServletRequest request, Model model) {
-    	HttpSession session = request.getSession();
-    	long managerId = (long) session.getAttribute("employee");
-        model.addAttribute(Constant.SCHEDULES, scheduleService.getScheduleInfosByManager(managerId));
+        model.addAttribute(Constant.SCHEDULES,
+        		scheduleService.getScheduleInfosByManager(
+        				(long) request.getSession().getAttribute(Constant.EMPLOYEE)));
         return Constant.VIEW_SCHEDULES_JSP;
     }
     

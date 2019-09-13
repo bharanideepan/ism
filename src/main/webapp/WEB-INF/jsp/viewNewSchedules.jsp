@@ -24,7 +24,10 @@
                      <th>Position</th>
                      <th>Department</th>
                      <th>Experience</th>
+                     <th>Technology</th>
                      <th>Status</th>
+                     <th>Date</th>
+                     <th>Time</th>
                      <th>Accept</th>
                      <th>Reject</th>
                   </tr>
@@ -34,6 +37,7 @@
                         <td>${schedule.candidate.position}</td>
                         <td>${schedule.candidate.department}</td>
                         <td>${schedule.candidate.experience}</td>
+                        <td>${schedule.candidate.technology}</td>
                         <c:if test="${schedule.candidate.status != 'New'}">
                         <td>Cleared ${schedule.round-1}st round</td>
                         </c:if>

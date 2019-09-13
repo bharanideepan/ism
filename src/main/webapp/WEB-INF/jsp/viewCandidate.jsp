@@ -27,7 +27,23 @@
             </tr>
             <tr>
                <td>Candidate status:</td>
+               <c:if test="${candidate.status != 'New'}">
+                  <c:forEach var="schedule" items="${schedules}">
+                     <c:set var="status" value="${schedule.round + 1}" scope="page"/>
+                  </c:forEach>
+               <td>Cleared round ${status}</td>
+               </c:if>
+               <c:if test="${candidate.status == 'New'}">
                <td>${candidate.status}</td>
+               </c:if>
+            </tr>
+            <tr>
+               <td>Experience:</td>
+               <td>${candidate.experience}</td>
+            </tr>
+            <tr>
+               <td>Technology:</td>
+               <td>${candidate.technology}</td>
             </tr>
             <tr>
                <th colspan="4" align="center">Interview Details</th>
@@ -55,31 +71,31 @@
                      </tr>
                      <c:set var="siNo" value="${siNo + 1}" scope="page"/>
                   </c:forEach>
-                  <c:if test="${check != 1}">
-                    <!-- <tr>
+                    <!-- 
+                  <c:if test="${check != 1}"><tr>
                         <th><button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">
                            &#x1F4C5;
                            </button>
                         </th>
-                     </tr> --> 
-                  </c:if>
+                     </tr>
+                  </c:if> --> 
                </c:if>
                <c:if test="${schedules.isEmpty()}">
                   <tr>
-                     <th>
-                        <button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">
+                     <th>No schedules
+                        <!-- <button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">
                         &#x1F4C5;
-                        </button>
+                        </button> -->
                      </th>
                   </tr>
                </c:if>
             </c:if>
             <c:if test="${schedules == null}">
                <tr>
-                  <th>
-                     <button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">
-                     &#x1F4C5;
-                     </button>
+                  <th>No schedules
+                        <!-- <button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">
+                        &#x1F4C5;
+                        </button> -->
                   </th>
                </tr>
             </c:if>

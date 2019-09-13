@@ -53,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<ScheduleInfo> rejectAndGetNewScheduleInfos(long candidateId, long employeeId, long scheduleId, String comment) {
         Employee employee = this.getEmployeeById(employeeId);
         Schedule schedule = scheduleService.updateScheduleStatus(scheduleId, ScheduleStatus.Declined);
-        candidateService.updateCandidateStatus(candidateId, Result.Pending);
+        candidateService.updateCandidateStatus(candidateId, Result.New);
         scheduleRejectionTrackService.createScheduleRejectionTrack(employee, schedule, comment);
 		return scheduleService.getEmployeeNewScheduleInfosById(employeeId);
 	}
