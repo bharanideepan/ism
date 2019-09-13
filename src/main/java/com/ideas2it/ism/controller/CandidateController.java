@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -191,8 +191,9 @@ public class CandidateController {
     private String viewCandidateProgress(@RequestParam(name = Constant.ID) long candidateId,
     		Model model) {
         try { 
-        	Candidate candidate = candidateService.getCandidateProgress(candidateId);
-            model.addAttribute(Constant.CANDIDATE, candidate); 
+        	Map<String, Object> candidateAndProgress = candidateService.getCandidateAndProgress(candidateId);
+            model.addAttribute(Constant.CANDIDATE, candidateAndProgress.get(Constant.CANDIDATE)); 
+            model.addAttribute(Constant.SCHEDULES, candidateAndProgress.get(Constant.SCHEDULES)); 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -174,4 +174,13 @@ public interface ScheduleService {
 	 * @return scheduleInfos - List of schedules for the manager.
 	 */
 	List<ScheduleInfo> getScheduleInfosByManager(long managerId);
+
+	/**
+	 * gets the schedules which are scheduled on the given date
+	 *  
+	 * @param date - Date which is given by the client.
+	 * 
+	 * @return scheduleInfos - List of schedules which are scheduled on that day.
+	 */
+	List<ScheduleInfo> getScheduleInfosByDate(String date);
 }
