@@ -36,20 +36,6 @@ public class ScheduleController {
     /**
      * Dispatches the create schedule page.
      *
-     * @param model - Used to send a new schedule to the dispatched page
-     *
-     * @return CREATE_SCHEDULE_JSP - Page to be displayed to the client
-     */ 
-	  @RequestMapping(value = Constant.GET_RECRUITER_OPERATIONS, method = RequestMethod.GET)
-    public String getRecruitersOperations(Model model) {
-    	model.addAttribute(Constant.SCHEDULE_STATUS, new ArrayList<ScheduleStatus>(Arrays.asList(ScheduleStatus.values())));
-    	model.addAttribute(Constant.CANDIDATE_STATUS, new ArrayList<CandidateStatus>(Arrays.asList(CandidateStatus.values())));
-        return Constant.RECRUITER_JSP;
-    }
-
-    /**
-     * Dispatches the create schedule page.
-     *
      * @param candidateId - Id of the candidate who needs to be scheduled
      * @param model - Used to send a new schedule to the dispatched page
      *
@@ -58,7 +44,7 @@ public class ScheduleController {
 	  @RequestMapping(value = Constant.SCHEDULE_FORM, method = RequestMethod.GET)
     public String getScheduleForm(@RequestParam(name = Constant.CANDIDATE_ID) 
         long candidateId, Model model) {
-    	model.addAttribute(Constant.SCHEDULE, new Schedule());
+    	model.addAttribute(Constant.SCHEDULE, new ScheduleInfo());
     	model.addAttribute(Constant.TYPES, new ArrayList<InterviewType>(Arrays.asList(InterviewType.values())));
     	Map<String, Object> candidateAndInterviewers = scheduleService.getCandidateAndInterviewersByTechnology(candidateId);
         model.addAttribute(Constant.INTERVIEWERS, candidateAndInterviewers.get(Constant.INTERVIEWERS));
@@ -70,46 +56,23 @@ public class ScheduleController {
      * Creates a schedule for a candidate.
      * It will be created by recruiter.
      *
-     * @param request - An HttpServletRequest object that contains the request
-     * the client has made of the servlet
-     * @param ModelAttribute schedule - Schedule model object from the browser
      * @param model - Used to send a new schedule to the dispatched page
+     * @param ModelAttribute scheduleInfo - Schedule model object from the browser
+     * @param ModelAttribute date - Scheduled date for the candidate(pattern="yyyy-MM-dd'T'HH:mm")
+     * @param ModelAttribute interviewerId - Id of the interviewer may or may not present
+     * @param ModelAttribute candidateId - Id of the candidate should be present
      *
      * @return VIEW_CANDIDATES - Page to be displayed to the client
      */ 
 	@RequestMapping(value = Constant.CREATE_SCHEDULE, method = RequestMethod.POST)
-    public String createSchedule(HttpServletRequest request, 
-    		@ModelAttribute(Constant.SCHEDULE)Schedule schedule, Model model,
-    		@RequestParam(Constant.SCHEDULED_DATE)@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")Date date) {
-    	long candidateId = Integer.parseInt(request.getParameter(Constant.CANDIDATE_ID));
-    	
-    	System.out.println("\n\n"+date+"\n");
-    	
-    	scheduleService.addSchedule(schedule, candidateId,
-    			    request.getParameter(Constant.SCHEDULED_DATE),
-    			    request.getParameter(Constant.SCHEDULED_TIME),
-    			    request.getParameter(Constant.INTERVIEWER_ID), date);
-    	model.addAttribute(Constant.SCHEDULE, new Schedule());
+    public String createSchedule( Model model,
+    		@ModelAttribute(Constant.SCHEDULE)ScheduleInfo scheduleInfo,
+    		@RequestParam(Constant.SCHEDULED_DATE)
+    		@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")Date date,
+    		@RequestParam(Constant.INTERVIEWER_ID)String interviewerId,
+    		@RequestParam(Constant.CANDIDATE_ID)long candidateId) {
+    	scheduleService.addSchedule(scheduleInfo, candidateId, interviewerId, date);
         return Constant.REDIRECT + Constant.VIEW_SCHEDULES + "?status=New";
-    }
- 
-    /**
-     * Gets schedule by id.
-     * 
-     * @param RequestParam scheduleId - Used to get the schedule by id.
-     * @param model - Used to send schedule object to jsp.
-     * 
-     * @return VIEW_SCHEDULE_JSP - 
-     */
-    @RequestMapping(value = Constant.GET_SCHEDULE, method = RequestMethod.GET)  
-    private String getScheduleById(@RequestParam(name = Constant.SCHEDULE_ID) long scheduleId, Model model) {
-    	Schedule schedule = scheduleService.getScheduleById(scheduleId);
-        model.addAttribute(Constant.SCHEDULE, schedule); 
-    	
-    	System.out.println("\n\n"+schedule.getDateTime()+"\n");
-    	       
-        model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
-        return Constant.VIEW_SCHEDULE_JSP;
     }
     
     /**
@@ -119,31 +82,34 @@ public class ScheduleController {
      * @param request - An HttpServletRequest object that contains the request
      * the client has made of the servlet
      * @param ModelAttribute schedule - Schedule model object from the browser
+     * 
      * @return
      */
     @RequestMapping(value = Constant.INTERVIEW_RESULT, method = RequestMethod.GET)  
-    private String updateResult(HttpServletRequest request, Model model) {
-        String feedBack = request.getParameter(Constant.FEED_BACK); 
-        long scheduleId = Long.parseLong(request.getParameter(Constant.ID));
-        String result = request.getParameter(Constant.RESULT);
+    private String updateResult(Model model,
+    		@RequestParam(Constant.FEED_BACK)String feedBack,
+    		@RequestParam(Constant.RESULT)String result,
+    		@RequestParam(Constant.ID)long scheduleId
+    		) {
         scheduleService.updateResult(feedBack, scheduleId, result);
-        return Constant.INDEX_JSP;
+        return Constant.INDEX_JSP;//TODO redirect to view schedules page
     }
   
      /** 
      * Gets all schedules by status.
      * 
-     * @param RequestParam status - Status of the schedule entered by the client.
+     * @param status - Status of the schedule entered by the client.
      * @param model - Used to send schedules to the jsp.
      * 
      * @return VIEW_SCHEDULES_JSP - 
      */
     @RequestMapping(value = Constant.VIEW_SCHEDULES_BY_STATUS, method = RequestMethod.GET)  
-    private String getSchedulesByStatus(@RequestParam(Constant.STATUS)ScheduleStatus status, Model model) {
-        model.addAttribute(Constant.SCHEDULES, scheduleService.getSchedulesByStatus(status)); 
+    private String getSchedulesByStatus(@RequestParam(Constant.STATUS)ScheduleStatus status,
+    		Model model) {
+        model.addAttribute(Constant.SCHEDULES, scheduleService.getScheduleInfosByStatus(status)); 
         return Constant.VIEW_SCHEDULES_JSP;
     }
- 
+
     /**
      * Updates the schedule status as rescheduled and also reschedules.
      * 
@@ -152,7 +118,7 @@ public class ScheduleController {
      * @param model - Used to send schedule object to jsp.
      * 
      * @return VIEW_SCHEDULE_JSP - 
-     */
+     
     @RequestMapping(value = Constant.RESCHEDULE, method = RequestMethod.POST)  
     private String reschedule(Model model,
     		@ModelAttribute(Constant.SCHEDULE)Schedule newSchedule,
@@ -168,7 +134,7 @@ public class ScheduleController {
 				scheduleId, candidateId, date, time, interviewerId));
         model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
         return Constant.VIEW_SCHEDULE_JSP;
-    }
+    }*/
  
     /**
      * Gets all pending schedules.
@@ -178,34 +144,29 @@ public class ScheduleController {
      * @param model - Used to send schedule object to jsp.
      * 
      * @return GET_RECRUITER_OPERATIONS - 
-     */
+     *
     @RequestMapping(value = Constant.CANCEL_SCHEDULE, method = RequestMethod.POST)  
     private String cancelSchedule(Model model, @ModelAttribute(Constant.SCHEDULE)Schedule schedule) {
     	scheduleService.cancelSchedule(schedule);
         return "redirect:/schedulesByStatus?status=New";
-    }
+    }*/
  
     /**
      * Gets interviewers available for that schedule
      * 
      * @param model - Used to send schedule object to jsp.
-     * @param RequestParam scheduleId - Id of the schedule to be assigned
+     * @param scheduleId - Id of the schedule to be assigned
      * 
      * @return ASSIGN_INTERVIEWER_JSP - 
      */
     @RequestMapping(value = Constant.GET_SCHEDULE_WITH_INTERVIEWERS, method = RequestMethod.GET)  
     private String getInterviewersByTechnology(Model model,
     		@RequestParam(Constant.SCHEDULE_ID)long scheduleId) {
-    	Map<String, Object> scheduleAndInterviewers= 
-    			scheduleService.getScheduleAndInterviewersByTechnology(scheduleId);
-        model.addAttribute(Constant.SCHEDULE, scheduleAndInterviewers.get(Constant.SCHEDULE));
-        model.addAttribute(Constant.INTERVIEWERS, scheduleAndInterviewers.get(Constant.INTERVIEWERS));
-        
-        ScheduleInfo scheduleInfo = (ScheduleInfo)scheduleAndInterviewers.get(Constant.SCHEDULE);
-    	
-    	System.out.println("\n\n"+ scheduleInfo.getInterviewType()+"\n");
-    	       
-        model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());
+    	Map<String, Object> ScheduleInfoAndInterviewers= 
+    			scheduleService.getScheduleInfoAndInterviewersByTechnology(scheduleId);
+        model.addAttribute(Constant.SCHEDULE, ScheduleInfoAndInterviewers.get(Constant.SCHEDULE));
+        model.addAttribute(Constant.INTERVIEWERS, ScheduleInfoAndInterviewers.get(Constant.INTERVIEWERS));
+        //model.addAttribute(Constant.NEW_SCHEDULE, new Schedule());TODO-reschedule
         return Constant.VIEW_SCHEDULE_JSP;
     }
  
@@ -234,8 +195,8 @@ public class ScheduleController {
      * @return VIEW_SCHEDULES_JSP - 
      */
     @RequestMapping(value = Constant.VIEW_SCHEDULES, method = RequestMethod.GET)  
-    private String getAllSchedules(Model model) {
-        model.addAttribute(Constant.SCHEDULES, scheduleService.getAllSchedules());
+    private String getAllScheduleInfos(Model model) {
+        model.addAttribute(Constant.SCHEDULES, scheduleService.getAllScheduleInfos());
         return Constant.VIEW_SCHEDULES_JSP;
     }
     
@@ -249,10 +210,10 @@ public class ScheduleController {
      * @return VIEW_SCHEDULES_JSP - 
      */
     @RequestMapping(value = Constant.VIEW_SCHEDULES_MANAGER, method = RequestMethod.GET)  
-    private String getSchedulesByManager(HttpServletRequest request, Model model) {
+    private String getScheduleInfosByManager(HttpServletRequest request, Model model) {
     	HttpSession session = request.getSession();
     	long managerId = (long) session.getAttribute("employee");
-        model.addAttribute(Constant.SCHEDULES, scheduleService.getSchedulesByManager(managerId));
+        model.addAttribute(Constant.SCHEDULES, scheduleService.getScheduleInfosByManager(managerId));
         return Constant.VIEW_SCHEDULES_JSP;
     }
 }

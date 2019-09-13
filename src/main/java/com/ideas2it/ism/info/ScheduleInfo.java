@@ -66,6 +66,7 @@ public class ScheduleInfo {
 			Employee interviewer,
 			int round,
 			List<ScheduleRejectionTrack> scheduleRejectionTracks) {
+		this.id = id;
     	this.interviewType = interviewType;
     	this.setDateAndTime(dateTime);
     	this.interviewFeedback = interviewFeedback;

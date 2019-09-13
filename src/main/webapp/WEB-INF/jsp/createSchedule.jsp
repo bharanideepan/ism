@@ -52,24 +52,6 @@
                      </tr>
                   </table>
                </div>
-               <div class="box">
-                  <table  class="table">
-                     <tr>
-                        <th>Name</th>
-                        <th>Department</th>
-                        <th>Assign</th>
-                     </tr>
-                     <c:forEach var="interviewer" items="${interviewers}">
-                        <tr>
-                           <td align="center">${interviewer.name}</td>
-                           <td align="center">${interviewer.department}</td>
-                           <td align="center"><input type = "radio" 
-                              name="interviewerId" value="${interviewer.id}"/>
-                           </td>
-                        </tr>
-                     </c:forEach>
-                  </table>
-               </div>
             </form:form>
          </div>
       </div>
