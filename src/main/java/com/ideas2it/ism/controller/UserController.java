@@ -14,8 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ideas2it.ism.entity.Role;
 import com.ideas2it.ism.entity.User;
-import com.ideas2it.ism.exception.IsmException;
-//import com.ideas2it.ism.service.LoginService;
 import com.ideas2it.ism.service.RoleService;
 import com.ideas2it.ism.service.UserService;
 
@@ -126,27 +124,6 @@ public class UserController {
         ModelAndView model = new ModelAndView();
         try {
             userService.update(user);
-            model.setViewName("redirect:/getUser");
-        } catch (Exception e) {
-            model.addObject("errorMessage", e);
-            model.setViewName("/error");
-        }
-        return model;
-    }
-    
-    /**
-     * Soft deletes the user by user Id
-     *
-     * @param request - Process the user request
-     * @param response - Send response back to user based on request
-     */
-    @RequestMapping("/deleteUser")
-    public ModelAndView deleteUser(HttpServletRequest request, HttpServletResponse response)
-                         throws IOException, ServletException {
-        ModelAndView model = new ModelAndView();
-        try {
-            int userId = Integer.parseInt(request.getParameter("id"));
-            userService.delete(userId);
             model.setViewName("redirect:/getUser");
         } catch (Exception e) {
             model.addObject("errorMessage", e);

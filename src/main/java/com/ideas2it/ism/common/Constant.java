@@ -109,6 +109,15 @@ public class Constant {
 	// Error Constants.
 	public static final String ERROR_RETRIEVING_CANDIDATES = "Error while fetching the Candidiate details";
 	public static final String INDEX = "index";
+	public static final String LOGIN = "login";
+	public static final String LOGIN_USER = "loginUser";
+	public static final String LOGOUT = "logout";
+	
+	public static final String ADMIN = "Admin";
+	public static final String MANAGER = "Manager";
+	public static final String RECRUITER = "Recruiter";
+	public static final String ROLE = "role";
+	public static final String USER = "user";
 }
 
    

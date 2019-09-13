@@ -12,8 +12,9 @@ public interface UserService {
      * Create new user along with their details which user registered.
      * 
      * @param user - A object which has new user details to be saved
+     * @throws IsmException 
      */
-	public void create(User user, String roleId);
+	public void create(User user, String roleId) throws IsmException;
 
 	/**
 	 * Get the existing user by using the user Id
@@ -30,12 +31,6 @@ public interface UserService {
 	 */
 	public void update(User user);
 
-	/**
-	 * Soft deletes the user by changin the status
-	 * 
-	 * @param userId
-	 */
-	public void delete(int userId);
 
 	/**
 	 * Get all the existing user which are registerd.
@@ -44,9 +39,22 @@ public interface UserService {
 	 */
 	public List<User> getUser();
 	
-    public String encrypt(String input);
+	/**
+	 * Encrypt the user entered password using MD5 Algorithm.
+	 * 
+	 * @param input - User entered password to encrypt
+	 * @return Encrypted password
+	 * @throws IsmException
+	 */
+    public String encrypt(String input) throws IsmException;
 	
-	//public void assignassignRole(String[] roleIds, User user);
-
+    /**
+     * Check the user exist for the given user name and password
+     * 
+     * @param userName - Name which user entered for authenticate
+     * @param password - Password for authenticate
+     * @return If user credentials are true
+     * @throws IsmException - If credentials are not correct
+     */
 	public boolean checkUser(String userName, String password) throws IsmException;
 }

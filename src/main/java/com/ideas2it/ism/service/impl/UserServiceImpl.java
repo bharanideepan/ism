@@ -3,10 +3,7 @@ package com.ideas2it.ism.service.impl;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.ideas2it.ism.entity.Role;
 import com.ideas2it.ism.entity.User;
 import com.ideas2it.ism.exception.IsmException;
-import com.ideas2it.ism.dao.UserDao;
 import com.ideas2it.ism.dao.UserRepository;
 import com.ideas2it.ism.service.RoleService;
 import com.ideas2it.ism.service.UserService;
@@ -23,9 +19,6 @@ import com.ideas2it.ism.service.UserService;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
-	private UserDao userDao;
 	
 	@Autowired
 	private RoleService roleService;
@@ -39,12 +32,12 @@ public class UserServiceImpl implements UserService {
     public User getUserByName(String userName) throws IsmException {
         User user = userRepository.findByName(userName);
         if(null == user) {
-        	throw new IsmException("User not found");
+        	throw new IsmException("User not found for user name "+userName);
         }
         return user;
     }
 
-	public void create(User user, String roleId) {
+	public void create(User user, String roleId) throws IsmException, NumberFormatException {
 		System.out.println("user create");
 		int id = Integer.parseInt(roleId);
         Role role = roleService.getRoleById(id);
@@ -67,11 +60,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(existingUser);
 	}
 
-	public void delete(int userId) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public List<User> getUser() {
 		return userRepository.findAll();
 	}
@@ -84,10 +72,10 @@ public class UserServiceImpl implements UserService {
  			System.out.println(password);
 			return Boolean.TRUE;
 		}
-		throw new IsmException("Bad User Credentials");
+		throw new IsmException("Incorrect Password");
 	}
 	
-    public String encrypt(String input) {
+    public String encrypt(String input) throws IsmException {
 		String password = null;
 		if(null == input) return null;
 		try {
@@ -96,7 +84,7 @@ public class UserServiceImpl implements UserService {
 			password = new BigInteger(1, digest.digest()).toString(16);
 		}
 		catch (NoSuchAlgorithmException e) {
-			System.out.println("Unable to encrypt");
+			throw new IsmException("Unable to encrypt");
 		}
 		return password;
     }
