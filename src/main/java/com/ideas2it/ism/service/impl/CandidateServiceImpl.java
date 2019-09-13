@@ -27,6 +27,7 @@ import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.dao.CandidateRepository;
 import com.ideas2it.ism.entity.Candidate;
+import com.ideas2it.ism.entity.Schedule;
 import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.info.CandidateFormInfo;
 import com.ideas2it.ism.info.CandidatePagenationInfo;
@@ -54,8 +55,8 @@ public class CandidateServiceImpl implements CandidateService {
     private CandidateDAO candidateDAO;
     @Autowired
     private ScheduleService scheduleService;
-    private final String UPLOAD_DIRECTORY = "/home/ubuntu/resume/";
-    private final String PROFILE_PIC_PATH = "http://localhost:8080/resume/";
+    private final String UPLOAD_DIRECTORY = "/home/ubuntu/Desktop/ism/src/main/webapp/image/";
+    private final String PROFILE_PIC_PATH = "/image/";
     
 	public CandidateFormInfo getCandidateFormInfo() {
 		CandidateFormInfo candidateFormInfo = new CandidateFormInfo();
@@ -140,6 +141,9 @@ public class CandidateServiceImpl implements CandidateService {
 	public Candidate updateCandidate(Candidate candidate, MultipartFile resume) throws IOException {
 		candidate = saveCandidateResume(candidate, resume);
 		Candidate candidateToBeUpdated = candidateRepository.getOne(candidate.getId());
+		for(Schedule schedule : candidateToBeUpdated.getSchedules()) {
+			System.out.println(schedule);
+		}
 		candidate.setSchedules(candidateToBeUpdated.getSchedules());
 		candidate.setStatus(candidateToBeUpdated.getStatus());
 		return candidateRepository.save(candidate);

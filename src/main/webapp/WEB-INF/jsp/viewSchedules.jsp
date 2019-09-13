@@ -29,10 +29,12 @@
             <a href="logout" style="float:right">Log Out</a>
         </div>
       </c:if>
+      <div id="dateSearch"  align="center">
       <form method="post" action="schedulesByDate">
       	<input type="date" name="shdate" required/>
       	<button type="submit">Search</button>
       </form>
+      </div>
       <div>
          <c:if test="${schedules != null}">
             <c:if test="${!schedules.isEmpty()}">
