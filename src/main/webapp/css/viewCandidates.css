@@ -10,14 +10,29 @@
          text-decoration: underline;
      }
      .table {
-        width:1000px;
-        height:400px;
+        width:70%;
+        margin-top: 5%;
         margin: auto;
         border: none;
         border-radius: 20px;
         box-shadow: 10px 10px 5px grey; 
-        background:linear-gradient(to right, #ffefba, #ffffff);
+        background:linear-gradient(to top, #dad299, #b0dab9); 
+        padding: 20px;
      }
+     
+     .info {
+        width: 200px;
+        margin: 50px;
+     }
+     
+     .status{
+        width: 100px;
+        margin: 50px;
+        border: none;
+        box-shadow: 5px 5px 5px grey; 
+        border-radius: 3px;
+     }
+     
     #container { width:100%; font-size: 0;}
 
 
@@ -94,7 +109,7 @@
   #body {
      background:linear-gradient(to bottom, #141E30 20%, #243B55 100%);
   }
-  .td {
+  td {
      text-align:center;
   }
 .footer {

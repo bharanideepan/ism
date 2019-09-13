@@ -11,9 +11,8 @@ a:link {
      }
      .table {
         margin: auto;
-        width: 30%;
-        height: 400px;
-        margin-top: 3%;
+        margin-top: 5%;
+        width: 40%;
         border: none;
         border-radius: 20px;
         box-shadow: 10px 10px 5px grey; 
@@ -27,19 +26,52 @@ a:link {
     width:100px;
   }
   
-  .td {
-    color:goldenrod;
+  #assigned{
+    border: none;
   }
   
-  .flex {
+  td {
+    text-align: left;
+    padding: 10px;
+  }
+
+  #home {
+    height: 100%;
+    width:100%; 
+    font-size: 0;
+   }
+    #home {width: 20%; }
+   .cards {
+      display:inline-block;
+      margin:10px;
+      float:left;
+   }
+ .flex {
     display:flex;
     flex-wrap:nowrap;
   }
   .box {
     width:50%;
-  }  
+  } 
   
-     #background{
+    #heading{
+  	position:relative;
+  	top:-50px;
+  	left:400px;
+  }
+  
+  #logo{
+  	position:relative;
+  	top:20px;
+  	left:0px;
+  }
+  
+  #header{
+  	height:75px;
+  	font-size:20px;
+  }
+  
+   #background{
        background-image: url("/image/login1.jpeg");
        background-repeat: no-repeat;
        background-size: 100% 700px;

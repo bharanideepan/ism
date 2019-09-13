@@ -51,8 +51,9 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value="/")
-    public ModelAndView index(HttpServletRequest request, HttpServletResponse response, HttpSession session)
-		                 throws ServletException, IOException {
+    public ModelAndView index(HttpServletRequest request,
+    		HttpServletResponse response, HttpSession session)
+    				throws ServletException, IOException {
         ModelAndView model = new ModelAndView();
         String role = (String) session.getAttribute(Constant.ROLE);
         if(null != session.getAttribute(Constant.USER)) {

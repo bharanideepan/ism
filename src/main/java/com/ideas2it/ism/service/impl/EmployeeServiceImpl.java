@@ -11,6 +11,7 @@ import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.dao.EmployeeRepository;
 import com.ideas2it.ism.entity.Employee;
 import com.ideas2it.ism.entity.Schedule;
+import com.ideas2it.ism.info.ScheduleInfo;
 import com.ideas2it.ism.service.CandidateService;
 import com.ideas2it.ism.service.EmployeeService;
 import com.ideas2it.ism.service.ScheduleRejectionTrackService;
@@ -35,43 +36,32 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	ScheduleRejectionTrackService scheduleRejectionTrackService;
 
-	@Override
-	public Employee getEmployeeWithNewSchedulesById(long employeeId) {
-        Employee employee = employeeRepository.getOne(employeeId);
-        employee.setSchedules(scheduleService.getEmployeeNewSchedulesById(employeeId));
-		return employee;
+	public List<ScheduleInfo> getEmployeeNewScheduleInfosById(long employeeId) {
+		return scheduleService.getEmployeeNewScheduleInfosById(employeeId);
 	}
 
-	@Override
-	public Employee getEmployeeWithPendingSchedulesById(long employeeId) {
-        Employee employee = employeeRepository.getOne(employeeId);
-        employee.setSchedules(scheduleService.getEmployeePendingSchedulesById(employeeId));
-		return employee;
+	public List<ScheduleInfo> getEmployeePendingScheduleInfosById(long employeeId) {
+		return scheduleService.getEmployeePendingScheduleInfosById(employeeId);
 	}
 
-	public Employee acceptSchedule(long candidateId, long employeeId, long scheduleId) {
-        Employee employee = employeeRepository.getOne(employeeId);
+	public List<ScheduleInfo> acceptAndGetNewScheduleInfos(long candidateId, long employeeId, long scheduleId) {
         scheduleService.updateScheduleStatus(scheduleId, ScheduleStatus.Pending);
         candidateService.updateCandidateStatus(candidateId, Result.Pending);
-        employee.setSchedules(scheduleService.getEmployeeNewSchedulesById(employeeId));      
-		return employee;
+		return scheduleService.getEmployeeNewScheduleInfosById(employeeId);
 	}
 
-	@Override
-	public Employee rejectSchedule(long candidateId, long employeeId, long scheduleId, String comment) {
-        Employee employee = employeeRepository.getOne(employeeId);
+	public List<ScheduleInfo> rejectAndGetNewScheduleInfos(long candidateId, long employeeId, long scheduleId, String comment) {
+        Employee employee = this.getEmployeeById(employeeId);
         Schedule schedule = scheduleService.updateScheduleStatus(scheduleId, ScheduleStatus.Declined);
-        candidateService.updateCandidateStatus(candidateId, Result.Pending);
+        candidateService.updateCandidateStatus(candidateId, Result.New);
         scheduleRejectionTrackService.createScheduleRejectionTrack(employee, schedule, comment);
-        employee.setSchedules(scheduleService.getEmployeeNewSchedulesById(employeeId));      
-		return employee;
+		return scheduleService.getEmployeeNewScheduleInfosById(employeeId);
 	}
 	
 	public List<Employee> getEmployeesByTechnology(Technology technology) {
 		return employeeRepository.fetchEmployeesByTechnology(technology);
 	}
 
-	@Override
 	public Employee getEmployeeById(long employeeId) {
 		return employeeRepository.getOne(employeeId);
 	}

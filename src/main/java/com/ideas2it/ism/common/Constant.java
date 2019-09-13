@@ -23,6 +23,9 @@ public class Constant {
 	public static final String PAGE_NO = "pageNo";
 	public static final int RETRIEVE_LIMIT = 5;
 	public static final String APPLICATION_JSON = "application/json";
+	public static final String DATE = "date";
+	public static final String TIME = "time";
+	public static final String USER = "user";
     
 	// Candidate constants.
     public static final  String CANDIDATE = "candidate";
@@ -35,6 +38,8 @@ public class Constant {
 	public static final String PAGENATION_INFO = "pagenationInfo";
 	public static final String CANDIDATE_ID = "candidateId";
 	public static final String CANDIDATES = "candidate";
+	public static final String PHONE_NUMBER = "phoneNumber";
+	public static final String EMAIL_ID = "emailId";
     
     // Candidate mapping constants. 
     public final static String ADD_CANDIDATE = "addCandidate";
@@ -105,6 +110,8 @@ public class Constant {
 	public static final String VIEW_SCHEDULES_BY_STATUS = "viewSchedulesByStatus";
 	public static final String VIEW_SCHEDULES = "viewSchedules";
 	public static final String VIEW_SCHEDULES_MANAGER = "viewSchedulesByManager";
+	public static final String SCHEDULES_BY_DATE = "schedulesByDate";
+	public static final String REDIRECT_SCHEDULE_WITH_INTERVIEWER = REDIRECT + GET_SCHEDULE_WITH_INTERVIEWERS + "?" + SCHEDULE_ID + "=";
 	
 	// Error Constants.
 	public static final String ERROR_RETRIEVING_CANDIDATES = "Error while fetching the Candidiate details";
@@ -117,7 +124,6 @@ public class Constant {
 	public static final String MANAGER = "Manager";
 	public static final String RECRUITER = "Recruiter";
 	public static final String ROLE = "role";
-	public static final String USER = "user";
 }
 
    
