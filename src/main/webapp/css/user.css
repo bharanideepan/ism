@@ -1,66 +1,56 @@
+#loginForm {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 200px; /* Location of the box */
+  left: 10%;
+  top: 10%;
+  width: 50%; /* Full width */
+  height: 50%; /* Full height */
+  padding-left:34%;
+}
+.background {
+  font-family: -webkit-body;
+  font-size: 20px;
+  color: cornsilk;
+  filter: url();
+  display:flex;
+  }
+  
+.bg {
+  background-color:#F0FFFF;
+  padding: 10%;
+  box-shadow: 5px 5px 5px; 
+  }
+form input.name {
+  background-image: url("/image/user.png");
+  background-position: 220px 10px;
+}
 
-.button {
-  width: 80px;
-  padding: 10px;
-  font-size: 14px;
-  text-align: center;
+.btn-primary {
+    color: #fff;
+    background-color: #19568a;
+    border-color: #2e6da4;
+}
+
+.close {
+  color: red;
+  align: right;
+  font-size: 30px;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
   cursor: pointer;
-  outline: none;
-  color: #fff;
-  background-color: #4CAF50;
-  border: none;
-  box-shadow: 10px 10px 5px grey;
 }
 
-.button:hover {background-color: #3e8e41}
-
-.button:active {
-  background-color: #3e8e41;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
+label{
+	color: #333;
 }
 
-.info {
-	width: 200px;
-	font-family: verdana;
+.content {
+	color: #333;
+	width:500px
 }
-.ans{
-	width:200px;
-	border: none;
-}
-.data {
-	heigth: 300px;
-	padding: 10px;
-}
-     .table {
-        margin: auto;
-        margin-top: 5%;
-        width:200px;
-        height:300px;
-        border: none;
-        box-shadow: 10px 10px 5px grey; 
-        background:linear-gradient(to top, #dad299, #b0dab9); 
-        padding: 20px;
-     }
-
-   #login{
-       background-image: url("/image/login1.jpeg");
-       background-repeat: no-repeat;
-       background-size: 100% 700px;
-   }
-   #heading{
-  	position:relative;
-  	top:-50px;
-  	left:400px;
-  }
-  
-  #logo{
-  	position:relative;
-  	top:20px;
-  	left:0px;
-  }
-  
-  #header{
-  	height:75px;
-  	font-size:20px;
-  }

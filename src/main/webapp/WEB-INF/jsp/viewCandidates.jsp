@@ -11,7 +11,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   
 </head>
-<body>
+<body style="background-color:#F0FFFF;">
 <%@ include file="header.jsp" %>     
 
 <nav class="navbar navbar-inverse">
