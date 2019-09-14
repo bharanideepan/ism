@@ -79,6 +79,10 @@ public class LoginController {
     	    session.setAttribute("role", loginUser.getRole().getName());
 	        if(userService.checkUser(user.getName(), user.getPassword())) {
 	        	session.setAttribute("user", loginUser.getName());
+	        	
+	            System.out.println("session" +loginUser.getEmployee().getId());
+
+	        	
 	        	session.setAttribute("employee", loginUser.getEmployee().getId());
 	        }
 	        model.setViewName("redirect:/");
@@ -93,7 +97,6 @@ public class LoginController {
     public ModelAndView logout(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        System.out.println("session" +session);
         if(null != session) {
         	session.invalidate();
         }

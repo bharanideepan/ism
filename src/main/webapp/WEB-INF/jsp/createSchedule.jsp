@@ -18,9 +18,16 @@
       <a class="navbar-brand" href="#">ISM</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="viewSchedules">View Schedules</a></li>
-      <li><a href="addCandidate">Add Candidate</a></li>
-      <li><a href="viewCandidates">View New Candidates</a></li>
+      <c:if test="${role == 'Recruiter'}">
+      <li><a href="viewSchedules">Schedules</a></li>      
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Candidates <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="addCandidate">Add</a></li>
+          <li><a href="viewCandidates">View</a></li>
+        </ul>
+      </li>
+      </c:if>
       <li><a href="logout">Log Out</a></li>
     </ul>
   </div>

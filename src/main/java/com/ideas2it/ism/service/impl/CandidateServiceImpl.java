@@ -141,9 +141,6 @@ public class CandidateServiceImpl implements CandidateService {
 	public Candidate updateCandidate(Candidate candidate, MultipartFile resume) throws IOException {
 		candidate = saveCandidateResume(candidate, resume);
 		Candidate candidateToBeUpdated = candidateRepository.getOne(candidate.getId());
-		for(Schedule schedule : candidateToBeUpdated.getSchedules()) {
-			System.out.println(schedule);
-		}
 		candidate.setSchedules(candidateToBeUpdated.getSchedules());
 		candidate.setStatus(candidateToBeUpdated.getStatus());
 		return candidateRepository.save(candidate);

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
-<!DOCTYPE html>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
+<!DOCTYPE html> 
 <html>
    <head>
       <meta charset="UTF-8">
@@ -22,7 +22,6 @@
       <a class="navbar-brand" href="#">ISM</a>
     </div>
     <ul class="nav navbar-nav">
-      <c:if test="${role == 'Manager'}">   
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Schedules <span class="caret"></span></a>
         <ul class="dropdown-menu">
@@ -37,34 +36,28 @@
           <li><a href="pendingSchedules">Pending <span class="badge">${noOfPendingSchedules}</span></a></li>
         </ul>
       </li>
-      </c:if>
-      
-      <c:if test="${role == 'Recruiter'}">
-      <li><a href="viewSchedules">Schedules</a></li>      
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Candidates <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="addCandidate">Add</a></li>
-          <li><a href="viewCandidates">View</a></li>
-        </ul>
-      </li>
-      </c:if>
+      <!-- <c:if test="${role == 'Recruiter'}">
+      <li class="active"><a href="viewSchedules">View Schedules</a></li>
+      <li><a href="addCandidate">Add Candidate</a></li>
+      <li><a href="viewCandidates">View New Candidates</a></li>
+      </c:if> -->
       <li><a href="logout">Log Out</a></li>
     </ul>
-	    <div class="navbar-form navbar-right" >
+	    <form class="navbar-form navbar-right" action="schedulesByDate" method="post">
 	      <div class="form-group">
-	        <input id="enteredDate" value="" type="date" class="form-control" name="shdate" required>
+	        <input type="date" class="form-control" name="shdate" required>
 	      </div>
-	      <button onclick="getByDate()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-	    </div>
+	      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+	    </form>
   </div>
 </nav>
 
 		<div>
-         <c:if test="${pagenationInfo.scheduleInfos != null}">
-            <c:if test="${!pagenationInfo.scheduleInfos.isEmpty()}">
-               <table class = "table" id="contentTable">
+         <c:if test="${schedules != null}">
+            <c:if test="${!schedules.isEmpty()}">
+               <table class = "table">
                   <tr>
+                     <th>S.No.</th>
                      <th>Candidate Name</th>
                      <th>Round</th>
                      <th>Interview Type</th>
@@ -74,8 +67,10 @@
                      <th>Interviewer</th>
                      <th>Records</th>
                   </tr>
-                  <c:forEach var="schedule" items="${pagenationInfo.scheduleInfos}">
+                  <c:set var="sNumber" value="1" scope="page"/>
+                  <c:forEach var="schedule" items="${schedules}">
                      <tr>
+                        <td>${sNumber}</td>
                         <td><a href="viewProgress?id=${schedule.candidate.id}">${schedule.candidate.name}</a></td>
                         <td>${schedule.round}</td>
                         <td>${schedule.interviewType}</td>
@@ -91,29 +86,13 @@
                            </c:otherwise>
                         </c:choose>
                         <td>
-        <a href="getScheduleWithInterviewers?scheduleId=${schedule.id}">&#9776;</a></td>
+        <a href="getScheduleWithInterviewers?scheduleId=${schedule.id}"><span class="glyphicon glyphicon-list-alt"></span></a></td>
                      </tr>
+                     <c:set var="sNumber" value="${sNumber+1}" scope="page"/>
                   </c:forEach>
                </table>
             </c:if>
-         <div>
-          <div>
-            <button value =1  id = "back" 
-               onclick = "pagenation('${pagenationInfo.searchedDate}', this.value, '-1', ${pagenationInfo.lastPageNo});"
-               class = "btn">&#10096;</button>
-          </div>
-            <c:forEach var="page" items="${pagenationInfo.pages}">
-            <div>
-            <button class = "btn" onclick = "pagenation('${pagenationInfo.searchedDate}', ${page}, 'page', ${pagenationInfo.lastPageNo});">${page}</button>          
-            </div> 
-           </c:forEach>
-         <div>
-           <button value =1 id = "next" 
-            onclick = "pagenation('${pagenationInfo.searchedDate}', this.value, '1', ${pagenationInfo.lastPageNo});"
-           class = "btn">&#10097;</button>
-        </div>
-      </div> 
-            <c:if test="${pagenationInfo.scheduleInfos.isEmpty()}">
+            <c:if test="${schedules.isEmpty()}">
                <table class = "table">
                   <tr>
                      <th>No results available for your search</th>
@@ -121,7 +100,7 @@
                </table>
             </c:if>
          </c:if>
-         <c:if test="${pagenationInfo.scheduleInfos == null}">
+         <c:if test="${schedules == null}">
             <table class = "table">
                <tr>
                   <th>No results available for your search</th>
@@ -129,6 +108,15 @@
             </table>
          </c:if>
       </div>
-      <script src="/js/schedulePagenation.js"></script>
+       <div id="pass">
+         <div class="modal-content">
+            <div id="created">Created Successfully</div>
+            <br>
+            <div id="updated">Updated Successfully</div>
+            <br>
+            <span class="close">&times;</span>
+         </div>
+      </div>
+ 
    </body>
 </html>
