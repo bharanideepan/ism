@@ -25,8 +25,8 @@
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Candidates <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="addCandidate">Add</a></li>
-          <li><a href="viewCandidates">View</a></li>
+          <li><a href="addCandidate"><span class="glyphicon glyphicon-plus"></span> Add Candidate</a></li>
+          <li><a href="viewCandidates">View Candidates</a></li>
         </ul>
       </li>
       </c:if>
@@ -127,6 +127,7 @@
         
 	      <c:if test="${pagenationInfo.pages.size() != 1}">
         
+        <div class="page" align="center">
          	 <ul class="pagination">
 			  <li>
 			  	<button class = "btn" value =1  id = "back" onclick = "pagenation('${pagenationInfo.status}', this.value, '-1', ${pagenationInfo.lastPageNo});">
@@ -144,7 +145,8 @@
            			Next
        			</button>
    			  </li>
-			</ul>       
+			</ul>    
+			</div>   
 			
 			</c:if>
 			

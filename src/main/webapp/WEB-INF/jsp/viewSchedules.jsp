@@ -13,8 +13,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   
+        <link rel="stylesheet" type="text/css" href="/css/ism.css">   
+  
    </head>
-   <body>   
+   <body> 
+   
       <%@ include file="header.jsp" %> 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -44,8 +47,8 @@
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Candidates <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="addCandidate">Add</a></li>
-          <li><a href="viewCandidates">View</a></li>
+          <li><a href="addCandidate"><span class="glyphicon glyphicon-plus"></span> Add Candidate</a></li>
+          <li><a href="viewCandidates">View Candidates</a></li>
         </ul>
       </li>
       </c:if>
@@ -97,22 +100,32 @@
                </table>
             </c:if>
          <div>
-          <div>
-            <button value =1  id = "back" 
-               onclick = "pagenation('${pagenationInfo.searchedDate}', this.value, '-1', ${pagenationInfo.lastPageNo});"
-               class = "btn">&#10096;</button>
-          </div>
-            <c:forEach var="page" items="${pagenationInfo.pages}">
-            <div>
-            <button class = "btn" onclick = "pagenation('${pagenationInfo.searchedDate}', ${page}, 'page', ${pagenationInfo.lastPageNo});">${page}</button>          
-            </div> 
-           </c:forEach>
-         <div>
-           <button value =1 id = "next" 
-            onclick = "pagenation('${pagenationInfo.searchedDate}', this.value, '1', ${pagenationInfo.lastPageNo});"
-           class = "btn">&#10097;</button>
-        </div>
-      </div> 
+        
+	      <c:if test="${pagenationInfo.pages.size() != 1}">
+        
+        <div class="page" align="center">
+         	 <ul class="pagination">
+				  <li>
+				  	<button value =1  id = "back" 
+	               onclick = "pagenation('${pagenationInfo.searchedDate}', this.value, '-1', ${pagenationInfo.lastPageNo});"
+	               class = "btn">Previous</button>
+	       		  </li>
+       		  
+	            <c:forEach var="page" items="${pagenationInfo.pages}">
+	 				 <li>
+	 				 	<button class = "btn" onclick = "pagenation('${pagenationInfo.searchedDate}', ${page}, 'page',
+	 				 		${pagenationInfo.lastPageNo});">${page}</button>
+			 		</li>
+	           </c:forEach>
+           
+	              <li>
+				  	<button value =1 id = "next" onclick = "pagenation('${pagenationInfo.searchedDate}', this.value, '1',
+				  		${pagenationInfo.lastPageNo});" class = "btn">Next</button>
+	   			  </li>
+			</ul>       
+			</div>
+			</c:if>
+         
             <c:if test="${pagenationInfo.scheduleInfos.isEmpty()}">
                <table class = "table">
                   <tr>
