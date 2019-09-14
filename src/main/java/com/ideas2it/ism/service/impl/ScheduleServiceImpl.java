@@ -16,6 +16,7 @@ import com.ideas2it.ism.common.Constant;
 import com.ideas2it.ism.common.InterviewType;
 import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.ScheduleStatus;
+import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.dao.ScheduleDAO;
 import com.ideas2it.ism.dao.ScheduleRepository;
 import com.ideas2it.ism.entity.Candidate;
@@ -335,6 +336,27 @@ public class ScheduleServiceImpl implements ScheduleService {
 		schedule.setInterviewType(scheduleInfo.getInterviewType());
 		schedule.setRound(scheduleInfo.getRound());
 		return scheduleRepository.save(schedule);
+	}
+
+	@Override
+	public Map<String, Object> getSchedulesAndCounts(long managerId) {
+		Map<String, Object> schedulesAndCounts = new HashMap<String, Object>();
+		schedulesAndCounts.put(Constant.SCHEDULES,
+				this.getScheduleInfosByManager(managerId));
+		schedulesAndCounts.put(Constant.NO_OF_NEW,
+				this.getEmployeeNewScheduleInfosById(managerId).size());
+		schedulesAndCounts.put(Constant.NO_OF_PENDING,
+				this.getEmployeePendingScheduleInfosById(managerId).size());
+		schedulesAndCounts.put(Constant.NO_OF_DECLINED,
+				this.getDeclinedScheduleInfosByManagerId(managerId).size());
+		return schedulesAndCounts;
+	}
+
+	@Override
+	public List<ScheduleInfo> getDeclinedScheduleInfosByManagerId(long managerId) {
+		return this.getScheduleInfosBySchedules(scheduleRepository
+				.fetchDeclinedSchedulesByTechnology(employeeService
+						.getEmployeeById(managerId).getTechnology()));
 	}
 
 }

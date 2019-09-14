@@ -8,6 +8,8 @@
 </head>
 <body class="bg" id="login">
    <%@ include file="header.jsp" %> 
+   
+  
     <form:form method="post" action="saveUser" modelAttribute="user">
         <table class="table">
             <tr><td align="center" colspan="2"><h2 style="color:green">Sign Up</h2></td></tr>

@@ -91,4 +91,15 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 	 */
 	@Query("SELECT s FROM Schedule s WHERE date_time like :date%")
 	List<Schedule> getSchedulesByDate(String date);
+	
+	/**
+	 * Fetch List of pending schedules for a particular employee. Each schedule consist
+	 * of the employeeId. With the help of the employee id list of schedule is fetched. 
+	 * 
+	 * @param employeeId - Id of the employee whose newly assigned schedule to be fetched.
+	 * @return schedules - List of pending schedules for the particular employee.
+	 * If there is no schedule is assigned empty list is passed.
+	 */
+	@Query("SELECT s FROM Schedule s inner join s.candidate c WHERE c.technology = :technology and s.status = 'Declined'")
+	List<Schedule> fetchDeclinedSchedulesByTechnology(@Param("technology")Technology technology);
 }

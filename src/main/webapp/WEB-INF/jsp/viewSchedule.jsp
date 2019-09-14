@@ -22,15 +22,32 @@
       <a class="navbar-brand" href="#">ISM</a>
     </div>
     <ul class="nav navbar-nav">
-      <c:if test="${role == 'Manager'}">
-      <li class="active"><a href="viewSchedulesByManager">View Schedules</a></li>
-      <li><a href="newSchedules">New Schedules</a></li>
-      <li><a href="pendingSchedules">Pending Schedules</a></li>
+      <c:if test="${role == 'Manager'}">   
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Schedules <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="declinedSchedules">Declined <span class="badge">${noOfDeclinedSchedules}</span></a></li>
+          <li><a href="viewSchedulesByManager">All</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Your Schedules <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="newSchedules">New <span class="badge">${noOfNewSchedules}</span></a></li>
+          <li><a href="pendingSchedules">Pending <span class="badge">${noOfPendingSchedules}</span></a></li>
+        </ul>
+      </li>
       </c:if>
+      
       <c:if test="${role == 'Recruiter'}">
-      <li class="active"><a href="viewSchedules">View Schedules</a></li>
-      <li><a href="addCandidate">Add Candidate</a></li>
-      <li><a href="viewCandidates">View New Candidates</a></li>
+      <li><a href="viewSchedules">Schedules</a></li>      
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Candidates <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="addCandidate">Add</a></li>
+          <li><a href="viewCandidates">View</a></li>
+        </ul>
+      </li>
       </c:if>
       <li><a href="logout">Log Out</a></li>
     </ul>

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.json.JSONArray;
 
 import com.ideas2it.ism.common.ScheduleStatus;
+import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.entity.Schedule;
 import com.ideas2it.ism.info.ScheduleInfo;
 import com.ideas2it.ism.info.SchedulePagenationInfo;
@@ -57,6 +58,16 @@ public interface ScheduleService {
 	 * If there is no schedule is assigned empty list is passed.
 	 */
 	List<ScheduleInfo> getEmployeePendingScheduleInfosById(long employeeId);
+
+	/**
+	 * For the given employee id the pending schedules for the particular employee
+	 * is fetch and returned as list.
+	 * 
+	 * @param employeeId - Id of the employee whose newly assigned schedule to be fetched.
+	 * @return schedules - List of pending schedules for the particular employee.
+	 * If there is no schedule is assigned empty list is passed.
+	 */
+	List<ScheduleInfo> getDeclinedScheduleInfosByManagerId(long managerId);
 
 	/**
 	 * The schedule is fetched from DB and the given status is updated.
@@ -191,6 +202,19 @@ public interface ScheduleService {
 	 */
 	List<ScheduleInfo> getScheduleInfosByManager(long managerId);
 
+
+	/**
+	 * Schedules of certain manager are retrieved based on his department.
+	 * From the id the manager object is fetched and the department is obtained
+	 * and corresponding schedules are retrieved.
+	 *  
+	 * @param managerId - Id of the manager whose department schedules to be fetched.
+	 * 
+	 * @return schedulesAndCounts - List of schedules for the manager,
+	 * Number of new Schedule, number of pending schedules and number of rejected schedules.
+	 */
+	Map<String, Object> getSchedulesAndCounts(long managerId);
+	
 	/**
 	 * gets the schedules which are scheduled on the given date
 	 *  
