@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +13,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="/css/user.css"/>
   <style>
   body {
     font: 400 15px Lato, sans-serif;
@@ -28,12 +30,11 @@
   h4 {
     font-size: 19px;
     line-height: 1.375em;
-    color: #303030;
     font-weight: 400;
     margin-bottom: 30px;
   }  
   .jumbotron {
-    background-color: #f4511e;
+    background-color: #333;
     color: #fff;
     padding: 100px 25px;
     font-family: Montserrat, sans-serif;
@@ -64,7 +65,7 @@
   }
   .carousel-control.right, .carousel-control.left {
     background-image: none;
-    color: #f4511e;
+    color: #333;
   }
   .carousel-indicators li {
     border-color: #f4511e;
@@ -122,7 +123,7 @@
   }
   .navbar {
     margin-bottom: 0;
-    background-color: #f4511e;
+    background-color: #333;
     z-index: 9999;
     border: 0;
     font-size: 12px !important;
@@ -135,7 +136,7 @@
     color: #fff !important;
   }
   .navbar-nav li a:hover, .navbar-nav li.active a {
-    color: #f4511e !important;
+    color: #333 !important;
     background-color: #fff !important;
   }
   .navbar-default .navbar-toggle {
@@ -145,7 +146,7 @@
   footer .glyphicon {
     font-size: 20px;
     margin-bottom: 20px;
-    color: #f4511e;
+    color: #333;
   }
   .slideanim {visibility:hidden;}
   .slide {
@@ -190,6 +191,15 @@
       font-size: 150px;
     }
   }
+  .glyphicon-plus-sign {
+     color: #f4511e;
+  }
+  .glyphicon-eye-open {
+     color: #f4511e;
+  }
+  .glyphicon-ok-sign {
+     color: #f4511e;
+  }
   </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
@@ -207,9 +217,9 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#about">ABOUT</a></li>
         <li><a href="#services">HELP</a></li>
+        <li><a href="#features">FEATURE</a></li>
         <li><a href="#contact">CONTACT</a></li>
-        <li><a href="/login">LOGIN</a></li>
-
+        <li><a onclick="loginForm()">LOGIN</a></li>
       </ul>
     </div>
   </div>
@@ -221,29 +231,23 @@
 </div>
 
 <!-- Container (About Section) -->
-<div id="about" class="container-fluid">
-  <div class="row">
-    <div class="col-sm-8">
-      <h2>About</h2><br>
-      <h4>Employees are the valuable assert of a company.</h4><br>
+<div id="about" class="container-fluid text-center">
+      <h2>About</h2>
+      <h4>Employees are the valuable assert of a company.</h4>
       <h4>Here we help to manage an entire interview process to select our valuable assert.
-      </br>You can schedule an interview and mangae it with an ease.</h4><br>
-      <p></p>
-    </div>
-    <div class="col-sm-4">
-      <span class="glyphicon glyphicon-signal logo"></span>
-    </div>
-  </div>
+      </br>You can schedule an interview and mangae it with an ease.
+      </h4><br>
 </div>
 
 <!-- Container (Services Section) -->
 <div id="services" class="container-fluid text-center">
   <h2>Help</h2>
-  <h2>Status &nbsp calrifications</h2>
+  <h2>Status &nbsp Descriptions</h2>
   <br>
   <div class="row">
+  </div>
   <div class="col-sm-6">
-      <h2>Candidate &nbsp Status &nbsp Description</h2><br>
+      <h2 align="left">Candidate &nbsp Status &nbsp Description</h2><br>
       <h4 align="left" >New - When a candidate is newly added. <br><br>
           Pending - When a candidate is assigned for an interview.<br><br>
           Cleared - When a candidate clears the interview assinged.<br><br>
@@ -253,7 +257,7 @@
       <p></p>
   </div>
    <div class="col-sm-6">
-      <h2>Schedule &nbsp Status &nbsp Description</h2><br>
+      <h2 align="left">Schedule &nbsp Status &nbsp Description</h2><br>
       <h4 align="left">New - When a new schedule is assinged for a candidate. <br><br>
           Selected - When a candidate is selected for the company.<br><br>
           Rejected - When a candidate is rejected in the interview. <br><br>
@@ -264,6 +268,63 @@
           
       <p></p>
   </div>
+  </div>
+</div>
+<div id="features" class="container-fluid text-center">
+  <h2>FEATURES</h2>
+  <h4>ADMIN</h4>
+  <div class="row slideanim">
+    <div class="col-sm-12">
+      <span class="btn-lg glyphicon glyphicon-plus-sign"></span>
+      <h4>ADD &nbsp USER</h4>
+      <p>Add new users</p>
+    </div>
+  </div>
+  <h4>Recruiter</h4>
+  <br>
+  <div class="row slideanim">
+    <div class="col-sm-4">
+      <span class="btn-lg glyphicon glyphicon-plus-sign"></span>
+      <h4>ADD &nbsp CANDIDATE</h4>
+      <p>Recruiter can add new candidates</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="btn-lg glyphicon glyphicon-eye-open"></span>
+      <h4>VIEW &nbsp CANDIDATES</h4>
+      <p>View added candidates</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="btn-lg glyphicon glyphicon-plus-sign"></span>
+      <h4>ADD &nbsp SCHEDULE</h4>
+      <p>Add an interview for candidate</p>
+    </div>
+  </div>
+  <br><br>
+  <h4>Manager</h4>
+  <div class="row slideanim">
+    <div class="col-sm-6">
+      <span class="btn-lg glyphicon glyphicon-ok-sign"></span>
+      <h4>ASSIGN &nbsp SCHEDULE</h4>
+      <p>Assign schedule for a candidate</p>
+    </div>
+    <div class="col-sm-6">
+      <span class="btn-lg glyphicon glyphicon-eye-open"></span>
+      <h4>VIEW &nbsp SCHEDULES</h4>
+      <p>View all schedules</p>
+    </div>
+  </div>
+    <h4>Employee</h4>
+  <div class="row slideanim">
+    <div class="col-sm-6">
+      <span class="btn-lg glyphicon glyphicon-eye-open"></span>
+      <h4>VIEW &nbsp NEW &nbsp SCHEDULE</h4>
+      <p>Newly assigned schedules</p>
+    </div>
+    <div class="col-sm-6">
+      <span class="btn-lg glyphicon glyphicon-eye-open"></span>
+      <h4>VIEW &nbsp PENDING &nbsp SCHEDULES</h4>
+      <p>Accepted Schedules</p>
+    </div>
   </div>
 </div>
 
@@ -291,8 +352,35 @@
   </a>
   <p>Visit our page <a href="https://www.ideas2it.com" title="Visit w3schools">Copyrights &copy; Ideas2It</a></p>
 </footer>
-
+    <div class="blur">
+	    <div id="loginForm" class="loginform">
+	       <div class="bg">
+			<form:form  id="loginUser" method="post" action="loginUser" modelAttribute="user">
+		      <div class="bg" align="center"><img  src="/image/user.png" height="50px" width="50px"/></div><br>
+			  <div class="form-group">
+			    <label for="email" >Username:</label><br>
+			    <form:input type="text" placeholder="Username" path="name" class="form-control"/>
+			  </div><br>
+			  <div class="form-group">
+			    <label for="pwd">Password:</label>
+			    <form:input type="password" placeholder="Password" path="password" class="form-control"/>
+			  </div><br>
+			  <div align="center;"><input type="submit" onclick="login()" class="btn btn-primary" value="Login">
+                <button id ="close" style="float:right; background-color:#B22222;" class="btn btn-primary">Close</button>
+              </div>
+			</form:form>
+		</div>
+		</div>
+    </div>
 <script>
+function loginForm() {
+	var form = document.getElementById('loginForm');
+	form.style.display="block";
+}
+function login() {
+	var form = document.getElementById('loginUser');
+	form.action = "loginUser";
+}
 $(document).ready(function(){
   // Add smooth scrolling to all links in navbar + footer link
   $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
