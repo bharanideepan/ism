@@ -40,6 +40,7 @@ public class Constant {
 	public static final String CANDIDATES = "candidate";
 	public static final String PHONE_NUMBER = "phoneNumber";
 	public static final String EMAIL_ID = "emailId";
+	public static final String NEW = "New";
     
     // Candidate mapping constants. 
     public final static String ADD_CANDIDATE = "addCandidate";
@@ -56,6 +57,8 @@ public class Constant {
 
 	// Employee constants.	
 	public static final String EMPLOYEE = "employee";
+	public static final String EMPLOYEES = "employees";
+	public static final String EMPLOYEE_ID = "employeeId";
 	
 	// Schedule constants.
 	public static final String SCHEDULES = "schedules";
@@ -116,6 +119,7 @@ public class Constant {
 	// Error Constants.
 	public static final String ERROR_RETRIEVING_CANDIDATES = "Error while fetching the Candidiate details";
 	public static final String INDEX = "index";
+	public static final Object BAD_CREDENTIAL = "badCredential";
 	public static final String UPDATE_SCHEDULE = "updateSchedule";
 }
 

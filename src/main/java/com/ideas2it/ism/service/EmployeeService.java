@@ -69,4 +69,12 @@ public interface EmployeeService {
 	 * @return employee - Employee having the ID
 	 */
 	Employee getEmployeeById(long employeeId);
+
+    /**
+     * Get list of employees to show while creating a new user. Employees
+     * who does not have an user account are fetched.
+     * 
+     * @return employees - List of employees who dont have an user account.
+     */
+	List<Employee> getNewEmployees();
 }

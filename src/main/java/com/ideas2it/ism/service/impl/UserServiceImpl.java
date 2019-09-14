@@ -11,11 +11,13 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ideas2it.ism.entity.Employee;
 import com.ideas2it.ism.entity.Role;
 import com.ideas2it.ism.entity.User;
 import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.dao.UserDao;
 import com.ideas2it.ism.dao.UserRepository;
+import com.ideas2it.ism.service.EmployeeService;
 import com.ideas2it.ism.service.RoleService;
 import com.ideas2it.ism.service.UserService;
 
@@ -29,6 +31,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private EmployeeService employeeService;
 	
     /**
      * Get the Role object by user name
@@ -44,14 +49,16 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-	public void create(User user, String roleId) {
+	public void create(User user, String roleId, long employeeId) {
 		System.out.println("user create");
+		Employee employee = employeeService.getEmployeeById(employeeId);
 		int id = Integer.parseInt(roleId);
         Role role = roleService.getRoleById(id);
         user.setRole(role);
         String password = encrypt(user.getPassword());
-        System.out.println(password+"pass");
         user.setPassword(password);
+        user.setEmployee(employee);
+        employee.setUser(user);
         userRepository.save(user);
 	}
 

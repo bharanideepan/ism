@@ -5,12 +5,42 @@
 <head>
 <meta charset="UTF-8">
 <title>View Candidate</title>
- <link rel="stylesheet" type="text/css" href="/css/viewCandidate.css">
+      
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
   <link rel="stylesheet" type="text/css" href="/css/popUp.css">
 </head>
-<body onload="currentStatus('${status}');" id="background">
-<%@ include file="header.jsp" %>  
-<%@ include file="recruiterMenu.jsp" %>
+<body onload="currentStatus('${status}');">  
+      <%@ include file="header.jsp" %> 
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ISM</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <c:if test="${role == 'Manager'}">
+      <li><a href="viewSchedulesByManager">View Schedules</a></li>
+      <li><a href="newSchedules">New Schedules</a></li>
+      <li><a href="pendingSchedules">Pending Schedules</a></li>
+      </c:if>
+      <c:if test="${role == 'Recruiter'}">
+      <li><a href="viewSchedules">View Schedules</a></li>
+      <li><a href="addCandidate">Add Candidate</a></li>
+      <li><a href="viewCandidates">View New Candidates</a></li>
+      </c:if>
+      <li><a href="logout">Log Out</a></li>
+    </ul>
+	    <form class="navbar-form navbar-right" action="schedulesByDate" method="post">
+	      <div class="form-group">
+	        <input type="date" class="form-control" name="shdate" required>
+	      </div>
+	      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+	    </form>
+  </div>
+</nav>
     <div>
         <table class="table">
             <tr>
@@ -26,16 +56,24 @@
                <td>${candidate.department}</td>
             </tr>
             <tr>
-               <td>Candidate status:</td>
-               <c:if test="${candidate.status != 'New'}">
+               <!--<td>Candidate status:</td>
+               <c:if test="${candidate.status != 'New' && candidate.status != 'Pending'}">
                   <c:forEach var="schedule" items="${schedules}">
-                     <c:set var="status" value="${schedule.round + 1}" scope="page"/>
+                     <c:set var="status" value="${schedule.round}" scope="page"/>
                   </c:forEach>
                <td>Cleared round ${status}</td>
                </c:if>
-               <c:if test="${candidate.status == 'New'}">
-               <td>${candidate.status}</td>
-               </c:if>
+               <c:if test="${candidate.status == 'New' || candidate.status == 'Pending'}">
+                   <c:if test="${schedule.round == '0'}">  
+                     <td>${candidate.status}</td>
+                   </c:if>
+                   <c:if test="${schedule.round != '0'}">
+                     <c:forEach var="schedule" items="${schedules}">
+                       <c:set var="status" value="${schedule.round}" scope="page"/>
+                     </c:forEach>
+                     <td>Cleared round ${status}</td>
+                   </c:if>
+               </c:if>-->
             </tr>
             <tr>
                <td>Experience:</td>
@@ -47,7 +85,7 @@
             </tr>
             <tr>
                <td>Resume:</td>
-               <td><a href="${candidate.resumeFilePath}" alt="resume">View Resume</a></td>
+               <td><a href="${candidate.resumeFilePath}" target="_blank"><span class="glyphicon glyphicon-download-alt"></span></a></td>
             <tr>
                <th colspan="4" align="center">Interview Details</th>
             </tr>

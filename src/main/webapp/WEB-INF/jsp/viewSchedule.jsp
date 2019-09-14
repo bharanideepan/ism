@@ -6,31 +6,43 @@
 <html>
    <head>
       <meta charset="UTF-8">
-      <link rel="stylesheet" type="text/css" href="/css/viewSchedule.css">
-      <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
+      
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
       <title>View schedule</title>
    </head>
-   <body id="background">
-   <%@ include file="header.jsp" %> 
-      <c:if test="${role == 'Employee'}">
-        <div class="navbar">
-            <a href="newSchedules">New Schedules</a>
-            <a href="pendingSchedules">Pending Schedules</a>
-            <c:if test="${role == 'Manager'}">
-            <a href="viewSchedulesByManager">View Schedules</a>
-            </c:if>
-            <a href="logout" style="float:right">Log Out</a>
-        </div>
+   <body>  
+      <%@ include file="header.jsp" %> 
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ISM</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <c:if test="${role == 'Manager'}">
+      <li class="active"><a href="viewSchedulesByManager">View Schedules</a></li>
+      <li><a href="newSchedules">New Schedules</a></li>
+      <li><a href="pendingSchedules">Pending Schedules</a></li>
       </c:if>
       <c:if test="${role == 'Recruiter'}">
-        <div class="navbar">
-            <a href="addCandidate">Add Candidate</a>
-            <a href="viewCandidates">View Candidates</a>
-            <a href="viewSchedules">View Schedules</a>
-            <a href="logout" style="float:right">Log Out</a>
-        </div>
+      <li class="active"><a href="viewSchedules">View Schedules</a></li>
+      <li><a href="addCandidate">Add Candidate</a></li>
+      <li><a href="viewCandidates">View New Candidates</a></li>
       </c:if>
-   
+      <li><a href="logout">Log Out</a></li>
+    </ul>
+	    <form class="navbar-form navbar-right" action="schedulesByDate" method="post">
+	      <div class="form-group">
+	        <input type="date" class="form-control" name="shdate" required>
+	      </div>
+	      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+	    </form>
+  </div>
+</nav>
+
       <div class ="box" id="viewDiv">
          <table class="table">
             <tr>
@@ -125,7 +137,7 @@
                <tr>
                   <td><input type="hidden" name="scheduleId" value="${schedule.id}"/>
                   		<input type="submit" value="Confirm"/></td>
-                  <td><input type="reset" onclick="getCommentBox(this.value)" value="Cancel"></td>
+                  <td><input type="reset" onclick="getRecruiter(this.value)" value="Cancel"></td>
                </tr>
                </table>
             </form>
@@ -226,11 +238,11 @@
 	                 </td>
                 </tr>
                 <tr>
-               		<td><input type="reset" onclick="getRecruiter(this.value)" value="Cancel"/></td>
                		<td>
                			<input type="hidden" name="scheduleId" value="${schedule.id}"/>
                			<input type="submit" value="Confirm">
             		</td>
+               		<td><input type="reset" onclick="getRecruiter(this.value)" value="Cancel"/></td>
            		</tr>
          </table>
         </form:form>

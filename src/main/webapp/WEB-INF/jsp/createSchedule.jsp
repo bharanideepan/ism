@@ -3,15 +3,35 @@
 <!DOCTYPE HTML>
 <html>
    <head>
-      <link rel="stylesheet" href="/css/createSchedule.css">
+      
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
    <body id="background">
-      <%@ include file="header.jsp" %>   
-      <%@ include file="recruiterMenu.jsp" %>
+<%@ include file="header.jsp" %>    
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ISM</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="viewSchedules">View Schedules</a></li>
+      <li><a href="addCandidate">Add Candidate</a></li>
+      <li><a href="viewCandidates">View New Candidates</a></li>
+      <li><a href="logout">Log Out</a></li>
+    </ul>
+  </div>
+</nav>
+  
       <div id="createScheduleId" class="makeSchedule" align="center">
          <div class= "flex">
             <form:form name="form" id="createScheduleFormId" action="createSchedule" method="post" modelAttribute="schedule">
                <div class="box">
                   <table class="table">
+                  <caption>Interview Schedule Form</caption>
                      <tr>
                         <td>InterviewTypes</td>
                         <td>

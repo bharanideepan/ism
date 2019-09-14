@@ -4,49 +4,58 @@
 <html>
 <head>
 <meta charset="UTF-8">
- <link rel="stylesheet" type="text/css" href="/css/viewNewSchedules.css">
+      
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
     <link rel="stylesheet" type="text/css" href="/css/popUp.css">
-   <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
 </head>
-<body id="background">
+<body>
 <%@ include file="header.jsp" %> 
-        <div class="navbar">
-            <a href="newSchedules">New Schedules</a>
-            <a href="pendingSchedules">Pending Schedules</a>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ISM</a>
+    </div>
+    <ul class="nav navbar-nav">
       <c:if test="${role == 'Manager'}">
-            <a href="viewSchedulesByManager">View Schedules</a>
+      <li><a href="viewSchedulesByManager">View Schedules</a></li>
       </c:if>
-            <a href="logout" style="float:right">Log Out</a>
-        </div>
+      <li class="active"><a href="newSchedules">New Schedules</a></li>
+      <li><a href="pendingSchedules">Pending Schedules</a></li>
+      <li><a href="logout">Log Out</a></li>
+    </ul>
+  </div>
+</nav>
+        
       <div>
          <c:if test="${schedules != null}">
             <c:if test="${!schedules.isEmpty()}">
-               <table id="contentTable" class = "table" align="center" cellpadding = "10">
+               <table class = "table">
                   <tr>
-                     <th>Name</th>
+                     <th>S.No.</th>
+                     <th>Candidate Name</th>
                      <th>Position</th>
                      <th>Department</th>
                      <th>Experience</th>
                      <th>Technology</th>
-                     <th>Status</th>
                      <th>Date</th>
                      <th>Time</th>
                      <th>Accept</th>
                      <th>Reject</th>
                   </tr>
+                  <c:set var="sNumber" value="1" scope="page"/>
                   <c:forEach var="schedule" items="${schedules}">
                      <tr>
+                        <td>${sNumber}</td>
                         <td><a href="viewProgress?id=${schedule.candidate.id}">${schedule.candidate.name}</a></td>
                         <td>${schedule.candidate.position}</td>
                         <td>${schedule.candidate.department}</td>
                         <td>${schedule.candidate.experience}</td>
                         <td>${schedule.candidate.technology}</td>
-                        <c:if test="${schedule.candidate.status == 'Cleared'}">
-                        <td>Cleared round ${schedule.round-1}</td>
-                        </c:if>
-                        <c:if test="${schedule.candidate.status == 'New'}">
-                        <td>${schedule.candidate.status}</td>
-                        </c:if>
                         <td>${schedule.date}</td>
                         <td>${schedule.time}</td>
                         <td > 
@@ -60,6 +69,7 @@
                            </button>
                         </td>
                      </tr>
+                     <c:set var="sNumber" value="${sNumber+1}" scope="page"/>
                   </c:forEach>
                </table>
                <div id="pass">
@@ -71,17 +81,17 @@
                </div>
             </c:if>
             <c:if test="${schedules.isEmpty()}">
-               <table id="contentTable" class = "table" align="center" cellpadding = "10">
+               <table class = "table">
                   <tr>
-                     <td>No new schedules</td>
+                     <th>No new schedules</th>
                   </tr>
                </table>
             </c:if>
          </c:if>
          <c:if test="${schedules == null}">
-            <table id="contentTable" class = "table" align="center" cellpadding = "10">
+            <table class = "table">
                <tr>
-                  <td>No new schedules</td>
+                  <th>No new schedules</th>
                </tr>
             </table>
          </c:if>

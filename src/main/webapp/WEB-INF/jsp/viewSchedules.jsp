@@ -7,38 +7,46 @@
    <head>
       <meta charset="UTF-8">
       <title>View schedules</title>
-      <link rel="stylesheet" type="text/css" href="/css/viewSchedules.css">
-         <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
-      
+        <link rel="stylesheet" type="text/css" href="/css/popUp.css">      
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
    </head>
-   <body>
+   <body>   
       <%@ include file="header.jsp" %> 
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ISM</a>
+    </div>
+    <ul class="nav navbar-nav">
       <c:if test="${role == 'Manager'}">
-        <div class="navbar">
-            <a href="newSchedules">New Schedules</a>
-            <a href="pendingSchedules">Pending Schedules</a>
-            <a href="viewSchedulesByManager">View Schedules</a>
-            <a href="logout" style="float:right">Log Out</a>
-        </div>
+      <li class="active"><a href="viewSchedulesByManager">View Schedules</a></li>
+      <li><a href="newSchedules">New Schedules</a></li>
+      <li><a href="pendingSchedules">Pending Schedules</a></li>
       </c:if>
       <c:if test="${role == 'Recruiter'}">
-        <div class="navbar">
-            <a href="addCandidate">Add Candidate</a>
-            <a href="viewCandidates">View Candidates</a>
-            <a href="viewSchedules">View Schedules</a>
-            <a href="logout" style="float:right">Log Out</a>
-        </div>
+      <li class="active"><a href="viewSchedules">View Schedules</a></li>
+      <li><a href="addCandidate">Add Candidate</a></li>
+      <li><a href="viewCandidates">View New Candidates</a></li>
       </c:if>
-      <div id="dateSearch"  align="center">
-      <form method="post" action="schedulesByDate">
-      	<input type="date" name="shdate" required/>
-      	<button type="submit">Search</button>
-      </form>
-      </div>
-      <div>
+      <li><a href="logout">Log Out</a></li>
+    </ul>
+	    <form class="navbar-form navbar-right" action="schedulesByDate" method="post">
+	      <div class="form-group">
+	        <input type="date" class="form-control" name="shdate" required>
+	      </div>
+	      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+	    </form>
+  </div>
+</nav>
+
+		<div>
          <c:if test="${schedules != null}">
             <c:if test="${!schedules.isEmpty()}">
-               <table id="contentTable" class = "table" align="center" cellpadding = "10">
+               <table class = "table">
                   <tr>
                      <th>S.No.</th>
                      <th>Candidate Name</th>
@@ -68,27 +76,38 @@
                               <td>Not assigned</td>
                            </c:otherwise>
                         </c:choose>
-                        <td><a href="getScheduleWithInterviewers?scheduleId=${schedule.id}">More</a></td>
+                        <td>
+        <a href="getScheduleWithInterviewers?scheduleId=${schedule.id}"><span class="glyphicon glyphicon-list-alt"></span></a></td>
                      </tr>
                      <c:set var="sNumber" value="${sNumber+1}" scope="page"/>
                   </c:forEach>
                </table>
             </c:if>
             <c:if test="${schedules.isEmpty()}">
-               <table id="contentTable" class = "table" align="center" cellpadding = "10">
+               <table class = "table">
                   <tr>
-                     <td>No results available for your search</td>
+                     <th>No results available for your search</th>
                   </tr>
                </table>
             </c:if>
          </c:if>
          <c:if test="${schedules == null}">
-            <table id="contentTable" class = "table" align="center" cellpadding = "10">
+            <table class = "table">
                <tr>
-                  <td>No results available for your search</td>
+                  <th>No results available for your search</th>
                </tr>
             </table>
          </c:if>
       </div>
+       <div id="pass">
+         <div class="modal-content">
+            <div id="created">Created Successfully</div>
+            <br>
+            <div id="updated">Updated Successfully</div>
+            <br>
+            <span class="close">&times;</span>
+         </div>
+      </div>
+ 
    </body>
 </html>

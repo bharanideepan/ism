@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.ideas2it.ism.common.Department;
@@ -47,8 +48,13 @@ public class Employee {
 	@OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name="employee_id")
 	private List<Schedule> schedules;
+	
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id")
+	private User user;
 
-    @Override
+
+	@Override
     public String toString() {
     	return this.name;
     }
@@ -102,4 +108,12 @@ public class Employee {
 		this.schedules = schedules;
 	}
 
+
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

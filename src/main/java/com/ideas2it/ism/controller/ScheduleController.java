@@ -75,6 +75,9 @@ public class ScheduleController {
     		@RequestParam(Constant.INTERVIEWER_ID)String interviewerId,
     		@RequestParam(Constant.CANDIDATE_ID)long candidateId) {
     	scheduleService.addSchedule(scheduleInfo, candidateId, interviewerId, date);
+    	
+    	System.out.println("\ncontroller\n");
+    	
         return Constant.REDIRECT + Constant.VIEW_SCHEDULES_BY_STATUS + "?status=New";
     }
     
