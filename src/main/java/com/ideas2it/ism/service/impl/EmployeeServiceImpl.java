@@ -65,4 +65,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee getEmployeeById(long employeeId) {
 		return employeeRepository.getOne(employeeId);
 	}
+
+	@Override
+	public List<Employee> getNewEmployees() {
+		return employeeRepository.getNewEmployees();
+	}
 }

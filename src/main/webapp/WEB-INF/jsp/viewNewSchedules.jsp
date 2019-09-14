@@ -56,12 +56,6 @@
                         <td>${schedule.candidate.department}</td>
                         <td>${schedule.candidate.experience}</td>
                         <td>${schedule.candidate.technology}</td>
-                        <c:if test="${schedule.candidate.status == 'Cleared'}">
-                        <td>Cleared round ${schedule.round-1}</td>
-                        </c:if>
-                        <c:if test="${schedule.candidate.status == 'New'}">
-                        <td>${schedule.candidate.status}</td>
-                        </c:if>
                         <td>${schedule.date}</td>
                         <td>${schedule.time}</td>
                         <td > 

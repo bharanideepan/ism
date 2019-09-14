@@ -155,7 +155,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		scheduleInfo.setCandidate(schedule.getCandidate());
     	if((null != interviewerId) && (!interviewerId.isEmpty())) {
     		scheduleInfo.setInterviewer(employeeService.getEmployeeById(Long.parseLong(interviewerId)));
-			mailSender.sendMail("manibharathi@ideas2it.com", "Testing", "Success");
+			mailSender.sendMail("manibharathi@ideas2it.com", "Testing", comment);
     	}
 		return scheduleRepository.save(this.getScheduleByScheduleInfo(scheduleInfo));
 	}

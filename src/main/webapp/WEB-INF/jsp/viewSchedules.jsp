@@ -7,7 +7,7 @@
    <head>
       <meta charset="UTF-8">
       <title>View schedules</title>
-      
+        <link rel="stylesheet" type="text/css" href="/css/popUp.css">      
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -99,5 +99,15 @@
             </table>
          </c:if>
       </div>
+       <div id="pass">
+         <div class="modal-content">
+            <div id="created">Created Successfully</div>
+            <br>
+            <div id="updated">Updated Successfully</div>
+            <br>
+            <span class="close">&times;</span>
+         </div>
+      </div>
+ 
    </body>
 </html>
