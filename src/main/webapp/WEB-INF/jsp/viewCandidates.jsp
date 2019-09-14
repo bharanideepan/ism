@@ -20,9 +20,16 @@
       <a class="navbar-brand" href="#">ISM</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="viewSchedules">View Schedules</a></li>
-      <li><a href="addCandidate">Add Candidate</a></li>
-      <li class="active"><a href="viewCandidates">View New Candidates</a></li>
+      <c:if test="${role == 'Recruiter'}">
+      <li><a href="viewSchedules">Schedules</a></li>      
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Candidates <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="addCandidate">Add</a></li>
+          <li><a href="viewCandidates">View</a></li>
+        </ul>
+      </li>
+      </c:if>
       <li><a href="logout">Log Out</a></li>
     </ul>    
                                          
@@ -117,24 +124,31 @@
             </c:forEach>
           </table>  
         </div>
-        <div align="center">
-          <div class = "cards">
-            <button value =1  id = "back" 
-               onclick = "pagenation('${pagenationInfo.status}', this.value, '-1', ${pagenationInfo.lastPageNo});"
-               class = "btn">&#10096;</button>
-          </div>
+        
+	      <c:if test="${pagenationInfo.pages.size() != 1}">
+        
+         	 <ul class="pagination">
+			  <li>
+			  	<button class = "btn" value =1  id = "back" onclick = "pagenation('${pagenationInfo.status}', this.value, '-1', ${pagenationInfo.lastPageNo});">
+            		Previous
+           		</button>
+       		  </li>
+       		  
             <c:forEach var="page" items="${pagenationInfo.pages}">
-            <div class = "cards">
-             <button class = "btn" onclick = "pagenation('${pagenationInfo.status}', ${page}, 'page', ${pagenationInfo.lastPageNo});">
-                 ${page}</button>          
-            </div> 
+ 				 <li><button class = "btn" onclick = "pagenation('${pagenationInfo.status}', ${page}, 'page', ${pagenationInfo.lastPageNo});">
+                 ${page}</button></li>
            </c:forEach>
-         <div class = "cards">
-           <button value =1 id = "next" class = "btn" 
-              onclick = "pagenation('${pagenationInfo.status}', this.value, '1', ${pagenationInfo.lastPageNo});">
-           &#10097;</button>
-        </div>
-      </div> 
+           
+              <li>
+			  	<button class = "btn" value =1 id = "next" onclick = "pagenation('${pagenationInfo.status}', this.value, '1', ${pagenationInfo.lastPageNo});">
+           			Next
+       			</button>
+   			  </li>
+			</ul>       
+			
+			</c:if>
+			
+      
 	      </c:if>
 	      <c:if test="${pagenationInfo.candidates.isEmpty()}">
 	        <table class = "table">

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
-<!DOCTYPE html>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
+<!DOCTYPE html> 
 <html>
    <head>
       <meta charset="UTF-8">
@@ -22,7 +22,6 @@
       <a class="navbar-brand" href="#">ISM</a>
     </div>
     <ul class="nav navbar-nav">
-      <c:if test="${role == 'Manager'}">   
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Schedules <span class="caret"></span></a>
         <ul class="dropdown-menu">
@@ -37,18 +36,11 @@
           <li><a href="pendingSchedules">Pending <span class="badge">${noOfPendingSchedules}</span></a></li>
         </ul>
       </li>
-      </c:if>
-      
-      <c:if test="${role == 'Recruiter'}">
-      <li><a href="viewSchedules">Schedules</a></li>      
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Candidates <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="addCandidate">Add</a></li>
-          <li><a href="viewCandidates">View</a></li>
-        </ul>
-      </li>
-      </c:if>
+      <!-- <c:if test="${role == 'Recruiter'}">
+      <li class="active"><a href="viewSchedules">View Schedules</a></li>
+      <li><a href="addCandidate">Add Candidate</a></li>
+      <li><a href="viewCandidates">View New Candidates</a></li>
+      </c:if> -->
       <li><a href="logout">Log Out</a></li>
     </ul>
 	    <form class="navbar-form navbar-right" action="schedulesByDate" method="post">

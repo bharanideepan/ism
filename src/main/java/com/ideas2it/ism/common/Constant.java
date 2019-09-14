@@ -115,12 +115,17 @@ public class Constant {
 	public static final String VIEW_SCHEDULES_MANAGER = "viewSchedulesByManager";
 	public static final String SCHEDULES_BY_DATE = "schedulesByDate";
 	public static final String REDIRECT_SCHEDULE_WITH_INTERVIEWER = REDIRECT + GET_SCHEDULE_WITH_INTERVIEWERS + "?" + SCHEDULE_ID + "=";
+	public static final String VIEW_DECLINED_SCHEDULES = "viewDeclinedSchedules";
 	
 	// Error Constants.
 	public static final String ERROR_RETRIEVING_CANDIDATES = "Error while fetching the Candidiate details";
 	public static final String INDEX = "index";
 	public static final Object BAD_CREDENTIAL = "badCredential";
 	public static final String UPDATE_SCHEDULE = "updateSchedule";
+	public static final String NO_OF_NEW = "noOfNewSchedules";
+	public static final String NO_OF_PENDING = "noOfPendingSchedules";
+	public static final String NO_OF_DECLINED = "noOfDeclinedSchedules";
+	public static final String DECLINED_SCHEDULES = "declinedSchedules";
 }
 
    

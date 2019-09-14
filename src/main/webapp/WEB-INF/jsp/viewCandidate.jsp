@@ -15,32 +15,51 @@
 </head>
 <body onload="currentStatus('${status}');">  
       <%@ include file="header.jsp" %> 
+      
+      
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">ISM</a>
     </div>
     <ul class="nav navbar-nav">
-      <c:if test="${role == 'Manager'}">
-      <li><a href="viewSchedulesByManager">View Schedules</a></li>
-      <li><a href="newSchedules">New Schedules</a></li>
-      <li><a href="pendingSchedules">Pending Schedules</a></li>
+      <c:if test="${role == 'Manager'}">   
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Schedules <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="declinedSchedules">Declined <span class="badge">${noOfDeclinedSchedules}</span></a></li>
+          <li><a href="viewSchedulesByManager">All</a></li>
+        </ul>
+      </li>
       </c:if>
+      
+      <c:if test="${role != 'Recruiter'}">    
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Your Schedules <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="newSchedules">New <span class="badge">${noOfNewSchedules}</span></a></li>
+          <li><a href="pendingSchedules">Pending <span class="badge">${noOfPendingSchedules}</span></a></li>
+        </ul>
+      </li>
+      </c:if>
+      
       <c:if test="${role == 'Recruiter'}">
-      <li><a href="viewSchedules">View Schedules</a></li>
-      <li><a href="addCandidate">Add Candidate</a></li>
-      <li><a href="viewCandidates">View New Candidates</a></li>
+      <li><a href="viewSchedules">Schedules</a></li>      
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Candidates <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="addCandidate">Add</a></li>
+          <li><a href="viewCandidates">View</a></li>
+        </ul>
+      </li>
       </c:if>
+      
       <li><a href="logout">Log Out</a></li>
     </ul>
-	    <form class="navbar-form navbar-right" action="schedulesByDate" method="post">
-	      <div class="form-group">
-	        <input type="date" class="form-control" name="shdate" required>
-	      </div>
-	      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-	    </form>
   </div>
 </nav>
+
+
     <div>
         <table class="table">
             <tr>
