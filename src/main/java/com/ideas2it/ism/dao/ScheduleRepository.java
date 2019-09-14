@@ -84,6 +84,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 	/**
 	 * Fetch List of schedules which are scheduled on given date
 	 * 
+	 * @param pageNo - Details present in the current page is fetched.
 	 * @param date - Date given by the client
 	 * 
 	 * @return schedules - List of schedules which are scheduled on the given date

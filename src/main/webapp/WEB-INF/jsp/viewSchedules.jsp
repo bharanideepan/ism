@@ -34,21 +34,20 @@
       </c:if>
       <li><a href="logout">Log Out</a></li>
     </ul>
-	    <form class="navbar-form navbar-right" action="schedulesByDate" method="post">
+	    <div class="navbar-form navbar-right" >
 	      <div class="form-group">
-	        <input type="date" class="form-control" name="shdate" required>
+	        <input id="enteredDate" value="" type="date" class="form-control" name="shdate" required>
 	      </div>
-	      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-	    </form>
+	      <button onclick="getByDate()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+	    </div>
   </div>
 </nav>
 
 		<div>
-         <c:if test="${schedules != null}">
-            <c:if test="${!schedules.isEmpty()}">
-               <table class = "table">
+         <c:if test="${pagenationInfo.scheduleInfos != null}">
+            <c:if test="${!pagenationInfo.scheduleInfos.isEmpty()}">
+               <table class = "table" id="contentTable">
                   <tr>
-                     <th>S.No.</th>
                      <th>Candidate Name</th>
                      <th>Round</th>
                      <th>Interview Type</th>
@@ -58,10 +57,8 @@
                      <th>Interviewer</th>
                      <th>Records</th>
                   </tr>
-                  <c:set var="sNumber" value="1" scope="page"/>
-                  <c:forEach var="schedule" items="${schedules}">
+                  <c:forEach var="schedule" items="${pagenationInfo.scheduleInfos}">
                      <tr>
-                        <td>${sNumber}</td>
                         <td><a href="viewProgress?id=${schedule.candidate.id}">${schedule.candidate.name}</a></td>
                         <td>${schedule.round}</td>
                         <td>${schedule.interviewType}</td>
@@ -77,13 +74,29 @@
                            </c:otherwise>
                         </c:choose>
                         <td>
-        <a href="getScheduleWithInterviewers?scheduleId=${schedule.id}"><span class="glyphicon glyphicon-list-alt"></span></a></td>
+        <a href="getScheduleWithInterviewers?scheduleId=${schedule.id}">&#9776;</a></td>
                      </tr>
-                     <c:set var="sNumber" value="${sNumber+1}" scope="page"/>
                   </c:forEach>
                </table>
             </c:if>
-            <c:if test="${schedules.isEmpty()}">
+         <div>
+          <div>
+            <button value =1  id = "back" 
+               onclick = "pagenation('${pagenationInfo.searchedDate}', this.value, '-1', ${pagenationInfo.lastPageNo});"
+               class = "btn">&#10096;</button>
+          </div>
+            <c:forEach var="page" items="${pagenationInfo.pages}">
+            <div>
+            <button class = "btn" onclick = "pagenation('${pagenationInfo.searchedDate}', ${page}, 'page', ${pagenationInfo.lastPageNo});">${page}</button>          
+            </div> 
+           </c:forEach>
+         <div>
+           <button value =1 id = "next" 
+            onclick = "pagenation('${pagenationInfo.searchedDate}', this.value, '1', ${pagenationInfo.lastPageNo});"
+           class = "btn">&#10097;</button>
+        </div>
+      </div> 
+            <c:if test="${pagenationInfo.scheduleInfos.isEmpty()}">
                <table class = "table">
                   <tr>
                      <th>No results available for your search</th>
@@ -91,7 +104,7 @@
                </table>
             </c:if>
          </c:if>
-         <c:if test="${schedules == null}">
+         <c:if test="${pagenationInfo.scheduleInfos == null}">
             <table class = "table">
                <tr>
                   <th>No results available for your search</th>
@@ -99,15 +112,6 @@
             </table>
          </c:if>
       </div>
-       <div id="pass">
-         <div class="modal-content">
-            <div id="created">Created Successfully</div>
-            <br>
-            <div id="updated">Updated Successfully</div>
-            <br>
-            <span class="close">&times;</span>
-         </div>
-      </div>
- 
+      <script src="/js/schedulePagenation.js"></script>
    </body>
 </html>
