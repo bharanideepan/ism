@@ -16,5 +16,10 @@ public class HomeController {
     private String dispatchIndexPage() {
         return Constant.INDEX_JSP;
     }
+    
+    @RequestMapping(value = "home", method = RequestMethod.GET)  
+    private String dispatchHomePage() {
+        return "home";
+    }
 
 }

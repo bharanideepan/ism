@@ -96,9 +96,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 	        pageNo = pageNo - 1;
 	        pageNo = pageNo * Constant.RETRIEVE_LIMIT; 
 			scheduleInfos = this.getScheduleInfosBySchedules(scheduleDAO.fetchSchedulesByLimit(pageNo));
-			for (ScheduleInfo scheduleInfo : scheduleInfos) {
-				System.out.println(scheduleInfo.getCandidate().getId());
-			}
 		}
         JSONArray schedules = new JSONArray();
         for (ScheduleInfo scheduleInfo : scheduleInfos) { 
