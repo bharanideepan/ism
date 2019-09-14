@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ideas2it.ism.common.Constant;
 import com.ideas2it.ism.entity.Role;
 import com.ideas2it.ism.entity.User;
 import com.ideas2it.ism.exception.IsmException;
@@ -62,6 +63,7 @@ public class UserController {
     	try {
             List <Role> roles = roleService.getRoles();
             model.addObject("roles", roles);
+            model.addObject(Constant.EMPLOYEES, roleService.getEmployees());
             model.addObject("user", new User());
             model.setViewName("/add-user");
     	} catch (Exception e) {
@@ -83,9 +85,10 @@ public class UserController {
         ModelAndView model = new ModelAndView();
         try {
         	String roleId = request.getParameter("userRoles");
-        	System.out.println("user" +user);
-            userService.create(user, roleId);
-            model.setViewName("redirect:/login");
+        	long employeeId = Long.parseLong(request.getParameter(Constant.EMPLOYEE_ID));
+            userService.create(user, roleId, employeeId);
+            model.addObject(Constant.STATUS, Constant.CREATED);
+            model.setViewName("/login");
         } catch (Exception e) {
             model.addObject("errorMessage", e);
             model.setViewName("/error");

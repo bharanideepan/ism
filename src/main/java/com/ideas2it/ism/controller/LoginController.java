@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ideas2it.ism.common.Constant;
 import com.ideas2it.ism.entity.Role;
 import com.ideas2it.ism.entity.User;
 import com.ideas2it.ism.exception.IsmException;
@@ -73,17 +74,21 @@ public class LoginController {
             throws ServletException, IOException, IsmException {
         ModelAndView model = new ModelAndView();
     	HttpSession session = request.getSession();
-    	User loginUser = userService.getUserByName(user.getName());
-	    session.setAttribute("role", loginUser.getRole().getName());
         try {
+        	User loginUser = userService.getUserByName(user.getName());
+    	    session.setAttribute("role", loginUser.getRole().getName());
 	        if(userService.checkUser(user.getName(), user.getPassword())) {
 	        	session.setAttribute("user", loginUser.getName());
+	        	
+	            System.out.println("session" +loginUser.getEmployee().getId());
+
+	        	
 	        	session.setAttribute("employee", loginUser.getEmployee().getId());
 	        }
 	        model.setViewName("redirect:/");
         } catch (IsmException e) {
-        	model.addObject("message", e.getMessage());
-        	model.setViewName("redirect:/login");
+        	model.addObject(Constant.STATUS, Constant.BAD_CREDENTIAL);
+        	model.setViewName("/login");
         }
     	return model;
     }
@@ -92,8 +97,9 @@ public class LoginController {
     public ModelAndView logout(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        System.out.println("session" +session);
-        session.invalidate();
+        if(null != session) {
+        	session.invalidate();
+        }
         return new ModelAndView("redirect:/login");
     }
 }

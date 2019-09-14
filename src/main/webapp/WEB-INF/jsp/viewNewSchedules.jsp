@@ -21,11 +21,25 @@
       <a class="navbar-brand" href="#">ISM</a>
     </div>
     <ul class="nav navbar-nav">
-      <c:if test="${role == 'Manager'}">
-      <li><a href="viewSchedulesByManager">View Schedules</a></li>
+      <c:if test="${role == 'Manager'}">   
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Schedules <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="declinedSchedules">Declined <span class="badge">${noOfDeclinedSchedules}</span></a></li>
+          <li><a href="viewSchedulesByManager">All</a></li>
+        </ul>
+      </li>
       </c:if>
-      <li class="active"><a href="newSchedules">New Schedules</a></li>
-      <li><a href="pendingSchedules">Pending Schedules</a></li>
+      
+      <c:if test="${role != 'Recruiter'}">    
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Your Schedules <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="newSchedules">New <span class="badge">${noOfNewSchedules}</span></a></li>
+          <li><a href="pendingSchedules">Pending <span class="badge">${noOfPendingSchedules}</span></a></li>
+        </ul>
+      </li>
+      </c:if>
       <li><a href="logout">Log Out</a></li>
     </ul>
   </div>
@@ -45,7 +59,7 @@
                      <th>Date</th>
                      <th>Time</th>
                      <th>Accept</th>
-                     <th>Reject</th>
+                     <th>Decline</th>
                   </tr>
                   <c:set var="sNumber" value="1" scope="page"/>
                   <c:forEach var="schedule" items="${schedules}">
@@ -56,12 +70,6 @@
                         <td>${schedule.candidate.department}</td>
                         <td>${schedule.candidate.experience}</td>
                         <td>${schedule.candidate.technology}</td>
-                        <c:if test="${schedule.candidate.status == 'Cleared'}">
-                        <td>Cleared round ${schedule.round-1}</td>
-                        </c:if>
-                        <c:if test="${schedule.candidate.status == 'New'}">
-                        <td>${schedule.candidate.status}</td>
-                        </c:if>
                         <td>${schedule.date}</td>
                         <td>${schedule.time}</td>
                         <td > 

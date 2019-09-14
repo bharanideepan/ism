@@ -1,11 +1,14 @@
 package com.ideas2it.ism.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +16,20 @@ import com.ideas2it.ism.common.Constant;
 import com.ideas2it.ism.common.InterviewType;
 import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.ScheduleStatus;
+import com.ideas2it.ism.common.Technology;
+import com.ideas2it.ism.dao.ScheduleDAO;
 import com.ideas2it.ism.dao.ScheduleRepository;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.entity.Schedule;
+import com.ideas2it.ism.info.CandidatePagenationInfo;
 import com.ideas2it.ism.info.ScheduleInfo;
+import com.ideas2it.ism.info.SchedulePagenationInfo;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
 import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.service.CandidateService;
 import com.ideas2it.ism.service.EmployeeService;
 import com.ideas2it.ism.service.ScheduleService;
+import com.ideas2it.ism.util.CalculatePage;
 import com.ideas2it.ism.util.EmailSender;
 
 @Service
@@ -29,6 +37,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	
 	@Autowired
 	private ScheduleRepository scheduleRepository;
+	@Autowired
+	private ScheduleDAO scheduleDAO;
 	@Autowired
 	private CandidateService candidateService;
 	@Autowired
@@ -60,9 +70,53 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     /**
      * {@inheritDoc}
+     * @throws IsmException 
      */	
-	public List<ScheduleInfo> getAllScheduleInfos() {
-		return this.getScheduleInfosBySchedules(scheduleRepository.findAll());
+	public SchedulePagenationInfo getAllScheduleInfos() throws IsmException {
+		SchedulePagenationInfo pagenationInfo = new SchedulePagenationInfo();
+		int count = (int) scheduleRepository.count();
+		pagenationInfo.setScheduleInfos(this.getScheduleInfosBySchedules(scheduleDAO.fetchSchedulesByLimit(0)));
+		if (0 != count) {
+		    List<Integer> pages = CalculatePage.calculatePages(count, Constant.RETRIEVE_LIMIT); 
+		    pagenationInfo.setPages(pages);
+		    int lastPage = pages.get(pages.size() - 1); 
+		    pagenationInfo.setLastPageNo(lastPage);
+		    pagenationInfo.setTotalCount(count);
+		}
+		return pagenationInfo;
+	}
+	
+	@Override
+	public JSONArray retrieveAllSchedules(int pageNo, String date) throws IsmException {
+		List<ScheduleInfo> scheduleInfos;
+		if ((null != date) && !(date.isEmpty())) {
+	        pageNo = pageNo - 1;
+	        pageNo = pageNo * Constant.RETRIEVE_LIMIT; 
+            scheduleInfos  = this.getScheduleInfosBySchedules(scheduleDAO.getSchedulesByDate(pageNo, date));
+		} else {
+	        pageNo = pageNo - 1;
+	        pageNo = pageNo * Constant.RETRIEVE_LIMIT; 
+			scheduleInfos = this.getScheduleInfosBySchedules(scheduleDAO.fetchSchedulesByLimit(pageNo));
+		}
+        JSONArray schedules = new JSONArray();
+        for (ScheduleInfo scheduleInfo : scheduleInfos) { 
+            JSONObject schedule = new JSONObject();
+            schedule.put(Constant.SCHEDULE_ID, scheduleInfo.getId());
+            schedule.put(Constant.CANDIDATE_ID, scheduleInfo.getCandidate().getId());
+            schedule.put(Constant.CANDIDATE_NAME, scheduleInfo.getCandidate().getName());
+            schedule.put(Constant.ROUND, scheduleInfo.getRound());
+            schedule.put(Constant.INTERVIEW_TYPE, scheduleInfo.getInterviewType());
+            schedule.put(Constant.DATE, scheduleInfo.getDate());
+            schedule.put(Constant.TIME, scheduleInfo.getTime());
+            schedule.put(Constant.STATUS, scheduleInfo.getStatus());
+            if(null != scheduleInfo.getInterviewer()) {
+                schedule.put(Constant.INTERVIEWER_NAME, scheduleInfo.getInterviewer().getName());
+            } else {
+            	schedule.put(Constant.INTERVIEWER_NAME, "null");
+            }
+            schedules.put(schedule);
+        }
+        return schedules;
 	}
 
     /**
@@ -155,7 +209,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		scheduleInfo.setCandidate(schedule.getCandidate());
     	if((null != interviewerId) && (!interviewerId.isEmpty())) {
     		scheduleInfo.setInterviewer(employeeService.getEmployeeById(Long.parseLong(interviewerId)));
-			mailSender.sendMail("manibharathi@ideas2it.com", "Testing", "Success");
+			mailSender.sendMail("manibharathi@ideas2it.com", "Testing", comment);
     	}
 		return scheduleRepository.save(this.getScheduleByScheduleInfo(scheduleInfo));
 	}
@@ -254,8 +308,21 @@ public class ScheduleServiceImpl implements ScheduleService {
     /**
      * {@inheritDoc}
      */	
-	public List<ScheduleInfo> getScheduleInfosByDate(String date) {
-		return this.getScheduleInfosBySchedules(scheduleRepository.getSchedulesByDate(date));
+	public SchedulePagenationInfo getScheduleInfosByDate(String date) {
+		SchedulePagenationInfo pagenationInfo = new SchedulePagenationInfo();
+    	System.out.println("service "+ date);
+		int count = (int) scheduleDAO.totalCountForDate(date);
+		pagenationInfo.setScheduleInfos(
+				this.getScheduleInfosBySchedules(scheduleDAO.getSchedulesByDate(0, date)));
+		if (0 != count) {
+		    List<Integer> pages = CalculatePage.calculatePages(count, Constant.RETRIEVE_LIMIT); 
+		    pagenationInfo.setPages(pages);
+		    int lastPage = pages.get(pages.size() - 1); 
+		    pagenationInfo.setLastPageNo(lastPage);
+		    pagenationInfo.setTotalCount(count);
+		}
+		pagenationInfo.setSearchedDate(date);
+		return pagenationInfo;
 	}
 
 	@Override
@@ -266,6 +333,27 @@ public class ScheduleServiceImpl implements ScheduleService {
 		schedule.setInterviewType(scheduleInfo.getInterviewType());
 		schedule.setRound(scheduleInfo.getRound());
 		return scheduleRepository.save(schedule);
+	}
+
+	@Override
+	public Map<String, Object> getSchedulesAndCounts(long managerId) {
+		Map<String, Object> schedulesAndCounts = new HashMap<String, Object>();
+		schedulesAndCounts.put(Constant.SCHEDULES,
+				this.getScheduleInfosByManager(managerId));
+		schedulesAndCounts.put(Constant.NO_OF_NEW,
+				this.getEmployeeNewScheduleInfosById(managerId).size());
+		schedulesAndCounts.put(Constant.NO_OF_PENDING,
+				this.getEmployeePendingScheduleInfosById(managerId).size());
+		schedulesAndCounts.put(Constant.NO_OF_DECLINED,
+				this.getDeclinedScheduleInfosByManagerId(managerId).size());
+		return schedulesAndCounts;
+	}
+
+	@Override
+	public List<ScheduleInfo> getDeclinedScheduleInfosByManagerId(long managerId) {
+		return this.getScheduleInfosBySchedules(scheduleRepository
+				.fetchDeclinedSchedulesByTechnology(employeeService
+						.getEmployeeById(managerId).getTechnology()));
 	}
 
 }

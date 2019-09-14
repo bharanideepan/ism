@@ -1,6 +1,6 @@
 package com.ideas2it.ism.entity;
 
-import java.io.Serializable;
+
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -28,11 +28,7 @@ import com.ideas2it.ism.entity.Role;
  */
 @Entity
 @Table (name = "user")
-public class User implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class User {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +44,7 @@ public class User implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     private Role role;
     
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = Employee.class, mappedBy = "user", cascade = CascadeType.ALL)
     private Employee employee;
     
     public String toString() {
