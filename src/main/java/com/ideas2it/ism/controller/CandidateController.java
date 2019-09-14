@@ -132,7 +132,6 @@ public class CandidateController {
         try { 
             candidate = candidateService.updateCandidate(candidate, resume);   
             model.addAttribute(Constant.CANDIDATE, candidate);
-            System.out.println("inside");
             model.addAttribute(Constant.STATUS, Constant.UPDATED); 
         } catch (Exception e) {
             System.out.println(e.getMessage());
