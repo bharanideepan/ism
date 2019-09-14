@@ -3,7 +3,9 @@ package com.ideas2it.ism.dao;
 import java.util.List;
 
 import com.ideas2it.ism.common.Department;
+import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.entity.Schedule;
+import com.ideas2it.ism.exception.IsmException;
 
 /**
  * This layer act as an intermediate between DB and 
@@ -16,5 +18,9 @@ import com.ideas2it.ism.entity.Schedule;
  */
 public interface ScheduleDAO {
 
+	public List<Schedule> fetchSchedulesByLimit(int startId) throws IsmException;
 
+	public List<Schedule> getSchedulesByDate(int i, String date);
+
+	public int totalCountForDate(String date);
 }
