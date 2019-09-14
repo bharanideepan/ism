@@ -4,41 +4,36 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <link rel="stylesheet" href="/css/user.css"/>
       <link rel="stylesheet" type="text/css" href="/css/popUp.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body class="bg" id="login" onload="currentStatus('${status}');">
    <%@ include file="header.jsp" %> 
-        <div >
-          <table class="table">
+   
+        <div>
             <form:form method="post" action="loginUser" modelAttribute="user">
-              <tr>
-                  <td class="info">User Name :</td></tr>
-              <tr>
-                  <td class="data">
-                  <input class="ans" type = "text" name = "Name" required></td>
-              </tr>
-              <tr >
-                <td class="info">Password :</td></tr>
-              <tr>  
-                <td class="data"><input class="ans" type = "password" name = "Password" required></td>
-              </tr>
-              <tr>
-               <td align="center"><button class="button">Login</button></td>
-              </tr>
+			 <div class="form-group">
+                  <label for="name">User Name :</label>
+                  <input class="form-control" type="text" name="Name" id="name" required/>
+              </div>
+			 <div class="form-group">
+                <label for="pwd">Password :</label>
+                <input class="form-control" id="pwd" type="password" name = "Password" required/>
+              </div>
+               <button class="btn btn-default">Login</button>
             </form:form>
-              <tr><td><a href="createUser" color="green">create new user ?</a></td></tr>
-          </table>
-        </div><br>
-       <div id="pass">
-         <div class="modal-content">
-            <div id="created">Signed in Successfully</div>
-            <br>
-            <div id="updated">Bad Credentials</div>
-            <br>
-            <span class="close">&times;</span>
-         </div>
-      </div>
+            <div id="pass">
+               <div class="modal-content">
+               <div id="created">Created Successfully</div>
+               <br>
+                   <div id="updated">Email or Password Mismatch</div>
+               <br>
+                   <span class="close">&times;</span>
+               </div>
+           </div>
       <script type="text/javascript">
          function currentStatus(status) {
              if (status === "created") {

@@ -148,8 +148,9 @@ public class CandidateController {
      * @return VIEW_CANDIDATES_JSP - Display all the fetched candidates information.
      */
     @RequestMapping(value = Constant.VIEW_CANDIDATES, method = RequestMethod.GET)  
-    private String viewAllCandidate(Model model) {
+    private String viewAllCandidate(HttpServletRequest request, Model model) {
         try { 
+        	request.getSession().setAttribute(Constant.CANDIDATE_STATUS, Constant.NEW);
         	CandidatePagenationInfo pagenationInfo = 
         			candidateService.getPagenationInfo();
             model.addAttribute(Constant.PAGENATION_INFO, pagenationInfo); 
@@ -259,9 +260,11 @@ public class CandidateController {
      * @return VIEW_CANDIDATES - Candidates objects of particular status are passed to jsp.
      */
     @RequestMapping(value = Constant.SEARCH_BY_STATUS, method = RequestMethod.GET)  
-    private String searchCandidateByStatus(@RequestParam(name = Constant.RESULT) Result status,
+    private String searchCandidateByStatus(HttpServletRequest request, 
+    		@RequestParam(name = Constant.RESULT) Result status,
     		Model model) {
-        try { 
+        try {
+        	request.getSession().setAttribute(Constant.CANDIDATE_STATUS, status);
         	CandidatePagenationInfo pagenationInfo = 
         			candidateService.searchByStatus(status);
             model.addAttribute(Constant.PAGENATION_INFO, pagenationInfo); 

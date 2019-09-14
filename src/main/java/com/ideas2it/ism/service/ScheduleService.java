@@ -102,12 +102,26 @@ public interface ScheduleService {
 	/**
 	 * Updates the schedule status as cancelled.
 	 * 
-	 * @param scheduleInfo - Model schedule from the client along with cancellation comment
+	 * @param scheduleId - Id of the schedule to be cancelled
 	 * @param comment - Comment for cancelling
 	 * 
 	 * @return true if the status of the schedule is updated as cancelled else false
-	 *
-	boolean cancelSchedule(Schedule scheduleInfo);
+	 */
+	boolean cancelSchedule(long scheduleId, String comment);
+	
+	/**
+	 * Updates the schedule status as rescheduled and also creates a new schedule.
+	 * 
+	 * @param newSchedule - Model schedule from the client along with reschedule comment
+	 * @param comment - Comment for rescheduling
+	 * @param scheduleId - Schedule id used to update the schedule
+	 * @param dateTime - Interview date and time
+	 * @param interviewerId - Id of the interviewer Which is in string format
+	 * 
+	 * @return schedule - After rescheduling successfully
+	 */
+	Schedule reschedule(ScheduleInfo scheduleInfo, String comment,
+			long scheduleId, Date date, String interviewerId);
 	
 	/**
 	 * Updates the schedule status as rescheduled and also creates a new schedule.
@@ -121,10 +135,9 @@ public interface ScheduleService {
 	 * @param interviewerId - Id of the interviewer Which is in string format
 	 * 
 	 * @return schedule - After rescheduling successfully
-	 *
-	Schedule reschedule(Schedule newSchedule, String comment,
-			long scheduleId, long candidateId, String date,
-			String time, String interviewerId);*/
+	 */
+	Schedule updateSchedule(ScheduleInfo scheduleInfo, long scheduleId,
+			Date date, String interviewerId);
 	
 	/**
 	 * Gets the scheduleInfos by status

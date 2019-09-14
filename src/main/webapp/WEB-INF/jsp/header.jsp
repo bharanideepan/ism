@@ -10,7 +10,7 @@
 <body>
       <div class="flex">
         <div class="logo">
-           	<a href="index" ><img src="/image/logo.png" width="200px" height="50px"/></a>
+           	<img src="/image/logo.png" width="200px" height="50px"/>
         </div>
         <div class="box" >
            	<h2 align="center" >Interview Schedule Management</h2>

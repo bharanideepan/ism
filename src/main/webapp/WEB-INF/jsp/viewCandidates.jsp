@@ -4,15 +4,45 @@
 <html>
 <head>
 <meta charset="UTF-8">
- <link rel="stylesheet" type="text/css" href="/css/viewCandidates.css">
- <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
+      
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
 </head>
-<body id="background">
-<%@ include file="header.jsp" %>  
-<%@ include file="recruiterMenu.jsp" %>
+<body>
+<%@ include file="header.jsp" %>     
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ISM</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="viewSchedules">View Schedules</a></li>
+      <li><a href="addCandidate">Add Candidate</a></li>
+      <li class="active"><a href="viewCandidates">View New Candidates</a></li>
+      <li><a href="logout">Log Out</a></li>
+    </ul>    
+                                         
+	    <form class="navbar-form navbar-right" action="schedulesByDate" method="post">
+	      <div class="dropdown">
+	        <select class="status" id="candidateStatus" name="result"  onclick="getByStatus();">
+                  <option value="${candidateStatus}">${candidateStatus}</option>
+               <c:forEach var="result" items="${pagenationInfo.results}" >
+                  <option value="${result}">${result}</option>
+               </c:forEach>
+            </select>
+	      </div>
+	    </form>
+  </div>
+</nav>
+  
       <div>
-         <table align="center">
+         <!--<table align="center">
             <tr>
+<<<<<<< HEAD
                   <td class="info">Search By Status</td>
                   <td>
                      <select value="{pagenationInfo.status}" class="status" id="candidateStatus" name="result"  onclick="getByStatus();">
@@ -20,16 +50,27 @@
                            <option value="${result}">${result}</option>
                         </c:forEach>
                      </select>
+=======
+               <form action="searchByName" method="post">
+                  <td><input type="text" name="name" placeholder="Search By Name" required/></td>
+                  <td><input type="submit" value=&#128269;></td>
+               </form>
+               <form action="searchByStatus" method="post">
+                  <td class="info">Search By Status</td>
+                  <td>
+                     
+>>>>>>> 5389730e9c14ba1c5628da8c621fe51a7d993cb0
                   </td>
                 <!--<td><input type="submit"  value=&#128269;></td>-->
-               <!--</form>-->
+               <!--</form>
             </tr>
-         </table>
+         </table>-->
       </div>
+      
       <c:if test="${pagenationInfo.candidates != null}">
          <c:if test="${!pagenationInfo.candidates.isEmpty()}">
             <div>
-               <table id="contentTable" class = "table" align="center" cellpadding = "10">
+               <table  class = "table">
                 <tr>
                 <th>Name</th>
                 <th>Position</th>
@@ -96,7 +137,7 @@
       </div> 
 	      </c:if>
 	      <c:if test="${pagenationInfo.candidates.isEmpty()}">
-	        <table id="contentTable" class = "table" align="center" cellpadding = "10">
+	        <table class = "table">
 	        	<tr><th>No results available for your search</th></tr>
 	        </table> 
 	      </c:if>

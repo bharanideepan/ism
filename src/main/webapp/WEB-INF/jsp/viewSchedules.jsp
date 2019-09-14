@@ -7,21 +7,46 @@
    <head>
       <meta charset="UTF-8">
       <title>View schedules</title>
-      <link rel="stylesheet" type="text/css" href="/css/viewSchedules.css">
-        <link rel="stylesheet" type="text/css" href="/css/popUp.css">
+        <link rel="stylesheet" type="text/css" href="/css/popUp.css">      
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
    </head>
-   <body onload="currentStatus('${status}');">
+   <body>   
       <%@ include file="header.jsp" %> 
-      <div id="dateSearch"  align="center">
-      <form method="post" action="schedulesByDate">
-      	<input type="date" name="shdate" required/>
-      	<button type="submit">Search</button>
-      </form>
-      </div>
-      <div>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ISM</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <c:if test="${role == 'Manager'}">
+      <li class="active"><a href="viewSchedulesByManager">View Schedules</a></li>
+      <li><a href="newSchedules">New Schedules</a></li>
+      <li><a href="pendingSchedules">Pending Schedules</a></li>
+      </c:if>
+      <c:if test="${role == 'Recruiter'}">
+      <li class="active"><a href="viewSchedules">View Schedules</a></li>
+      <li><a href="addCandidate">Add Candidate</a></li>
+      <li><a href="viewCandidates">View New Candidates</a></li>
+      </c:if>
+      <li><a href="logout">Log Out</a></li>
+    </ul>
+	    <form class="navbar-form navbar-right" action="schedulesByDate" method="post">
+	      <div class="form-group">
+	        <input type="date" class="form-control" name="shdate" required>
+	      </div>
+	      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+	    </form>
+  </div>
+</nav>
+
+		<div>
          <c:if test="${schedules != null}">
             <c:if test="${!schedules.isEmpty()}">
-               <table id="contentTable" class = "table" align="center" cellpadding = "10">
+               <table class = "table">
                   <tr>
                      <th>S.No.</th>
                      <th>Candidate Name</th>
@@ -31,6 +56,7 @@
                      <th>Time</th>
                      <th>Schedule Status</th>
                      <th>Interviewer</th>
+                     <th>Records</th>
                   </tr>
                   <c:set var="sNumber" value="1" scope="page"/>
                   <c:forEach var="schedule" items="${schedules}">
@@ -41,7 +67,7 @@
                         <td>${schedule.interviewType}</td>
                         <td>${schedule.date}</td>
                         <td>${schedule.time}</td>
-                        <td><a href="getScheduleWithInterviewers?scheduleId=${schedule.id}">${schedule.status}</a></td>
+                        <td>${schedule.status}</td>
                         <c:choose>
                            <c:when test="${schedule.interviewer != null}">
                               <td>${schedule.interviewer.name}</td>
@@ -50,23 +76,25 @@
                               <td>Not assigned</td>
                            </c:otherwise>
                         </c:choose>
+                        <td>
+        <a href="getScheduleWithInterviewers?scheduleId=${schedule.id}"><span class="glyphicon glyphicon-list-alt"></span></a></td>
                      </tr>
                      <c:set var="sNumber" value="${sNumber+1}" scope="page"/>
                   </c:forEach>
                </table>
             </c:if>
             <c:if test="${schedules.isEmpty()}">
-               <table id="contentTable" class = "table" align="center" cellpadding = "10">
+               <table class = "table">
                   <tr>
-                     <td>No results available for your search</td>
+                     <th>No results available for your search</th>
                   </tr>
                </table>
             </c:if>
          </c:if>
          <c:if test="${schedules == null}">
-            <table id="contentTable" class = "table" align="center" cellpadding = "10">
+            <table class = "table">
                <tr>
-                  <td>No results available for your search</td>
+                  <th>No results available for your search</th>
                </tr>
             </table>
          </c:if>
@@ -80,30 +108,6 @@
             <span class="close">&times;</span>
          </div>
       </div>
-      <script type="text/javascript">
-         function currentStatus(status) {
-             if (status === "created") {
-                 var modal = document.getElementById("pass");
-                 var created = document.getElementById("created");
-                 var span = document.getElementsByClassName("close")[0];
-                 modal.style.display = "block";
-                 created.style.display = "block"
-                 span.onclick = function() {
-                     modal.style.display = "none";
-                     created.style.display = "none"; 
-                  }
-             } else if (status === "updated") {
-                 var modal = document.getElementById("pass");
-                 var updated = document.getElementById("updated");
-                 var span = document.getElementsByClassName("close")[0];
-                 modal.style.display = "block";
-                 updated.style.display = "block"; 
-                 span.onclick = function() {
-                     modal.style.display = "none";
-                     updated.style.display = "none"; 
-                 }
-             }
-         }
-      </script>
+ 
    </body>
 </html>

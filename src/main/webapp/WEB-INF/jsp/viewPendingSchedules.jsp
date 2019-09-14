@@ -4,23 +4,40 @@
 <html>
    <head>
       <meta charset="UTF-8">
-      <link rel="stylesheet" type="text/css" href="/css/viewPendingSchedules.css">
+      
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
       <link rel="stylesheet" type="text/css" href="/css/popUp.css">
-      <link rel="stylesheet" type="text/css" href="/css/recruiterMenu.css">
    </head>
-   <body id="background">
-      <%@ include file="header.jsp" %>   
-      <div class="navbar">
-         <a href="newSchedules">New Schedules</a>
-         <a href="pendingSchedules">Pending Schedules</a>
-         <a href="logout" style="float:right">Log Out</a>
-      </div>
+   <body>
+      <%@ include file="header.jsp" %>
+      
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ISM</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <c:if test="${role == 'Manager'}">
+      <li><a href="viewSchedulesByManager">View Schedules</a></li>
+      </c:if>
+      <li><a href="newSchedules">New Schedules</a></li>
+      <li class="active"><a href="pendingSchedules">Pending Schedules</a></li>
+      <li><a href="logout">Log Out</a></li>
+    </ul>
+  </div>
+</nav>
+
       <div>
          <c:if test="${schedules != null}">
             <c:if test="${!schedules.isEmpty()}">
                <table id="contentTable" class = "table" align="center" cellpadding = "10">
                   <tr>
-                     <th>Name</th>
+                     <th>S.No.</th>
+                     <th>Candidate Name</th>
                      <th>Position</th>
                      <th>Department</th>
                      <th>Experience</th>
@@ -30,21 +47,23 @@
                      <th>Selected</th>
                      <th>Reject</th>
                   </tr>
+                  <c:set var="sNumber" value="1" scope="page"/>
                   <c:forEach var="schedule" items="${schedules}">
                      <tr>
-                        <td class = "td"><a href="viewProgress?id=${schedule.candidate.id}">${schedule.candidate.name}</a></td>
-                        <td class = "td">${schedule.candidate.position}</td>
-                        <td class = "td">${schedule.candidate.department}</td>
-                        <td class = "td">${schedule.candidate.experience}</td>
-                        <td class = "td">${schedule.candidate.status}</td>
-                        <td class = "td">${schedule.date}</td>
-                        <td class = "td">${schedule.time}</td>
-                        <td class = "td" > 
+                        <td>${sNumber}</td>
+                        <td><a href="viewProgress?id=${schedule.candidate.id}">${schedule.candidate.name}</a></td>
+                        <td>${schedule.candidate.position}</td>
+                        <td>${schedule.candidate.department}</td>
+                        <td>${schedule.candidate.experience}</td>
+                        <td>${schedule.candidate.status}</td>
+                        <td>${schedule.date}</td>
+                        <td>${schedule.time}</td>
+                        <td > 
                            <button class = "select" 
                               onclick="getComment('selected','${schedule.id}');">&#10004;
                            </button>
                         </td>
-                        <td class = "td">
+                        <td>
                            <button class = "reject"
                               onclick="getComment('rejected', '${schedule.id}');">&times;
                            </button>
@@ -57,13 +76,14 @@
                            <input type="submit" id="saveComment" value="ok"/>
                         </div>
                      </div>
+                     <c:set var="sNumber" value="${sNumber+1}" scope="page"/>
                   </c:forEach>
                </table>
             </c:if>
             <c:if test="${schedules.isEmpty()}">
                <table id="contentTable" class = "table" align="center" cellpadding = "10">
                   <tr>
-                     <td>No pending schedules</td>
+                     <th>No pending schedules</th>
                   </tr>
                </table>
             </c:if>
@@ -71,7 +91,7 @@
          <c:if test="${schedules == null}">
             <table id="contentTable" class = "table" align="center" cellpadding = "10">
                <tr>
-                  <td>No pending schedules</td>
+                  <th>No pending schedules</th>
                </tr>
             </table>
          </c:if>

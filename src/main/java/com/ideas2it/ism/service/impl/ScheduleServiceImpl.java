@@ -130,25 +130,35 @@ public class ScheduleServiceImpl implements ScheduleService {
 		}
 		scheduleRepository.save(schedule);
 	}
-  
-	//TODO-cancelSchedule
-	/*public boolean cancelSchedule(Schedule scheduleInfo) {
-		Schedule schedule = scheduleRepository.getOne(scheduleInfo.getId());
-		schedule.setCancellationComment(scheduleInfo.getCancellationComment());
+
+    /**
+     * {@inheritDoc}
+     */
+	public boolean cancelSchedule(long scheduleId, String comment) {
+		Schedule schedule = scheduleRepository.getOne(scheduleId);
+		schedule.setCancellationComment(comment);
 		schedule.setStatus(ScheduleStatus.Cancelled);
 		schedule = scheduleRepository.save(schedule);
 		return schedule.getStatus().equals(ScheduleStatus.Cancelled);
-	}*/
+	}
 
-	//TODO-reschedule
-	/*public Schedule reschedule(Schedule newSchedule, String comment,
-			long scheduleId, long candidateId, String date, String time, String interviewerId) {
+    /**
+     * {@inheritDoc}
+     */
+	public Schedule reschedule(ScheduleInfo scheduleInfo, String comment,
+			long scheduleId, Date date, String interviewerId) {
 		Schedule schedule = scheduleRepository.getOne(scheduleId);
 		schedule.setRescheduleComment(comment);
 		schedule.setStatus(ScheduleStatus.Rescheduled);
 		scheduleRepository.save(schedule);
-		return this.addSchedule(newSchedule, candidateId, date, time, interviewerId);
-	}*/
+		scheduleInfo.setDateTime(date);
+		scheduleInfo.setCandidate(schedule.getCandidate());
+    	if((null != interviewerId) && (!interviewerId.isEmpty())) {
+    		scheduleInfo.setInterviewer(employeeService.getEmployeeById(Long.parseLong(interviewerId)));
+			mailSender.sendMail("manibharathi@ideas2it.com", "Testing", comment);
+    	}
+		return scheduleRepository.save(this.getScheduleByScheduleInfo(scheduleInfo));
+	}
 
     /**
      * {@inheritDoc}
@@ -246,6 +256,16 @@ public class ScheduleServiceImpl implements ScheduleService {
      */	
 	public List<ScheduleInfo> getScheduleInfosByDate(String date) {
 		return this.getScheduleInfosBySchedules(scheduleRepository.getSchedulesByDate(date));
+	}
+
+	@Override
+	public Schedule updateSchedule(ScheduleInfo scheduleInfo, long scheduleId,
+			Date date, String interviewerId) {
+		Schedule schedule = this.getScheduleById(scheduleId);
+		schedule.setDateTime(date);
+		schedule.setInterviewType(scheduleInfo.getInterviewType());
+		schedule.setRound(scheduleInfo.getRound());
+		return scheduleRepository.save(schedule);
 	}
 
 }
