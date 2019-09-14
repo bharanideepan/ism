@@ -1,5 +1,6 @@
 package com.ideas2it.ism.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -7,8 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -21,11 +24,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ideas2it.ism.common.Constant;
 import com.ideas2it.ism.common.InterviewLevel;
 import com.ideas2it.ism.common.InterviewType;
+import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.CandidateStatus;
 import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.entity.Schedule;
 import com.ideas2it.ism.info.ScheduleInfo;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
+import com.ideas2it.ism.exception.IsmException;
 import com.ideas2it.ism.service.EmployeeService;
 import com.ideas2it.ism.service.ScheduleService;
 
@@ -225,7 +230,11 @@ public class ScheduleController {
      */
     @RequestMapping(value = Constant.VIEW_SCHEDULES, method = RequestMethod.GET)  
     private String getAllScheduleInfos(Model model) {
-        model.addAttribute(Constant.SCHEDULES, scheduleService.getAllScheduleInfos());
+    	try {
+            model.addAttribute(Constant.PAGENATION_INFO, scheduleService.getAllScheduleInfos());
+    	} catch (IsmException e) {
+    		System.out.println(e.getMessage());
+    	}
         return Constant.VIEW_SCHEDULES_JSP;
     }
     
@@ -254,9 +263,37 @@ public class ScheduleController {
      * 
      * @return VIEW_SCHEDULES_JSP - 
      */
-    @RequestMapping(value = Constant.SCHEDULES_BY_DATE, method = RequestMethod.POST)  
+    @RequestMapping(value = Constant.SCHEDULES_BY_DATE, method = RequestMethod.GET)  
     private String getScheduleInfosByDate(@RequestParam(Constant.SCHEDULED_DATE)String date, Model model) {
-        model.addAttribute(Constant.SCHEDULES, scheduleService.getScheduleInfosByDate(date));
+        model.addAttribute(Constant.PAGENATION_INFO, scheduleService.getScheduleInfosByDate(date));
         return Constant.VIEW_SCHEDULES_JSP;
+    }
+    
+    /**
+     * Sets required information along with request.
+     * Set the pageno  for pagenation along with request.
+     * Forward the request to displayplayerspage.
+     *
+     * @param request - User request from server.
+     * @param reponse - Response to server from servlet
+     * @throws ServletException -
+     *         Defines a general exception a servlet can throw when it 
+     *         encounters difficulty.
+     * @throws IOException - 
+     *         general class of exceptions produced by failed or 
+     *         interrupted I/O operations.
+     */
+    @RequestMapping(value = Constant.VIEW_ALL_SCHEDULES, method = RequestMethod.GET)  
+    private void viewAllSchedules(HttpServletRequest request, HttpServletResponse 
+            response) throws IOException {
+    	try {
+            int pageNo = Integer.parseInt(request.getParameter(Constant.PAGE_NO));
+            String date = request.getParameter(Constant.DATE);
+            JSONArray scheduleInfos = scheduleService.retrieveAllSchedules(pageNo, date);
+            response.setContentType(Constant.APPLICATION_JSON);
+            response.getWriter().write(scheduleInfos.toString());
+    	} catch(IsmException e) {
+    	    System.out.println(e.getMessage());	
+    	}
     }
 }

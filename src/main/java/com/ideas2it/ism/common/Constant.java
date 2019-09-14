@@ -21,7 +21,7 @@ public class Constant {
     public static final  String NAME = "name";
 	public static final String RESUME = "resume";
 	public static final String PAGE_NO = "pageNo";
-	public static final int RETRIEVE_LIMIT = 5;
+	public static final int RETRIEVE_LIMIT = 10;
 	public static final String APPLICATION_JSON = "application/json";
 	public static final String DATE = "date";
 	public static final String TIME = "time";
@@ -121,6 +121,10 @@ public class Constant {
 	public static final String INDEX = "index";
 	public static final Object BAD_CREDENTIAL = "badCredential";
 	public static final String UPDATE_SCHEDULE = "updateSchedule";
+	public static final String ROUND = "round";
+	public static final String INTERVIEW_TYPE = "interviewType";
+	public static final String INTERVIEWER_NAME = "interviewerName";
+	public static final String VIEW_ALL_SCHEDULES = "viewAllSchedules";
 }
 
    

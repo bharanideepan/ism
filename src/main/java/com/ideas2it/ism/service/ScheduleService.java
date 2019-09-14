@@ -4,9 +4,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+
 import com.ideas2it.ism.common.ScheduleStatus;
 import com.ideas2it.ism.entity.Schedule;
 import com.ideas2it.ism.info.ScheduleInfo;
+import com.ideas2it.ism.info.SchedulePagenationInfo;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
 import com.ideas2it.ism.exception.IsmException;
 
@@ -79,7 +82,7 @@ public interface ScheduleService {
 	 * 
 	 * @return schedules - List of all schedules.
 	 */
-	List<ScheduleInfo> getAllScheduleInfos();
+	SchedulePagenationInfo getAllScheduleInfos() throws IsmException;
 	
 	/**
 	 * Gets the schedule having the given ID
@@ -195,5 +198,16 @@ public interface ScheduleService {
 	 * 
 	 * @return scheduleInfos - List of schedules which are scheduled on that day.
 	 */
-	List<ScheduleInfo> getScheduleInfosByDate(String date);
+	SchedulePagenationInfo getScheduleInfosByDate(String date);
+
+    /** 
+     * Information of Schedule object is converted Json object and then 
+     *     added in JsonArray
+     *
+     * @param    pageNo - Schedules corresponding to the pageNo is fetched.
+     * @return    schedules - Schedule details.
+     * @throws IsmException - Thrown when a hibernate exception occurs while retrieving
+     * candidates details from DB. 
+     */ 
+	JSONArray retrieveAllSchedules(int pageNo, String date) throws IsmException;
 }

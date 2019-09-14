@@ -70,7 +70,7 @@
       <c:if test="${pagenationInfo.candidates != null}">
          <c:if test="${!pagenationInfo.candidates.isEmpty()}">
             <div>
-               <table  class = "table">
+               <table  class = "table" id="contentTable">
                 <tr>
                 <th>Name</th>
                 <th>Position</th>
