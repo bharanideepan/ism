@@ -12,16 +12,18 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      
+      <link rel="stylesheet" type="text/css" href="/css/ism.css">
   
    </head>
-   <body>   
-      <%@ include file="header.jsp" %> 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">ISM</a>
-    </div>
-    <ul class="nav navbar-nav">
+   <body> 
+      <div class="col-md-12 col-md-offset-0">
+         <div class="fresh-table full-color-orange">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                     <font class="navbar-brand">Interview Schedule Management</font>
+                  </div>
+   <!-- <ul class="nav navbar-nav">
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Schedules <span class="caret"></span></a>
         <ul class="dropdown-menu">
@@ -36,23 +38,33 @@
           <li><a href="pendingSchedules">Pending <span class="badge">${noOfPendingSchedules}</span></a></li>
         </ul>
       </li>
-      <!-- <c:if test="${role == 'Recruiter'}">
+       <c:if test="${role == 'Recruiter'}">
       <li class="active"><a href="viewSchedules">View Schedules</a></li>
       <li><a href="addCandidate">Add Candidate</a></li>
       <li><a href="viewCandidates">View New Candidates</a></li>
-      </c:if> -->
+      </c:if>
       <li><a href="logout">Log Out</a></li>
-    </ul>
-	    <form class="navbar-form navbar-right" action="schedulesByDate" method="post">
-	      <div class="form-group">
-	        <input type="date" class="form-control" name="shdate" required>
-	      </div>
-	      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-	    </form>
+    </ul> -->
   </div>
-</nav>
 
-		<div>
+               
+                  <div class="menu-bar">
+                     <table class = "table">
+                     <c:if test="${role == 'Manager'}">
+                              <tr><th><a href="declinedSchedules">Declined <span class="badge">${noOfDeclinedSchedules}</span></a></th></tr>
+                              <tr><th><a href="viewSchedulesByManager">All</a></th></tr>
+                              <tr><th><a href="newSchedules">New <span class="badge">${noOfNewSchedules}</span></a></th></tr>
+                              <tr><th><a href="pendingSchedules">Pending <span class="badge">${noOfPendingSchedules}</span></a></th></tr>
+                     </c:if>
+                     <c:if test="${role == 'Recruiter'}">
+                        <tr><th><a href="viewSchedules">Schedules</a></th></tr>
+                              <tr><th><a href="addCandidate"><span class="glyphicon glyphicon-plus"></span> Add Candidate</a></th></tr>
+                              <tr><th><a href="viewCandidates">View Candidates</a></th></tr>
+                     </c:if>
+                     <tr><th><a href="logout">Log Out</a></th></tr>
+                     </table>
+                  </div>
+		<div class="table-div">
          <c:if test="${schedules != null}">
             <c:if test="${!schedules.isEmpty()}">
                <table class = "table">
@@ -116,7 +128,7 @@
             <br>
             <span class="close">&times;</span>
          </div>
-      </div>
+      </div></div></div>
  
    </body>
 </html>

@@ -112,7 +112,7 @@
                  <c:if test="${schedule.status == 'New'}">
                   <th>change Interviewer:</th>
                   <td>
-                  	 <select id="assigned" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
+                  	 <select id="assigned" class="select" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
                   	     <option value="0">None</option>
                   	     <c:forEach var="interviewer" items="${interviewers}">
                              <option  
@@ -125,27 +125,28 @@
                <c:if test="${schedule.interviewer == null}">
                   <th>Assign Interviewer:</th>
                   <td>
+                  <div class="select">
                   	 <select id="assigned" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
                   	     <option value="0">None</option>
                   	     <c:forEach var="interviewer" items="${interviewers}">
-                             <option  
-                             value="${interviewer.id}">${interviewer.name}</option>
+                             <option value="${interviewer.id}">${interviewer.name}</option>
                          </c:forEach>
                   	 </select>
+               	 </div>
                   </td>
                </c:if>
             </tr>
             <c:if test="${role == 'Recruiter' && !(schedule.status == 'Selected' || schedule.status == 'Rejected')}">
                <tr>
-                  <td><input type="button" value="Reschedule"/></td>
-                  <td><input type="button" value="Update"></td>
-                  <td><input type="button" value="Cancel Schedule"></td>
+                  <td><input type="button" class="form-control" value="Reschedule"/></td>
+                  <td><input type="button" class="form-control" value="Update"></td>
+                  <td><input type="button" class="form-control" value="Cancel Schedule"></td>
                </tr>
             </c:if>
             </table></div>
             <div class="table-div-single-side">
             <c:if test="${schedule.status == 'Declined'}">
-            <table>
+            <table class="table">
                <tr>
                   <th>Declined By:</th><th>Reason:</th>
                </tr>

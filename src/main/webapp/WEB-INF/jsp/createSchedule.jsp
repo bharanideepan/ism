@@ -8,16 +8,16 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="/css/ism.css"/>
   
    <body id="background">
-<%@ include file="header.jsp" %>    
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">ISM</a>
-    </div>
-    <ul class="nav navbar-nav">
+      <div class="col-md-12 col-md-offset-0">
+         <div class="fresh-table full-color-orange">
+            <div class="container-fluid">
+               <div class="navbar-header">
+                  <font class="navbar-brand">Interview Schedule Management</font>
+               </div>
+    <!-- <ul class="nav navbar-nav">
       <c:if test="${role == 'Recruiter'}">
       <li><a href="viewSchedules">Schedules</a></li>      
       <li class="dropdown">
@@ -29,20 +29,36 @@
       </li>
       </c:if>
       <li><a href="logout">Log Out</a></li>
-    </ul>
+    </ul> -->
   </div>
-</nav>
-  
-      <div id="createScheduleId" class="makeSchedule" align="center">
-         <div class= "flex">
+
+            <div class="menu-bar">
+               <table class = "table">
+                  <c:if test="${role == 'Recruiter'}">
+                     <tr>
+                        <th><a href="viewSchedules">Schedules</a></th>
+                     </tr>
+                     <tr>
+                        <th><a href="addCandidate"><span class="glyphicon glyphicon-plus"></span> Add Candidate</a></th>
+                     </tr>
+                     <tr>
+                        <th><a href="viewCandidates">View Candidates</a></th>
+                     </tr>
+                  </c:if>
+                  <tr>
+                     <th><a href="logout">Log Out</a></th>
+                  </tr>
+               </table>
+            </div>    
+         <div class= "table-div-create">
             <form:form name="form" id="createScheduleFormId" action="createSchedule" method="post" modelAttribute="schedule">
                <div class="box">
                   <table class="table">
-                  <caption>Interview Schedule Form</caption>
+                  <tr><th>Interview Schedule Form</th></tr>
                      <tr>
                         <td>InterviewTypes</td>
                         <td>
-                           <form:select path="interviewType" items="${types}" />
+                           <form:select class="select" path="interviewType" items="${types}" />
                         </td>
                      </tr>
                      <tr>
@@ -51,19 +67,19 @@
                            <c:forEach var="schedule" items="${candidate.schedules}">
                               <c:set var="round" value="${schedule.round}" scope="page"/>
                            </c:forEach>
-                           <form:input path="round" value="${round+1}" />
+                           <form:input class="form-control" path="round" value="${round+1}" />
                         </td>
                      </tr>
                      <tr>
                         <td>Date</td>
                         <td>
-                           <input type="datetime-local" name="shdate" required="required"/>
+                           <input class="form-control" type="datetime-local" name="shdate" required="required"/>
                         </td>
                      </tr>
                <tr>
                   <td>Assign Interviewer</td>
                   <td>
-                  	 <select name="interviewerId">
+                  	 <select class="select" name="interviewerId">
                   	     <option value="">None</option>
                   	     <c:forEach var="interviewer" items="${interviewers}">
                              <option value="${interviewer.id}">${interviewer.name}</option>
@@ -72,15 +88,16 @@
                   </td>
                </tr>
                      <tr>
-                        <td><input type="reset" value="Clear"></td>
+                        <td><input class="form-control" type="reset" value="Clear"></td>
                         <td>
-                           <input type="hidden" name="candidateId" value="${candidate.id}"/><input type="submit" value="Submit">
+                           <input type="hidden" name="candidateId" value="${candidate.id}"/>
+                           <input class="form-control" type="submit" value="Submit">
                         </td>
                      </tr>
                   </table>
                </div>
             </form:form>
          </div>
-      </div>
+      </div></div>
    </body>
 </html>

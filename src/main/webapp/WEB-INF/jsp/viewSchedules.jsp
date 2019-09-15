@@ -76,9 +76,9 @@
                      </table>
                   </div>
                
+                  <div class="table-div">
             <c:if test="${pagenationInfo.scheduleInfos != null}">
                <c:if test="${!pagenationInfo.scheduleInfos.isEmpty()}">
-                  <div class="table-div">
                      <table class = "table" id="contentTable">
                         <tr>
                            <th>Candidate Name</th>
@@ -112,7 +112,6 @@
                            </tr>
                         </c:forEach>
                      </table>
-                  </div>
                </c:if>
                <c:if test="${pagenationInfo.scheduleInfos.isEmpty()}">
                   <table class = "table">
@@ -129,6 +128,7 @@
                   </tr>
                </table>
             </c:if>
+                  </div>
                
                <c:if test="${pagenationInfo.pages.size() != 1}">
                   <div class="page" align="center">

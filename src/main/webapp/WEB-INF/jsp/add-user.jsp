@@ -9,51 +9,69 @@
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-      <link rel="stylesheet" href="/css/user.css"/>
+  
+      <link rel="stylesheet" href="/css/ism.css"/>
 </head>
-<body style="background-color: #837872;">
-   <%@ include file="header.jsp" %> 
-   <nav class="navbar navbar-inverse">
-     <div class="container-fluid">
-       <div class="navbar-header">
-         <a class="navbar-brand" href="home">ISM</a>
-       </div>
-       <ul class="nav navbar-nav">
-         <li><a href="createUser">Add User</a></li>
-         <li><a href="logout">Log Out</a></li>
-       </ul>    
-      </div>
-    </nav>
-   	<div class="signUp">
+<body style="background-color: #837872;"> 
+      <div class="col-md-12 col-md-offset-0">
+         <div class="fresh-table full-color-orange">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                     <font class="navbar-brand">Interview Schedule Management</font>
+                  </div>
+</div>
+                  <div class="menu-bar">
+                     <table class = "table">
+                     <tr><th><a href="logout">Log Out</a></th></tr>
+                     </table>
+                  </div>
+   	<div class="table-div-signup">
 			<form:form method="post" action="saveUser" modelAttribute="user">
 		      <div  align="center"><img  src="/image/user.png" height="50px" width="50px"/></div><br>
-			  <div class="form-group">
-			    <label for="email" >Username:</label><br>
-			    <form:input type="text" placeholder="Username" path="name" class="form-control" required="required"/>
-			  </div><br>
-			  <div class="form-group">
-			    <label for="pwd">Password:</label>
-			    <form:input type="password" placeholder="Password" path="password" class="form-control" required="required"/>
-			  </div><br>
-			  <div class="form-group">
-			    <label>Employee:</label>
-			     <select class="form-control" name = "employeeId" required>
+               <div class="box">
+                  <table class="table">
+                  <tr><th>Create User</th></tr>
+                     <tr>
+                        <td>Username:</td>
+                        <td>
+                           <form:input type="text" placeholder="Username" path="name" class="form-control" required="required"/>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Password:</td>
+                        <td>
+                           <form:input type="password" placeholder="Password" path="password" class="form-control" required="required"/>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Employee:</td>
+                        <td>
+                           <select class="select" name = "employeeId" required>
                    <c:forEach var="employee" items="${employees}">
                      <option value="${employee.id}">${employee.name}</option>  
                    </c:forEach>
                  </select>
-			  </div><br>
-			  <div class="form-group">
-			    <label>Role:</label>
-                  <select class="form-control" name = "userRoles" required>
+                        </td>
+                     </tr>
+               <tr>
+                  <td>Role:</td>
+                  <td>
+                  <select class="select" name = "userRoles" required>
                      <c:forEach var="role" items="${roles}">
                        <option value="${role.id}">${role.name}</option>  
                      </c:forEach>
                   </select>
-			  </div><br>
-			  <div align="center"><input type="submit" class="btn btn-primary" value="save">
-              </div>
+                  </td>
+               </tr>
+                     <tr>
+                        <td><input class="form-control" type="reset" value="Clear"></td>
+                        <td>
+                           <input type="hidden" name="candidateId" value="${candidate.id}"/><input type="submit" class="btn btn-primary" value="save">
+                        </td>
+                     </tr>
+                  </table>
+               </div>
 			</form:form>
-    </div>
+    </div></div></div>
 </body>
 </html>
