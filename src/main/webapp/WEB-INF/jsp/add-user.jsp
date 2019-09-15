@@ -4,56 +4,56 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <link rel="stylesheet" href="/css/signup.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="/css/user.css"/>
 </head>
-<body class="bg" id="login">
+<body style="background-color: #837872;">
    <%@ include file="header.jsp" %> 
-   
-  
-    <form:form method="post" action="saveUser" modelAttribute="user">
-        <table class="table">
-            <tr><td align="center" colspan="2"><h2 style="color:green">Sign Up</h2></td></tr>
-            <tr>
-                <td class="info">User Name * </td></tr>
-             <tr>
-                <td>
-                <input class="ans" type = "text" name = "Name" required></td>
-            </tr>
-            <tr>
-                <td class="info">Password * </td>
-            </tr>
-            <tr>
-                <td>
-                <input class="ans" type = "password" name = "Password" required
-                    pattern ="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}"
-                    title="Must contain at least one number,one uppercase,lowercase letter, length 8"></td>
-            </tr>
-            <tr>
-                <td class="info">Employee * </td>
-            </tr>
-            <tr>  
-            <td>              
-               <select class="role" name = "employeeId" required>
-                 <c:forEach var="employee" items="${employees}">
-                   <option value="${employee.id}">${employee.name}</option>  
-                 </c:forEach>
-               </select>
-               </td>
-            </tr>
-            <tr>
-                <td class="info">Select Role<td>
-            </tr>
-            <tr>  
-            <td>              
-               <select class="role" name = "userRoles" required>
-                 <c:forEach var="role" items="${roles}">
-                   <option value="${role.id}">${role.name}</option>  
-                 </c:forEach>
-               </select>
-               </td>
-            </tr>
-             <tr><td align="center"><button class="button">Create</button></td></tr>
-        </table>
-    </form:form>
+   <nav class="navbar navbar-inverse">
+     <div class="container-fluid">
+       <div class="navbar-header">
+         <a class="navbar-brand" href="home">ISM</a>
+       </div>
+       <ul class="nav navbar-nav">
+         <li><a href="createUser">Add User</a></li>
+         <li><a href="logout">Log Out</a></li>
+       </ul>    
+      </div>
+    </nav>
+   	<div class="signUp">
+			<form:form method="post" action="saveUser" modelAttribute="user">
+		      <div  align="center"><img  src="/image/user.png" height="50px" width="50px"/></div><br>
+			  <div class="form-group">
+			    <label for="email" >Username:</label><br>
+			    <form:input type="text" placeholder="Username" path="name" class="form-control" required="required"/>
+			  </div><br>
+			  <div class="form-group">
+			    <label for="pwd">Password:</label>
+			    <form:input type="password" placeholder="Password" path="password" class="form-control" required="required"/>
+			  </div><br>
+			  <div class="form-group">
+			    <label>Employee:</label>
+			     <select class="form-control" name = "employeeId" required>
+                   <c:forEach var="employee" items="${employees}">
+                     <option value="${employee.id}">${employee.name}</option>  
+                   </c:forEach>
+                 </select>
+			  </div><br>
+			  <div class="form-group">
+			    <label>Role:</label>
+                  <select class="form-control" name = "userRoles" required>
+                     <c:forEach var="role" items="${roles}">
+                       <option value="${role.id}">${role.name}</option>  
+                     </c:forEach>
+                  </select>
+			  </div><br>
+			  <div align="center"><input type="submit" class="btn btn-primary" value="save">
+              </div>
+			</form:form>
+    </div>
 </body>
 </html>

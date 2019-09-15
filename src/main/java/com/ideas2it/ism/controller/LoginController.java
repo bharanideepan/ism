@@ -56,7 +56,7 @@ public class LoginController {
         String role = (String) session.getAttribute("role");
         if(null != session.getAttribute("user")) {
         	if(role.contains("Admin")) {
-        		model.setViewName("redirect:/newSchedules");
+        		model.setViewName("redirect:/createUser");
         	} else if(role.contains("Manager")) {
         		model.setViewName("redirect:/viewSchedulesByManager");
         	} else if(role.contains("Recruiter")) {

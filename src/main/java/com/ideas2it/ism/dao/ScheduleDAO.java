@@ -3,6 +3,7 @@ package com.ideas2it.ism.dao;
 import java.util.List;
 
 import com.ideas2it.ism.common.Department;
+import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.entity.Schedule;
 import com.ideas2it.ism.exception.IsmException;
@@ -23,4 +24,10 @@ public interface ScheduleDAO {
 	public List<Schedule> getSchedulesByDate(int i, String date);
 
 	public int totalCountForDate(String date);
+
+	public List<Schedule> fetchManagerSchedulesByLimit(Technology technology, int pageNo);
+
+	public int totalCountFoTechnology(Technology technology);
+
+	public List<Schedule> getMangerSchedulesByDate(Technology technology, int pageNo, String date);
 }

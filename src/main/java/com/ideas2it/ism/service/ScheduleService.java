@@ -198,9 +198,9 @@ public interface ScheduleService {
 	 *  
 	 * @param managerId - Id of the manager whose department schedules to be fetched.
 	 * 
-	 * @return scheduleInfos - List of schedules for the manager.
+	 * @return pagenationInfo - PageNo, total pages, list of schedules are passed. 
 	 */
-	List<ScheduleInfo> getScheduleInfosByManager(long managerId);
+	SchedulePagenationInfo getScheduleInfosByManager(long managerId);
 
 
 	/**
@@ -234,4 +234,27 @@ public interface ScheduleService {
      * candidates details from DB. 
      */ 
 	JSONArray retrieveAllSchedules(int pageNo, String date) throws IsmException;
+	
+    /** 
+     * Information of Schedule object is converted Json object and then 
+     *     added in JsonArray
+     *
+     * @param    technology - Schedules scheduled for corresponding technology on fetched.
+     * @param    pageNo - Schedules corresponding to the pageNo is fetched.
+     * @return    schedules - Schedule details.
+     * @throws IsmException - Thrown when a hibernate exception occurs while retrieving
+     * candidates details from DB. 
+     */ 
+	JSONArray retrieveAllManagerSchedules(Technology technology, int pageNo, String date)
+			throws IsmException;
+
+	/**
+	 * gets the schedules which are scheduled on the given date for the corresponding technology.
+	 * 
+	 * @param technology - Technology for which the schedules are fetched.
+	 * @param date - Date which is given by the client.
+	 * 
+	 * @return scheduleInfos - List of schedules which are scheduled on that day.
+	 */
+	SchedulePagenationInfo getManagerScheduleInfosByDate(Technology technology, String date);
 }

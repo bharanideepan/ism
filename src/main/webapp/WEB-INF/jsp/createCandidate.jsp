@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  
+        <link rel="stylesheet" href="/css/user.css"/>
 </head>
 <body>
 <%@ include file="header.jsp" %>    
@@ -85,12 +85,12 @@
         <tr>
           <c:if test="${update == action}">
               <td>
-                  <input id="save" type ="submit" value="Save"/>
+                  <input class="btn btn-primary" id="save" type ="submit" value="Save"/>
               </td>
           </c:if>
           <c:if test="${update != action}">
               <td>
-                  <input id="save" type ="submit" onclick="changeAction()" value="Update"/>
+                  <input id="save" class="btn btn-primary" type ="submit" onclick="changeAction()" value="Update"/>
               </td>
           </c:if>
         </tr>
