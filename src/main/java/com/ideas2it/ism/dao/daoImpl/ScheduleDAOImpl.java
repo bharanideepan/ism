@@ -12,6 +12,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ideas2it.ism.common.Constant;
+import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.dao.ScheduleDAO;
 import com.ideas2it.ism.entity.Schedule;
 import com.ideas2it.ism.exception.IsmException;
@@ -54,14 +55,32 @@ public class ScheduleDAOImpl implements ScheduleDAO {
         }
         return schedules;   
 	}
+	
+	@Override
+	public List<Schedule> fetchManagerSchedulesByLimit(Technology technology, int pageNo) {
+        List<Schedule> schedules = new ArrayList<Schedule>();
+        try  {
+        	System.out.println("dao");
+        	Session session = entityManager.unwrap(Session.class);
+            Query query = session.createQuery("select s FROM Schedule s inner join "
+            		+ "s.candidate c WHERE c.technology = :technology");
+            query.setFirstResult(pageNo);
+            query.setMaxResults(Constant.RETRIEVE_LIMIT);
+            query.setParameter("technology", technology);
+            schedules = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        }
+        return schedules;   
+	}
 
 	@Override
 	public int totalCountForDate(String date) {
         int size = 0;        
         try {
-        	System.out.println("repository "+ date);
         	Session session = entityManager.unwrap(Session.class);
-            Query query = session.createQuery("select count(id) from Schedule where date_time like :date");
+            Query query = session.createQuery(
+            		"select count(id) from Schedule where date_time like :date");
             query.setParameter("date", date+"%");
             if (null != query.uniqueResult()) {
                 size = ((Number)query.uniqueResult()).intValue();
@@ -71,5 +90,41 @@ public class ScheduleDAOImpl implements ScheduleDAO {
         } 
 		return size;
 	}
+	
+	@Override
+	public int totalCountFoTechnology(Technology technology) {
+        int size = 0;        
+        try {
+        	System.out.println("dao");
+        	Session session = entityManager.unwrap(Session.class);
+            Query query = session.createQuery("select count(s.id) "
+            		+ "from Schedule s inner join s.candidate c WHERE c.technology = :technology");
+            query.setParameter("technology", technology);
+            if (null != query.uniqueResult()) {
+                size = ((Number)query.uniqueResult()).intValue();
+            }
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } 
+		return size;
+	}
 
+	@Override
+	public List<Schedule> getMangerSchedulesByDate(Technology technology, int pageNo, String date) {
+        List<Schedule> schedules = new ArrayList<Schedule>();
+        try  {
+        	System.out.println("dao"+technology);
+        	Session session = entityManager.unwrap(Session.class);
+            Query query = session.createQuery("select s FROM Schedule s inner join "
+            		+ "s.candidate c WHERE date_time like :date and c.technology = :technology");
+            query.setFirstResult(pageNo);
+            query.setMaxResults(Constant.RETRIEVE_LIMIT);
+            query.setParameter("date", date+"%");
+            query.setParameter("technology", technology);
+            schedules = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        }
+        return schedules; 
+	}
 }

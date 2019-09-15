@@ -88,7 +88,7 @@ public class UserController {
         	long employeeId = Long.parseLong(request.getParameter(Constant.EMPLOYEE_ID));
             userService.create(user, roleId, employeeId);
             model.addObject(Constant.STATUS, Constant.CREATED);
-            model.setViewName("/login");
+            model.setViewName("redirect:/createUser");
         } catch (Exception e) {
             model.addObject("errorMessage", e);
             model.setViewName("/error");
