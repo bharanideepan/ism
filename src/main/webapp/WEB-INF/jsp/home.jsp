@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +35,20 @@
     margin-bottom: 30px;
   }  
   .jumbotron {
-    background-color: #333;
+    background: #ffb33b;
+    background: -moz-radial-gradient(center, ellipse cover, #ff5221 0%, #ffb33b 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #ff5221), color-stop(100%, #ffb33b));
+    /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover, #ff5221 0%, #ffb33b 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover, #ff5221 0%, #ffb33b 100%);
+    /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover, #ff5221 0%, #ffb33b 100%);
+    /* IE10+ */
+    background: radial-gradient(ellipse at center, #ff5221 0%, #ffb33b 100%);
+    /* W3C */
+    background-size: 250% 250%;
     color: #fff;
     padding: 100px 25px;
     font-family: Montserrat, sans-serif;
@@ -65,7 +79,20 @@
   }
   .carousel-control.right, .carousel-control.left {
     background-image: none;
-    color: #333;
+    background: #ffb33b;
+    background: -moz-radial-gradient(center, ellipse cover, #ff5221 0%, #ffb33b 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #ff5221), color-stop(100%, #ffb33b));
+    /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover, #ff5221 0%, #ffb33b 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover, #ff5221 0%, #ffb33b 100%);
+    /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover, #ff5221 0%, #ffb33b 100%);
+    /* IE10+ */
+    background: radial-gradient(ellipse at center, #ff5221 0%, #ffb33b 100%);
+    /* W3C */
+    background-size: 250% 250%;
   }
   .carousel-indicators li {
     border-color: #f4511e;
@@ -219,7 +246,12 @@
         <li><a href="#services">HELP</a></li>
         <li><a href="#features">FEATURE</a></li>
         <li><a href="#contact">CONTACT</a></li>
-        <li><a onclick="loginForm()">LOGIN</a></li>
+        <c:if test="${role != null}">
+            <li><a href="logout">LOGOUT</a></li>
+        </c:if>
+        <c:if test="${role == null}">
+            <li><a onclick="loginForm()">LOGIN</a></li>
+        </c:if>
       </ul>
     </div>
   </div>
@@ -343,24 +375,19 @@
   </div>
 </div>
 
-<!-- Image of location/map -->
-<img src="/w3images/map.jpg" class="w3-image w3-greyscale-min" style="width:100%">
-
 <footer class="container-fluid text-center">
   <a href="#myPage" title="To Top">
     <span class="glyphicon glyphicon-chevron-up"></span>
   </a>
   <p>Visit our page <a href="https://www.ideas2it.com" title="Visit w3schools">Copyrights &copy; Ideas2It</a></p>
 </footer>
-    <div class="blur">
 	    <div id="loginForm" class="loginform">
 	       <div class="bg">
 			<form:form  id="loginUser" method="post" action="loginUser" modelAttribute="user">
-		      <div class="bg" align="center"><img  src="/image/user.png" height="50px" width="50px"/></div><br>
 			  <div class="form-group">
 			    <label for="email" >Username:</label><br>
 			    <form:input type="text" placeholder="Username" path="name" class="form-control"/>
-			  </div><br>
+			  </div>
 			  <div class="form-group">
 			    <label for="pwd">Password:</label>
 			    <form:input type="password" placeholder="Password" path="password" class="form-control"/>
@@ -371,7 +398,6 @@
 			</form:form>
 		</div>
 		</div>
-    </div>
 <script>
 function loginForm() {
 	var form = document.getElementById('loginForm');

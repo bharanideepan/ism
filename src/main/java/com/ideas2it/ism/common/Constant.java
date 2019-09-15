@@ -88,6 +88,8 @@ public class Constant {
 	public static final String CREATE_RESCHEDULE_JSP = "createReschedule";
 	public static final String RECRUITER_JSP = "recruiter";
 	public static final String ASSIGN_INTERVIEWER_JSP = "assignInterviewer";
+	public static final String VIEW_ALL_SCHEDULES = "viewAllSchedules";
+	public static final String VIEW__MANAGER_SCHEDULES_JSP = "viewManagerSchedules";
 
 
     // Schedule mapping constants.
@@ -116,6 +118,12 @@ public class Constant {
 	public static final String SCHEDULES_BY_DATE = "schedulesByDate";
 	public static final String REDIRECT_SCHEDULE_WITH_INTERVIEWER = REDIRECT + GET_SCHEDULE_WITH_INTERVIEWERS + "?" + SCHEDULE_ID + "=";
 	public static final String VIEW_DECLINED_SCHEDULES = "viewDeclinedSchedules";
+	public static final String VIEW_ALL_MANAGER_SCHEDULES = "viewAllManagerSchedules";
+	public static final String MANAGER_SCHEDULES_BY_DATE = "managerSchedulesByDate";
+	public static final String ROUND = "round";
+	public static final String INTERVIEW_TYPE = "interviewType";
+	public static final String INTERVIEWER_NAME = "interviewerName";
+	public static final String TECHNOLOGY = "technology";
 	
 	// Error Constants.
 	public static final String ERROR_RETRIEVING_CANDIDATES = "Error while fetching the Candidiate details";
@@ -126,10 +134,6 @@ public class Constant {
 	public static final String NO_OF_PENDING = "noOfPendingSchedules";
 	public static final String NO_OF_DECLINED = "noOfDeclinedSchedules";
 	public static final String DECLINED_SCHEDULES = "declinedSchedules";
-	public static final String ROUND = "round";
-	public static final String INTERVIEW_TYPE = "interviewType";
-	public static final String INTERVIEWER_NAME = "interviewerName";
-	public static final String VIEW_ALL_SCHEDULES = "viewAllSchedules";
 }
 
    

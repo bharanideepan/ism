@@ -27,6 +27,7 @@ import com.ideas2it.ism.common.InterviewType;
 import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.CandidateStatus;
 import com.ideas2it.ism.common.ScheduleStatus;
+import com.ideas2it.ism.common.Technology;
 import com.ideas2it.ism.entity.Schedule;
 import com.ideas2it.ism.info.ScheduleInfo;
 import com.ideas2it.ism.entity.ScheduleRejectionTrack;
@@ -80,7 +81,7 @@ public class ScheduleController {
     		@RequestParam(Constant.INTERVIEWER_ID)String interviewerId,
     		@RequestParam(Constant.CANDIDATE_ID)long candidateId) {
     	scheduleService.addSchedule(scheduleInfo, candidateId, interviewerId, date);
-        return Constant.REDIRECT + Constant.VIEW_SCHEDULES_BY_STATUS + "?status=New";
+        return Constant.REDIRECT + Constant.VIEW_SCHEDULES;
     }
     
     /**
@@ -252,11 +253,11 @@ public class ScheduleController {
     	HttpSession session = request.getSession();
     	Map<String, Object> schedulesAndCounts = scheduleService.getSchedulesAndCounts(
 				(long)session.getAttribute(Constant.EMPLOYEE));
-        model.addAttribute(Constant.SCHEDULES, schedulesAndCounts.get(Constant.SCHEDULES));
+        model.addAttribute(Constant.PAGENATION_INFO, schedulesAndCounts.get(Constant.SCHEDULES));
         session.setAttribute(Constant.NO_OF_NEW, schedulesAndCounts.get(Constant.NO_OF_NEW));
         session.setAttribute(Constant.NO_OF_PENDING, schedulesAndCounts.get(Constant.NO_OF_PENDING));
         session.setAttribute(Constant.NO_OF_DECLINED, schedulesAndCounts.get(Constant.NO_OF_DECLINED));
-        return Constant.VIEW_SCHEDULES_JSP;
+        return Constant.VIEW__MANAGER_SCHEDULES_JSP;
     }
     
     /**
@@ -288,7 +289,9 @@ public class ScheduleController {
         				.getAttribute(Constant.EMPLOYEE)));
         return Constant.VIEW_DECLINED_SCHEDULES;
     }
-     /* Sets required information along with request.
+    
+    /**
+     * Sets required information along with request.
      * Set the pageno  for pagenation along with request.
      * Forward the request to displayplayerspage.
      *
@@ -314,4 +317,57 @@ public class ScheduleController {
     	    System.out.println(e.getMessage());	
     	}
     }
+    
+   /**
+    * Sets required information along with request.
+    * Set the pageno  for pagenation along with request.
+    * Forward the request to displayplayerspage.
+    *
+    * @param request - User request from server.
+    * @param reponse - Response to server from servlet
+    * @throws ServletException -
+    *         Defines a general exception a servlet can throw when it 
+    *         encounters difficulty.
+    * @throws IOException - 
+    *         general class of exceptions produced by failed or 
+    *         interrupted I/O operations.
+    */
+   @RequestMapping(value = Constant.VIEW_ALL_MANAGER_SCHEDULES, method = RequestMethod.GET)  
+   private void viewAllManagerSchedules(HttpServletRequest request, HttpServletResponse 
+           response) throws IOException {
+   	try {
+           int pageNo = Integer.parseInt(request.getParameter(Constant.PAGE_NO));         
+           String date = request.getParameter(Constant.DATE);
+           Technology technology = Technology.valueOf(request.getParameter(Constant.TECHNOLOGY));
+           JSONArray scheduleInfos = 
+        		   scheduleService.retrieveAllManagerSchedules(technology, pageNo, date);
+           response.setContentType(Constant.APPLICATION_JSON);
+           response.getWriter().write(scheduleInfos.toString());
+   	} catch(IsmException e) {
+   	    System.out.println(e.getMessage());	
+   	}
+   }
+   
+   /**
+    * Gets all schedules which are scheduled on the given date.
+    * 
+    * @param date - Date which is entered by the client.
+    * @param model - Used to send schedule objects to jsp.
+    * 
+    * @return VIEW_SCHEDULES_JSP - 
+    */
+   @RequestMapping(value = Constant.MANAGER_SCHEDULES_BY_DATE, method = RequestMethod.GET)  
+   private String getManagerScheduleInfosByDate(HttpServletRequest request,
+		   @RequestParam(Constant.SCHEDULED_DATE)String date, 
+		   @RequestParam(Constant.TECHNOLOGY) Technology technology, Model model) {
+       HttpSession session = request.getSession();
+   	   Map<String, Object> schedulesAndCounts = scheduleService.getSchedulesAndCounts(
+				(long)session.getAttribute(Constant.EMPLOYEE));
+	   model.addAttribute(Constant.PAGENATION_INFO, 
+			   scheduleService.getManagerScheduleInfosByDate(technology, date));
+       session.setAttribute(Constant.NO_OF_NEW, schedulesAndCounts.get(Constant.NO_OF_NEW));
+       session.setAttribute(Constant.NO_OF_PENDING, schedulesAndCounts.get(Constant.NO_OF_PENDING));
+       session.setAttribute(Constant.NO_OF_DECLINED, schedulesAndCounts.get(Constant.NO_OF_DECLINED));
+       return Constant.VIEW__MANAGER_SCHEDULES_JSP;
+   }
 }
