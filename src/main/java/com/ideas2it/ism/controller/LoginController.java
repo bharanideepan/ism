@@ -30,7 +30,7 @@ public class LoginController {
 	private RoleService roleService;
 	
 	
-    @RequestMapping(value="/login")
+    @RequestMapping(value="/home")
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response)
 		                 throws ServletException, IOException {
         ModelAndView model = new ModelAndView();
@@ -38,7 +38,8 @@ public class LoginController {
         	List <Role> roles = roleService.getRoles();
             model.addObject("roles", roles);
             model.addObject("message", "Enter login details");
-            model.setViewName("/login");
+            model.addObject("user", new User());
+            model.setViewName("/home");
         } catch (Exception e) {
             model.addObject("errorMessage", e);
             model.setViewName("/error");
@@ -51,6 +52,7 @@ public class LoginController {
     		HttpServletResponse response, HttpSession session)
     				throws ServletException, IOException {
         ModelAndView model = new ModelAndView();
+        model.addObject("user", new User());
         String role = (String) session.getAttribute("role");
         if(null != session.getAttribute("user")) {
         	if(role.contains("Admin")) {
@@ -63,7 +65,7 @@ public class LoginController {
         		model.setViewName("redirect:/newSchedules");
         	}
         } else {
-        	model.setViewName("redirect:/login");
+        	model.setViewName("redirect:/home");
         }
         return model;
     }
@@ -75,6 +77,7 @@ public class LoginController {
         ModelAndView model = new ModelAndView();
     	HttpSession session = request.getSession();
         try {
+        	System.out.println(user.getName());
         	User loginUser = userService.getUserByName(user.getName());
     	    session.setAttribute("role", loginUser.getRole().getName());
 	        if(userService.checkUser(user.getName(), user.getPassword())) {
@@ -88,7 +91,7 @@ public class LoginController {
 	        model.setViewName("redirect:/");
         } catch (IsmException e) {
         	model.addObject(Constant.STATUS, Constant.BAD_CREDENTIAL);
-        	model.setViewName("/login");
+        	model.setViewName("/home");
         }
     	return model;
     }
@@ -100,6 +103,9 @@ public class LoginController {
         if(null != session) {
         	session.invalidate();
         }
-        return new ModelAndView("redirect:/login");
+        ModelAndView model = new ModelAndView();
+        model.addObject("user", user);
+        model.setViewName("redirect:/home");
+        return model;
     }
 }
