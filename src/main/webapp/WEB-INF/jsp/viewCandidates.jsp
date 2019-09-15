@@ -11,7 +11,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   
 </head>
-<body style="background-color:#F0FFFF;">
+<body>
 <%@ include file="header.jsp" %>     
 
 <nav class="navbar navbar-inverse">
@@ -91,7 +91,7 @@
             </tr>
             <c:forEach var="candidate" items="${pagenationInfo.candidates}">
                 <tr>
-                    <td class = "td"><a href="viewCandidateForUpdate?candidateId=${candidate.id}">${candidate.name}</a></td>
+                    <td class = "td"><a href="viewCandidateForUpdate?candidateId=${candidate.id}" data-toggle="tooltip" title="Update?">${candidate.name}</a></td>
                     <td class = "td">${candidate.position}</td>
                     <td class = "td">${candidate.emailId}</td>
                     <td class = "td">${candidate.phoneNumber}</td>
@@ -154,13 +154,13 @@
 	      </c:if>
 	      <c:if test="${pagenationInfo.candidates.isEmpty()}">
 	        <table class = "table">
-	        	<tr><th>No results available for your search</th></tr>
+	        	<tr><th>No ${candidateStatus} candidates</th></tr>
 	        </table> 
 	      </c:if>
 	      </c:if>
 	      <c:if test="${pagenationInfo.candidates == null}">
 	        <table id="contentTable" class = "table" align="center" cellpadding = "10">
-	        	<tr><th>No results available for your search</th></tr>
+	        	<tr><th>No ${candidateStatus} candidates</th></tr>
 	        </table> 
 	      </c:if>
       <script src="/js/candidatePagenation.js"></script>

@@ -11,17 +11,18 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="/css/ism.css">
   
       <title>View schedule</title>
    </head>
    <body>  
-      <%@ include file="header.jsp" %> 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">ISM</a>
-    </div>
-    <ul class="nav navbar-nav">
+      <div class="col-md-12 col-md-offset-0">
+         <div class="fresh-table full-color-orange">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                     <font class="navbar-brand">Interview Schedule Management</font>
+                  </div>
+    <!-- <ul class="nav navbar-nav">
       <c:if test="${role == 'Manager'}">   
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Schedules <span class="caret"></span></a>
@@ -50,56 +51,66 @@
       </li>
       </c:if>
       <li><a href="logout">Log Out</a></li>
-    </ul>
-	    <form class="navbar-form navbar-right" action="schedulesByDate" method="post">
-	      <div class="form-group">
-	        <input type="date" class="form-control" name="shdate" required>
-	      </div>
-	      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-	    </form>
+    </ul> -->
   </div>
-</nav>
 
-      <div class ="box" id="viewDiv">
+                  <div class="menu-bar">
+                     <table class = "table">
+                     <c:if test="${role == 'Manager'}">
+                              <tr><th><a href="declinedSchedules">Declined <span class="badge">${noOfDeclinedSchedules}</span></a></th></tr>
+                              <tr><th><a href="viewSchedulesByManager">All</a></th></tr>
+                              <tr><th><a href="newSchedules">New <span class="badge">${noOfNewSchedules}</span></a></th></tr>
+                              <tr><th><a href="pendingSchedules">Pending <span class="badge">${noOfPendingSchedules}</span></a></th></tr>
+                     </c:if>
+                     <c:if test="${role == 'Recruiter'}">
+                        <tr><th><a href="viewSchedules">Schedules</a></th></tr>
+                              <tr><th><a href="addCandidate"><span class="glyphicon glyphicon-plus"></span> Add Candidate</a></th></tr>
+                              <tr><th><a href="viewCandidates">View Candidates</a></th></tr>
+                     </c:if>
+                     <tr><th><a href="logout">Log Out</a></th></tr>
+                     </table>
+                  </div>
+               
+      <div class ="table-div-single" id="viewDiv">
          <table class="table">
             <tr>
-               <td>Candidate Name:</td>
+               <th>Candidate Name:</th>
                <td>${schedule.candidate.name}</td>
             </tr>
             <tr>
-               <td>Candidate Experience:</td>
+               <th>Candidate Experience:</th>
                <td>${schedule.candidate.experience}</td>
             </tr>
             <tr>
-               <td>Technology:</td>
+               <th>Technology:</th>
                <td>${schedule.candidate.technology}</td>
             </tr>
             <tr>
-               <td>Interview Type:</td>
+               <th>Interview Type:</th>
                <td>${schedule.interviewType}</td>
             </tr>
             <tr>
-               <td>Interview Round:</td>
+               <th>Interview Round:</th>
                <td>${schedule.round}</td>
             </tr>
             <tr>
-               <td>Date:</td>
+               <th>Date:</th>
                <td>${schedule.date}</td>
             </tr>
             <tr>
-               <td>Time:</td>
+               <th>Time:</th>
                <td>${schedule.time}</td>
             </tr>
             <tr>
-               <td>Schedule Status:</td>
+               <th>Schedule Status:</th>
                <td>${schedule.status}</td>
             </tr>
             <tr>
                <c:if test="${schedule.interviewer != null}">
-               <td>Interviewer:</td>
+               <th>Interviewer:</th>
                <td>${schedule.interviewer.name}</td>
                  <c:if test="${schedule.status == 'New'}">
-                  <td>change Interviewer:</td>
+                  <th>change Interviewer:</th>
                   <td>
                   	 <select id="assigned" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
                   	     <option value="0">None</option>
@@ -112,7 +123,7 @@
                  </c:if>
                </c:if>
                <c:if test="${schedule.interviewer == null}">
-                  <td>Assign Interviewer:</td>
+                  <th>Assign Interviewer:</th>
                   <td>
                   	 <select id="assigned" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
                   	     <option value="0">None</option>
@@ -124,9 +135,19 @@
                   </td>
                </c:if>
             </tr>
-            <c:if test="${schedule.status == 'Declined'}">
+            <c:if test="${role == 'Recruiter' && !(schedule.status == 'Selected' || schedule.status == 'Rejected')}">
                <tr>
-                  <td>Declined By:</td><td>Reason:</td>
+                  <td><input type="button" value="Reschedule"/></td>
+                  <td><input type="button" value="Update"></td>
+                  <td><input type="button" value="Cancel Schedule"></td>
+               </tr>
+            </c:if>
+            </table></div>
+            <div class="table-div-single-side">
+            <c:if test="${schedule.status == 'Declined'}">
+            <table>
+               <tr>
+                  <th>Declined By:</th><th>Reason:</th>
                </tr>
                <c:forEach var="scheduleRejectionTrack" items="${schedule.scheduleRejectionTracks}">
 	              <tr>
@@ -134,18 +155,11 @@
 	                 <td>${scheduleRejectionTrack.comment}</td>
 	              </tr>
                </c:forEach>
-            </c:if>
-            <c:if test="${role == 'Recruiter' && !(schedule.status == 'Selected' || schedule.status == 'Rejected')}">
-               <tr>
-                  <td><input type="button" onclick="getRecruiter(this.value)" value="Reschedule"/></td>
-                  <td><input type="button" onclick="getRecruiter(this.value)" value="Update"></td>
-                  <td><input type="button" onclick="getRecruiter(this.value)" value="Cancel Schedule"></td>
-               </tr>
-            </c:if>
          </table>
+            </c:if>
       </div>
          
-         <div class="box" id="cancelDiv" style="display:none">
+         <div class="table-div-single" id="cancelDiv" style="display:none">
             <form action="cancelSchedule" method="post">
             <table class="table">
                <tr>
@@ -160,39 +174,39 @@
             </form>
          </div>
          
-      <div class ="box" id="rescheduleDiv" style="display:none">
+      <div class ="table-div-single" id="rescheduleDiv" style="display:none">
             <form:form action="reschedule" method="post" modelAttribute="newSchedule">
          <table class="table">
             <tr>
-               <td>Candidate Name:</td>
+               <th>Candidate Name:</th>
                <td>${schedule.candidate.name}</td>
             </tr>
             <tr>
-               <td>Candidate Experience:</td>
+               <th>Candidate Experience:</th>
                <td>${schedule.candidate.experience}</td>
             </tr>
             <tr>
-               <td>Interview Type:</td>
+               <th>Interview Type:</th>
                <td><form:select path="interviewType" items="${types}" /></td>
             </tr>
             <tr>
-               <td>Interview Round:</td>
+               <th>Interview Round:</th>
                <td><form:input path="round" value="${schedule.round}" readonly="true" /></td>
             </tr>
             <tr>
-               <td>Date:</td>
+               <th>Date:</th>
                <td><input type="datetime-local" name="shdate" value="${schedule.dateTime}"/></td>
             </tr>
             <tr>
-               <td>Reason:</td>
+               <th>Reason:</th>
                <td><textarea name="comment" required></textarea></td>
             </tr>
             <tr>
                <c:if test="${schedule.interviewer != null}">
-	               <td>Interviewer:</td>
+	               <th>Interviewer:</th>
 	               <td>${schedule.interviewer.name}</td>
                </c:if>
-	                 <td>Assign Interviewer</td>
+	                 <th>Assign Interviewer</th>
 	                 <td>
 	                 	 <select name="interviewerId">
 	                 	     <option value="">None</option>
@@ -216,35 +230,35 @@
         </form:form>
       </div>
          
-      <div class ="box" id="updateDiv" style="display:none">
+      <div class ="table-div-single" id="updateDiv" style="display:none">
             <form:form action="updateSchedule" method="post" modelAttribute="schedule">
          <table class="table">
             <tr>
-               <td>Candidate Name:</td>
+               <th>Candidate Name:</th>
                <td>${schedule.candidate.name}</td>
             </tr>
             <tr>
-               <td>Candidate Experience:</td>
+               <th>Candidate Experience:</th>
                <td>${schedule.candidate.experience}</td>
             </tr>
             <tr>
-               <td>Interview Type:</td>
+               <th>Interview Type:</th>
                <td><form:select path="interviewType" items="${types}" /></td>
             </tr>
             <tr>
-               <td>Interview Round:</td>
+               <th>Interview Round:</th>
                <td><form:input path="round" value="${schedule.round}" readonly="true"/></td>
             </tr>
             <tr>
-               <td>Date:</td>
+               <th>Date:</th>
                <td><input type="datetime-local" name="shdate" value="${schedule.dateTime}"/></td>
             </tr>
             <tr>
                <c:if test="${schedule.interviewer != null}">
-	               <td>Interviewer:</td>
+	               <th>Interviewer:</th>
 	               <td>${schedule.interviewer.name}</td>
                </c:if>
-	                 <td>Assign Interviewer</td>
+	                 <th>Assign Interviewer</th>
 	                 <td>
 	                 	 <select name="interviewerId">
 	                 	     <option value="">None</option>
@@ -264,6 +278,7 @@
          </table>
         </form:form>
       </div>
+      </div></div>
          
    </body>
    <script>
