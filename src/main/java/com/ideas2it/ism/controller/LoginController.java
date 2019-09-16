@@ -90,6 +90,7 @@ public class LoginController {
 	        }
 	        model.setViewName("redirect:/");
         } catch (IsmException e) {
+        	System.out.println("badCredential");
         	model.addObject(Constant.STATUS, Constant.BAD_CREDENTIAL);
         	model.setViewName("/home");
         }

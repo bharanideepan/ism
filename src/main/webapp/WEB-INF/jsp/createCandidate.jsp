@@ -68,7 +68,7 @@
         </tr>  
         <tr><td>Phone Number:</td>
           <td>
-          <form:input class="form-control" type ="tel"  maxlength="10" value="${candidate.phoneNumber}" path="phoneNumber"/>
+          <form:input class="form-control" type ="tel" pattern=".{10,}"  maxlength="10" value="${candidate.phoneNumber}" path="phoneNumber"/>
           </td>
         </tr>
         <tr><td>Email Id * :</td>
