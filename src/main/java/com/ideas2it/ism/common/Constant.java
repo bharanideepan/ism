@@ -21,8 +21,11 @@ public class Constant {
     public static final  String NAME = "name";
 	public static final String RESUME = "resume";
 	public static final String PAGE_NO = "pageNo";
-	public static final int RETRIEVE_LIMIT = 5;
+	public static final int RETRIEVE_LIMIT = 10;
 	public static final String APPLICATION_JSON = "application/json";
+	public static final String DATE = "date";
+	public static final String TIME = "time";
+	public static final String USER = "user";
     
 	// Candidate constants.
     public static final  String CANDIDATE = "candidate";
@@ -35,6 +38,9 @@ public class Constant {
 	public static final String PAGENATION_INFO = "pagenationInfo";
 	public static final String CANDIDATE_ID = "candidateId";
 	public static final String CANDIDATES = "candidate";
+	public static final String PHONE_NUMBER = "phoneNumber";
+	public static final String EMAIL_ID = "emailId";
+	public static final String NEW = "New";
     
     // Candidate mapping constants. 
     public final static String ADD_CANDIDATE = "addCandidate";
@@ -51,6 +57,8 @@ public class Constant {
 
 	// Employee constants.	
 	public static final String EMPLOYEE = "employee";
+	public static final String EMPLOYEES = "employees";
+	public static final String EMPLOYEE_ID = "employeeId";
 	
 	// Schedule constants.
 	public static final String SCHEDULES = "schedules";
@@ -80,6 +88,8 @@ public class Constant {
 	public static final String CREATE_RESCHEDULE_JSP = "createReschedule";
 	public static final String RECRUITER_JSP = "recruiter";
 	public static final String ASSIGN_INTERVIEWER_JSP = "assignInterviewer";
+	public static final String VIEW_ALL_SCHEDULES = "viewAllSchedules";
+	public static final String VIEW__MANAGER_SCHEDULES_JSP = "viewManagerSchedules";
 
 
     // Schedule mapping constants.
@@ -104,10 +114,26 @@ public class Constant {
 	public static final String VIEW_ALL_CANDIDATES = "viewAllCandidates";
 	public static final String VIEW_SCHEDULES_BY_STATUS = "viewSchedulesByStatus";
 	public static final String VIEW_SCHEDULES = "viewSchedules";
+	public static final String VIEW_SCHEDULES_MANAGER = "viewSchedulesByManager";
+	public static final String SCHEDULES_BY_DATE = "schedulesByDate";
+	public static final String REDIRECT_SCHEDULE_WITH_INTERVIEWER = REDIRECT + GET_SCHEDULE_WITH_INTERVIEWERS + "?" + SCHEDULE_ID + "=";
+	public static final String VIEW_DECLINED_SCHEDULES = "viewDeclinedSchedules";
+	public static final String VIEW_ALL_MANAGER_SCHEDULES = "viewAllManagerSchedules";
+	public static final String MANAGER_SCHEDULES_BY_DATE = "managerSchedulesByDate";
+	public static final String ROUND = "round";
+	public static final String INTERVIEW_TYPE = "interviewType";
+	public static final String INTERVIEWER_NAME = "interviewerName";
+	public static final String TECHNOLOGY = "technology";
 	
 	// Error Constants.
 	public static final String ERROR_RETRIEVING_CANDIDATES = "Error while fetching the Candidiate details";
 	public static final String INDEX = "index";
+	public static final Object BAD_CREDENTIAL = "badCredential";
+	public static final String UPDATE_SCHEDULE = "updateSchedule";
+	public static final String NO_OF_NEW = "noOfNewSchedules";
+	public static final String NO_OF_PENDING = "noOfPendingSchedules";
+	public static final String NO_OF_DECLINED = "noOfDeclinedSchedules";
+	public static final String DECLINED_SCHEDULES = "declinedSchedules";
 }
 
    

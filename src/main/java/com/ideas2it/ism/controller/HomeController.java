@@ -10,14 +10,12 @@ import com.ideas2it.ism.common.Constant;
 public class HomeController {
     
 	/**
-     * All the newly assigned schedules for the employee are fetched from DB.
-     * 
-     * @param model - Used to send candidate object along with request to jsp.
-     * @return VIEW_CANDIDATES_JSP - Display all the fetched candidates information.
+     * When the logo is pressed the home page is called. 
      */
     @RequestMapping(value = Constant.INDEX, method = RequestMethod.GET)  
     private String dispatchIndexPage() {
         return Constant.INDEX_JSP;
     }
+
 
 }

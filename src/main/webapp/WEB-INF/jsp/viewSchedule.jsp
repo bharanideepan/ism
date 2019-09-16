@@ -1,178 +1,319 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
- <link rel="stylesheet" type="text/css" href="/css/createCandidate.css">
-<title>View schedule</title>
-</head>
-<body>
+   <head>
+      <meta charset="UTF-8">
+      
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="/css/ism.css">
+  
+      <title>View schedule</title>
+   </head>
+   <body>  
+      <div class="col-md-12 col-md-offset-0">
+         <div class="fresh-table full-color-orange">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                     <font class="navbar-brand">Interview Schedule Management</font>
+                  </div>
+    <!-- <ul class="nav navbar-nav">
+      <c:if test="${role == 'Manager'}">   
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Schedules <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="declinedSchedules">Declined <span class="badge">${noOfDeclinedSchedules}</span></a></li>
+          <li><a href="viewSchedulesByManager">All</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Your Schedules <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="newSchedules">New <span class="badge">${noOfNewSchedules}</span></a></li>
+          <li><a href="pendingSchedules">Pending <span class="badge">${noOfPendingSchedules}</span></a></li>
+        </ul>
+      </li>
+      </c:if>
+      
+      <c:if test="${role == 'Recruiter'}">
+      <li><a href="viewSchedules">Schedules</a></li>      
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Candidates <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="addCandidate"><span class="glyphicon glyphicon-plus"></span> Add Candidate</a></li>
+          <li><a href="viewCandidates">View Candidate</a></li>
+        </ul>
+      </li>
+      </c:if>
+      <li><a href="logout">Log Out</a></li>
+    </ul> -->
+  </div>
 
-</body>
-<%@ include file="header.jsp" %> 
-    <div>
-        <table class="table" id="scheduleForm">
+                  <div class="menu-bar">
+                     <table class = "table">
+                     <c:if test="${role == 'Manager'}">
+                              <tr><th><a href="declinedSchedules">Declined <span class="badge">${noOfDeclinedSchedules}</span></a></th></tr>
+                              <tr><th><a href="viewSchedulesByManager">All</a></th></tr>
+                              <tr><th><a href="newSchedules">New <span class="badge">${noOfNewSchedules}</span></a></th></tr>
+                              <tr><th><a href="pendingSchedules">Pending <span class="badge">${noOfPendingSchedules}</span></a></th></tr>
+                     </c:if>
+                     <c:if test="${role == 'Recruiter'}">
+                        <tr><th><a href="viewSchedules">Schedules</a></th></tr>
+                              <tr><th><a href="addCandidate"><span class="glyphicon glyphicon-plus"></span> Add Candidate</a></th></tr>
+                              <tr><th><a href="viewCandidates">View Candidates</a></th></tr>
+                     </c:if>
+                     <tr><th><a href="logout">Log Out</a></th></tr>
+                     </table>
+                  </div>
+               
+      <div class ="table-div-single" id="viewDiv">
+         <table class="table">
             <tr>
-                <td>Candidate Name:</td>
-                <td>${schedule.candidate.name}</td>
+               <th>Candidate Name:</th>
+               <td>${schedule.candidate.name}</td>
             </tr>
             <tr>
-                <td>Interview Type:</td>
-                <td>${schedule.interviewType}</td>
+               <th>Candidate Experience:</th>
+               <td>${schedule.candidate.experience}</td>
             </tr>
             <tr>
-                <td>Interview Round:</td>
-                <td>${schedule.round}</td>
+               <th>Technology:</th>
+               <td>${schedule.candidate.technology}</td>
             </tr>
             <tr>
-                <td>Date:</td>
-                <td>${schedule.date}</td>
+               <th>Interview Type:</th>
+               <td>${schedule.interviewType}</td>
             </tr>
             <tr>
-                <td>Status:</td>
-                <td>${schedule.status}</td>
+               <th>Interview Round:</th>
+               <td>${schedule.round}</td>
             </tr>
             <tr>
-               	<c:choose>
-	                <c:when test="${schedule.interviewer != null}">   
-                		<td>Interviewer:</td>            
-	                	<td>${schedule.interviewer.name}</td>
-	                </c:when>
-	                <c:otherwise>               
-                		<td>Select Interviewer:</td>            
-	                	<td>
-					        <table class="assigntable">
-					                <caption>Interviewers</caption>
-					        <c:forEach var="interviewer" items="${interviewers}">
-					              <tr>
-					                <form action="assignInterviewer" method="post">
-					                <td>
-					                	${interviewer.name}
-				                	</td>
-				                	<td>
-					                	<input type="hidden" name="interviewerId" value="${interviewer.id}">
-					                	<input type="hidden" name="scheduleId" value="${schedule.id}">
-					                	<input type="submit" value="Assign">
-					               	</td>
-					               	</form>
-					            </tr>
-					        </c:forEach>
-					        </table>
-        				</td>
-	                </c:otherwise>
-                </c:choose> 
-            </tr>
-	        <c:if test="${schedule.status == 'Declined'}">
-	        	<c:forEach var="scheduleRejectionTrack" items="${schedule.scheduleRejectionTracks}">
-	        	</c:forEach>
-	        	<tr>
-	        		<td>Declined By:</td>
-	        		<td>${scheduleRejectionTrack.employee.name}</td>
-	        	</tr>
-	        	<tr>
-	        		<td>Reason:</td>
-	        		<td>${scheduleRejectionTrack.comment}</td>
-	        	</tr>
-	        </c:if>
-	            <tr id="comment" style="display:none">
-	    	<form:form action="cancelSchedule" method="post" modelAttribute="schedule">
-	                <td>Comment:</td>
-	                <td><form:input path="cancellationComment" required="true"/></td>
-	            </tr>
-	            <tr>
-	                <td>
-	                	<form:input type="hidden" path="id" value="${schedule.id}"/>
-	                		<c:choose>
-				                <c:when test="${schedule.status != 'Rescheduled' && schedule.status != 'Cancelled'
-				                && schedule.status != 'Selected' && schedule.status != 'Rejected'}">
-					                	<input id="confirm" type="submit" value="Confirm" style="display:none"/>
-					                	<input id="reset" type="reset" onclick="getCommentBox(this.value)" value="Cancel" style="display:none">
-			                	</c:when>
-			                	<c:otherwise>${schedule.cancellationComment}${schedule.rescheduleComment}</c:otherwise>
-                			</c:choose>
-	               		 </td>
-       			</form:form>
-	          		  </tr>
-	        <c:if test="${schedule.status == 'Selected' || schedule.status == 'Rejected'}">
-	        	<tr>
-	        		<td>Feedback:</td>
-	        		<td>${schedule.interviewFeedback}</td>
-	        	</tr>
-	        </c:if>
-	        <tr><td>
-        <input type="button" id="rescheduleButton" onclick="getCommentBox(this.value)" value="Reschedule">
-        <input type="button" id="cancelButton" onclick="getCommentBox(this.value)" value="Cancel Schedule">
-        	</td></tr>
-        </table>
-        <table class="table" id="rescheduleForm" style="display:none">
-	    	<form:form action="reschedule" method="post" modelAttribute="newSchedule">
-            <tr>
-                <td>Candidate Name:</td>
-                <td>${schedule.candidate.name}</td>
+               <th>Date:</th>
+               <td>${schedule.date}</td>
             </tr>
             <tr>
-                <td>Interview Type</td>
-                <td><form:input value="${schedule.interviewType}" path="interviewType" readonly="true"/></td>
+               <th>Time:</th>
+               <td>${schedule.time}</td>
             </tr>
             <tr>
-                <td>Interview Level:</td>
-                <td><form:input value="${schedule.interviewLevel}" path="interviewLevel" readonly="true"/></td>
+               <th>Schedule Status:</th>
+               <td>${schedule.status}</td>
             </tr>
             <tr>
-                <td>Date:</td>
-                <td><input type="date" name="shdate"/></td>
+               <c:if test="${schedule.interviewer != null}">
+               <th>Interviewer:</th>
+               <td>${schedule.interviewer.name}</td>
+                 <c:if test="${schedule.status == 'New'}">
+                  <th>change Interviewer:</th>
+                  <td>
+                  	 <select id="assigned" class="select" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
+                  	     <option value="0">None</option>
+                  	     <c:forEach var="interviewer" items="${interviewers}">
+                             <option  
+                             value="${interviewer.id}">${interviewer.name}</option>
+                         </c:forEach>
+                  	 </select>
+                  </td>
+                 </c:if>
+               </c:if>
+               <c:if test="${schedule.interviewer == null}">
+                  <th>Assign Interviewer:</th>
+                  <td>
+                  <div class="select">
+                  	 <select id="assigned" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
+                  	     <option value="0">None</option>
+                  	     <c:forEach var="interviewer" items="${interviewers}">
+                             <option value="${interviewer.id}">${interviewer.name}</option>
+                         </c:forEach>
+                  	 </select>
+               	 </div>
+                  </td>
+               </c:if>
+            </tr>
+            <c:if test="${role == 'Recruiter' && !(schedule.status == 'Selected' || schedule.status == 'Rejected')}">
+               <tr>
+                  <td><input type="button" class="form-control" value="Reschedule"/></td>
+                  <td><input type="button" class="form-control" value="Update"></td>
+                  <td><input type="button" class="form-control" value="Cancel Schedule"></td>
+               </tr>
+            </c:if>
+            </table></div>
+            <div class="table-div-single-side">
+            <c:if test="${schedule.status == 'Declined'}">
+            <table class="table">
+               <tr>
+                  <th>Declined By:</th><th>Reason:</th>
+               </tr>
+               <c:forEach var="scheduleRejectionTrack" items="${schedule.scheduleRejectionTracks}">
+	              <tr>
+	                 <td>${scheduleRejectionTrack.employee.name}</td>
+	                 <td>${scheduleRejectionTrack.comment}</td>
+	              </tr>
+               </c:forEach>
+         </table>
+            </c:if>
+      </div>
+         
+         <div class="table-div-single" id="cancelDiv" style="display:none">
+            <form action="cancelSchedule" method="post">
+            <table class="table">
+               <tr>
+                  <td><textarea name="comment" placeHolder="Reason" required></textarea></td>
+               </tr>
+               <tr>
+                  <td><input type="hidden" name="scheduleId" value="${schedule.id}"/>
+                  		<input type="submit" value="Confirm"/></td>
+                  <td><input type="reset" onclick="getRecruiter(this.value)" value="Cancel"></td>
+               </tr>
+               </table>
+            </form>
+         </div>
+         
+      <div class ="table-div-single" id="rescheduleDiv" style="display:none">
+            <form:form action="reschedule" method="post" modelAttribute="newSchedule">
+         <table class="table">
+            <tr>
+               <th>Candidate Name:</th>
+               <td>${schedule.candidate.name}</td>
             </tr>
             <tr>
-                <td>Time:</td>
-                <td ><input type="time" name="shtime"/></td>
+               <th>Candidate Experience:</th>
+               <td>${schedule.candidate.experience}</td>
             </tr>
             <tr>
-                <td>Comment:</td>
-                <td><input name="comment" required/></td>
+               <th>Interview Type:</th>
+               <td><form:select path="interviewType" items="${types}" /></td>
             </tr>
             <tr>
-                <td></td>
-                <td><input type="hidden" name="scheduleId" value="${schedule.id}"/>
-                	<input value="${schedule.candidate.id}" name="candidateId" type="hidden"/>
-                	<input type="submit" value="Confirm"/>
-       				<input type="reset" onclick="getCommentBox(this.value)" value="Cancel">
-                	</td>
+               <th>Interview Round:</th>
+               <td><form:input path="round" value="${schedule.round}" readonly="true" /></td>
             </tr>
-	        </form:form>
-        </table>
-    </div>
+            <tr>
+               <th>Date:</th>
+               <td><input type="datetime-local" name="shdate" value="${schedule.dateTime}"/></td>
+            </tr>
+            <tr>
+               <th>Reason:</th>
+               <td><textarea name="comment" required></textarea></td>
+            </tr>
+            <tr>
+               <c:if test="${schedule.interviewer != null}">
+	               <th>Interviewer:</th>
+	               <td>${schedule.interviewer.name}</td>
+               </c:if>
+	                 <th>Assign Interviewer</th>
+	                 <td>
+	                 	 <select name="interviewerId">
+	                 	     <option value="">None</option>
+	                 	     <c:forEach var="interviewer" items="${interviewers}">
+	                            <option value="${interviewer.id}">${interviewer.name}</option>
+	                        </c:forEach>
+	                 	 </select>
+	                 </td>
+                </tr>
+                <tr>
+               		<td>
+              			<input type="hidden" name="candidateId" value="${candidate.id}"/>
+               			<input type="hidden" name="scheduleId" value="${schedule.id}"/>
+               			<input type="submit" value="Confirm">
+          			</td>
+               		<td>
+               			<input type="reset" value="Cancel" onclick="getRecruiter(this.value)">
+          			</td>
+           		</tr>
+         </table>
+        </form:form>
+      </div>
+         
+      <div class ="table-div-single" id="updateDiv" style="display:none">
+            <form:form action="updateSchedule" method="post" modelAttribute="schedule">
+         <table class="table">
+            <tr>
+               <th>Candidate Name:</th>
+               <td>${schedule.candidate.name}</td>
+            </tr>
+            <tr>
+               <th>Candidate Experience:</th>
+               <td>${schedule.candidate.experience}</td>
+            </tr>
+            <tr>
+               <th>Interview Type:</th>
+               <td><form:select path="interviewType" items="${types}" /></td>
+            </tr>
+            <tr>
+               <th>Interview Round:</th>
+               <td><form:input path="round" value="${schedule.round}" readonly="true"/></td>
+            </tr>
+            <tr>
+               <th>Date:</th>
+               <td><input type="datetime-local" name="shdate" value="${schedule.dateTime}"/></td>
+            </tr>
+            <tr>
+               <c:if test="${schedule.interviewer != null}">
+	               <th>Interviewer:</th>
+	               <td>${schedule.interviewer.name}</td>
+               </c:if>
+	                 <th>Assign Interviewer</th>
+	                 <td>
+	                 	 <select name="interviewerId">
+	                 	     <option value="">None</option>
+	                 	     <c:forEach var="interviewer" items="${interviewers}">
+	                            <option value="${interviewer.id}">${interviewer.name}</option>
+	                        </c:forEach>
+	                 	 </select>
+	                 </td>
+                </tr>
+                <tr>
+               		<td>
+               			<input type="hidden" name="scheduleId" value="${schedule.id}"/>
+               			<input type="submit" value="Confirm">
+            		</td>
+               		<td><input type="reset" onclick="getRecruiter(this.value)" value="Cancel"/></td>
+           		</tr>
+         </table>
+        </form:form>
+      </div>
+      </div></div>
+         
    </body>
-      <script>
-         function getCommentBox(value) {
-              if(value === "Reschedule") {
-                  document.getElementById("rescheduleForm").style.display="block";
-                  document.getElementById("scheduleForm").style.display="none";
-                  document.getElementById("rescheduleButton").style.display="none";
-                  document.getElementById("cancelButton").style.display="none";
-                  document.getElementById("comment").style.display="none";
-                  
-              } else if(value === "Cancel Schedule") {
-                  document.getElementById("rescheduleForm").style.display="none";
-                  document.getElementById("scheduleForm").style.display="block";
-                  document.getElementById("rescheduleButton").style.display="none";
-                  document.getElementById("cancelButton").style.display="none";
-                  document.getElementById("comment").style.display="block";
-                  document.getElementById("confirm").style.display="block";
-                  document.getElementById("reset").style.display="block";
-                  
-              } else if(value === "Cancel") {
-                  document.getElementById("rescheduleForm").style.display="none";
-                  document.getElementById("scheduleForm").style.display="block";
-                  document.getElementById("rescheduleButton").style.display="block";
-                  document.getElementById("cancelButton").style.display="block";
-                  document.getElementById("comment").style.display="none";
-                  document.getElementById("confirm").style.display="none";
-                  document.getElementById("reset").style.display="none";
-                  
-              }
-         }
-      </script>
+   <script>
+      function assignInterviewer(scheduleId) {
+    	  var id = document.getElementById("assigned").value;
+    	  if (id != "0") {
+    	      location.href="assignInterviewer?scheduleId="+scheduleId+"&interviewerId="+id;
+    	  }
+      }
+      function getRecruiter(value) {
+           if(value === "Reschedule") {
+               document.getElementById("viewDiv").style.display="none";
+               document.getElementById("cancelDiv").style.display="none";
+               document.getElementById("updateDiv").style.display="none";
+               document.getElementById("rescheduleDiv").style.display="block";
+               
+           } else if(value === "Cancel Schedule") {
+               document.getElementById("viewDiv").style.display="none";
+               document.getElementById("cancelDiv").style.display="block";
+               document.getElementById("updateDiv").style.display="none";
+               document.getElementById("rescheduleDiv").style.display="none";
+               
+           } else if(value === "Cancel") {
+               document.getElementById("viewDiv").style.display="block";
+               document.getElementById("cancelDiv").style.display="none";
+               document.getElementById("updateDiv").style.display="none";
+               document.getElementById("rescheduleDiv").style.display="none";   
+           } else if(value === "Update") {
+               document.getElementById("viewDiv").style.display="none";
+               document.getElementById("cancelDiv").style.display="none";
+               document.getElementById("updateDiv").style.display="block";
+               document.getElementById("rescheduleDiv").style.display="none";
+               
+           }
+      }
+   </script>
 </html>
