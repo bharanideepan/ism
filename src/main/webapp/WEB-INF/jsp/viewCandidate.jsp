@@ -12,17 +12,16 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   
   <link rel="stylesheet" type="text/css" href="/css/popUp.css">
+  <link rel="stylesheet" type="text/css" href="/css/ism.css">
 </head>
-<body onload="currentStatus('${status}');">  
-      <%@ include file="header.jsp" %> 
-      
-      
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">ISM</a>
-    </div>
-    <ul class="nav navbar-nav">
+<body onload="currentStatus('${status}');">
+      <div class="col-md-12 col-md-offset-0">
+         <div class="fresh-table full-color-orange">
+            <div class="container-fluid">
+               <div class="navbar-header">
+                  <font class="navbar-brand">Interview Schedule Management</font>
+               </div>
+    <!-- <ul class="nav navbar-nav">
       <c:if test="${role == 'Manager'}">   
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Schedules <span class="caret"></span></a>
@@ -48,20 +47,55 @@
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Candidates <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="addCandidate">Add</a></li>
-          <li><a href="viewCandidates">View</a></li>
+          <li><a href="addCandidate"><span class="glyphicon glyphicon-plus"></span> Add Candidate</a></li>
+          <li><a href="viewCandidates">View Candidates</a></li>
         </ul>
       </li>
       </c:if>
       
       <li><a href="logout">Log Out</a></li>
-    </ul>
+    </ul> -->
   </div>
-</nav>
 
-
-    <div>
+            <div class="menu-bar">
+               <table class = "table">
+                  <c:if test="${role == 'Manager'}">
+                     <tr>
+                        <th><a href="declinedSchedules">Declined <span class="badge">${noOfDeclinedSchedules}</span></a></th>
+                     </tr>
+                     <tr>
+                        <th><a href="viewSchedulesByManager">All</a></th>
+                     </tr>
+                  </c:if>
+                  <c:if test="${role != 'Recruiter'}">
+                     <tr>
+                        <th><a href="newSchedules">New <span class="badge">${noOfNewSchedules}</span></a></th>
+                     </tr>
+                     <tr>
+                        <th><a href="pendingSchedules">Pending <span class="badge">${noOfPendingSchedules}</span></a></th>
+                     </tr>
+                  </c:if>
+                  <c:if test="${role == 'Recruiter'}">
+                     <tr>
+                        <th><a href="viewSchedules">Schedules</a></th>
+                     </tr>
+                     <tr>
+                        <th><a href="addCandidate"><span class="glyphicon glyphicon-plus"></span> Add Candidate</a></th>
+                     </tr>
+                     <tr>
+                        <th><a href="viewCandidates">View Candidates</a></th>
+                     </tr>
+                  </c:if>
+                  <tr>
+                     <th><a href="logout">Log Out</a></th>
+                  </tr>
+               </table>
+            </div>
+            <div class="table-div">
         <table class="table">
+            <tr>
+               <th colspan="4" align="center">Candidate Details</th>
+            </tr>
             <tr>
                <td>Name:</td>
                <td>${candidate.name}</td>
@@ -75,26 +109,6 @@
                <td>${candidate.department}</td>
             </tr>
             <tr>
-               <!--<td>Candidate status:</td>
-               <c:if test="${candidate.status != 'New' && candidate.status != 'Pending'}">
-                  <c:forEach var="schedule" items="${schedules}">
-                     <c:set var="status" value="${schedule.round}" scope="page"/>
-                  </c:forEach>
-               <td>Cleared round ${status}</td>
-               </c:if>
-               <c:if test="${candidate.status == 'New' || candidate.status == 'Pending'}">
-                   <c:if test="${schedule.round == '0'}">  
-                     <td>${candidate.status}</td>
-                   </c:if>
-                   <c:if test="${schedule.round != '0'}">
-                     <c:forEach var="schedule" items="${schedules}">
-                       <c:set var="status" value="${schedule.round}" scope="page"/>
-                     </c:forEach>
-                     <td>Cleared round ${status}</td>
-                   </c:if>
-               </c:if>-->
-            </tr>
-            <tr>
                <td>Experience:</td>
                <td>${candidate.experience}</td>
             </tr>
@@ -105,11 +119,15 @@
             <tr>
                <td>Resume:</td>
                <td><a href="${candidate.resumeFilePath}" target="_blank"><span class="glyphicon glyphicon-download-alt"></span></a></td>
+            </tr>
+            </table></div>
+               <div class="table-div-schedules">
+            <c:if test="${schedules != null}">
+               <c:if test="${!schedules.isEmpty()}">
+            <table class="table">
             <tr>
                <th colspan="4" align="center">Interview Details</th>
             </tr>
-            <c:if test="${schedules != null}">
-               <c:if test="${!schedules.isEmpty()}">
                   <tr>
                      <th>SI.No</th>
                      <th>Round</th>
@@ -131,36 +149,11 @@
                      </tr>
                      <c:set var="siNo" value="${siNo + 1}" scope="page"/>
                   </c:forEach>
-                    <!-- 
-                  <c:if test="${check != 1}"><tr>
-                        <th><button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">
-                           &#x1F4C5;
-                           </button>
-                        </th>
-                     </tr>
-                  </c:if> --> 
-               </c:if>
-               <c:if test="${schedules.isEmpty()}">
-                  <tr>
-                     <th>No schedules
-                        <!-- <button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">
-                        &#x1F4C5;
-                        </button> -->
-                     </th>
-                  </tr>
-               </c:if>
-            </c:if>
-            <c:if test="${schedules == null}">
-               <tr>
-                  <th>No schedules
-                        <!-- <button class = "schedule" onclick="location.href='scheduleForm?candidateId=${candidate.id}';">
-                        &#x1F4C5;
-                        </button> -->
-                  </th>
-               </tr>
-            </c:if>
          </table>
-      </div>
+               </c:if>
+            </c:if>
+            </div></div></div>
+            
       <div id="pass">
          <div class="modal-content">
             <div id="created">Created Successfully</div>

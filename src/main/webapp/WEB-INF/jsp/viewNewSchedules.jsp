@@ -11,16 +11,17 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   
     <link rel="stylesheet" type="text/css" href="/css/popUp.css">
+      
+      <link rel="stylesheet" type="text/css" href="/css/ism.css">
 </head>
-<body>
-<%@ include file="header.jsp" %> 
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">ISM</a>
-    </div>
-    <ul class="nav navbar-nav">
+<body>  
+      <div class="col-md-12 col-md-offset-0">
+         <div class="fresh-table full-color-orange">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                     <font class="navbar-brand">Interview Schedule Management</font>
+                  </div>
+  <!-- <ul class="nav navbar-nav">
       <c:if test="${role == 'Manager'}">   
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Schedules <span class="caret"></span></a>
@@ -29,9 +30,6 @@
           <li><a href="viewSchedulesByManager">All</a></li>
         </ul>
       </li>
-      </c:if>
-      
-      <c:if test="${role != 'Recruiter'}">    
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Your Schedules <span class="caret"></span></a>
         <ul class="dropdown-menu">
@@ -40,12 +38,58 @@
         </ul>
       </li>
       </c:if>
+      
+      <c:if test="${role == 'Recruiter'}">
+      <li><a href="viewSchedules">Schedules</a></li>      
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Candidates <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="addCandidate">Add</a></li>
+          <li><a href="viewCandidates">View</a></li>
+        </ul>
+      </li>
+      </c:if>
       <li><a href="logout">Log Out</a></li>
-    </ul>
+    </ul> -->  
   </div>
-</nav>
+               
+            <div class="menu-bar">
+               <table class = "table">
+                  <c:if test="${role == 'Manager'}">
+                     <tr>
+                        <th><a href="declinedSchedules">Declined <span class="badge">${noOfDeclinedSchedules}</span></a></th>
+                     </tr>
+                     <tr>
+                        <th><a href="viewSchedulesByManager">All</a></th>
+                     </tr>
+                  </c:if>
+                  <c:if test="${role != 'Recruiter'}">
+                     <tr>
+                        <th><a href="newSchedules">New <span class="badge">${noOfNewSchedules}</span></a></th>
+                     </tr>
+                     <tr>
+                        <th><a href="pendingSchedules">Pending <span class="badge">${noOfPendingSchedules}</span></a></th>
+                     </tr>
+                  </c:if>
+                  <c:if test="${role == 'Recruiter'}">
+                     <tr>
+                        <th><a href="viewSchedules">Schedules</a></th>
+                     </tr>
+                     <tr>
+                        <th><a href="addCandidate"><span class="glyphicon glyphicon-plus"></span> Add Candidate</a></th>
+                     </tr>
+                     <tr>
+                        <th><a href="viewCandidates">View Candidates</a></th>
+                     </tr>
+                  </c:if>
+                  <tr>
+                     <th><a href="logout">Log Out</a></th>
+                  </tr>
+               </table>
+            </div>
+
         
-      <div>
+      <div class="table-div">
          <c:if test="${schedules != null}">
             <c:if test="${!schedules.isEmpty()}">
                <table class = "table">
@@ -73,12 +117,12 @@
                         <td>${schedule.date}</td>
                         <td>${schedule.time}</td>
                         <td > 
-                           <button class = "accept" 
+                           <button class = "form-control" 
                               onclick="location.href='acceptSchedule?scheduleId=${schedule.id}&candidateId=${schedule.candidate.id}&id=${schedule.interviewer.id}';">&#10004;
                            </button>
                         </td>
                         <td>
-                           <button class = "reject"
+                           <button class = "form-control"
                               onclick="getComment('${schedule.interviewer.id}', '${schedule.id}', '${schedule.candidate.id}')">&times;
                            </button>
                         </td>
@@ -109,7 +153,7 @@
                </tr>
             </table>
          </c:if>
-      </div>
+      </div></div></div>
       <script type="text/javascript">
          function getComment(employeeId , scheduleId, candidateId) {
              var modal = document.getElementById("pass");
