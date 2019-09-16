@@ -47,7 +47,6 @@
                       column[5].innerHTML = array[j].experience; 
                       column[6].innerHTML = array[j].status
                       column[7].style.display =''; 
-                      column[8].style.display =''; 
                       column[7].innerHTML =''; 
                       if(('New' == array[j].status) || ('Cleared' == array[j].status)) { 
                           var scheduleBtn = document.createElement("BUTTON");
@@ -57,13 +56,9 @@
                           scheduleBtn.setAttribute("onclick", "scheduleCandidate("+candidateId+");");
                           column[7].appendChild(scheduleBtn);
                       }
-                      column[8].innerHTML =''; 
-                      var editBtn = document.createElement("BUTTON");
-                      editBtn.id ='ebtn';
-                      editBtn.innerHTML = "&#128065";
-                      editBtn.setAttribute("class", "editButton");
-                      editBtn.setAttribute("onclick", "onEdit("+candidateId+");");
-                      column[8].appendChild(editBtn); 
+                      var recordBtn = "&#9776;";
+                      var recordBtnLink = recordBtn.link("viewProgress?id="+candidateId);
+                      column[8].innerHTML = recordBtnLink;
                       j = j + 1;
                    }
                    for (var i=array.length+1 ; i<=10; i++) {
@@ -77,7 +72,7 @@
                       column[5].innerHTML = "";
                       column[6].innerHTML = "";
                       column[7].style.display ='none'; 
-                      column[8].style.display ='none'; 
+                      column[8].innerHTML = "";
                    }   
               } else {
                    console.log('Something went wrong..!!');
