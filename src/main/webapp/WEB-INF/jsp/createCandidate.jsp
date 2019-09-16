@@ -73,7 +73,8 @@
         </tr>
         <tr><td>Email Id * :</td>
           <td>
-          <form:input class="form-control" type ="email" value="${candidate.emailId}" path="emailId" required="required"/>
+          <form:input class="form-control" type ="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+          		value="${candidate.emailId}" path="emailId" required="required"/>
           </td>
         </tr>
         <tr><td>Position * :</td>
@@ -83,7 +84,8 @@
         </tr>
         <tr><td>Department:</td>
           <td>
-          <form:select class="select" required="required" path="department" value="${candidate.department}" items="${candidateFormInfo.departments}"/>
+          <form:select class="select" required="required" path="department" value="${candidate.department}"
+          		items="${candidateFormInfo.departments}"/>
           </td>
         </tr>
         <tr><td>Technology:</td>

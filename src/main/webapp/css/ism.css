@@ -119,6 +119,17 @@ background-color:  #ffb33b;
   border-left-width:0px;
   border-bottom-width:0px;
  }
+.reschedule-div-single{
+	width:50%;
+  height:100%;
+  overflow-y:auto;
+  margin:-0% 0 0 20%;
+  border:2px solid #bf923f;
+  border-top-width:1px;
+  border-right-width:0px;
+  border-left-width:0px;
+  border-bottom-width:0px;
+ }
 .table-div-signup{
 	width:35%;
   height:100%;

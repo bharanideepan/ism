@@ -88,10 +88,10 @@
                   </td>
                </tr>
                      <tr>
-                        <td><input class="form-control" type="reset" value="Clear"></td>
+                        <td><input class = "btn btn-primary" style=" background-color:#B22222;" type="reset" value="Clear"></td>
                         <td>
                            <input type="hidden" name="candidateId" value="${candidate.id}"/>
-                           <input class="form-control" type="submit" value="Submit">
+                           <input class = "btn btn-primary" type="submit" value="Submit">
                         </td>
                      </tr>
                   </table>

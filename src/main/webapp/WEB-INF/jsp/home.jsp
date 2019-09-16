@@ -391,7 +391,7 @@
 			    <label for="pwd">Password:</label>
 			    <form:input type="password" placeholder="Password" path="password" class="form-control"/>
 			  </div><br>
-			  <div align="center;"><input type="submit" onclick="login()" class="btn btn-primary" value="Login">
+			  <div align="center;"><button type="submit" onclick="login()" class="btn btn-primary">Login</button>
                 <button id ="close" style="float:right; background-color:#B22222;" class="btn btn-primary">Close</button>
               </div>
 			</form:form>
