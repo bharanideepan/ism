@@ -130,7 +130,7 @@
                         <div class="modal-content">
                            <div>Comment</div>
                            <textarea id="feedback" name="feedback"></textarea><br>
-                           <input type="submit" id="saveComment" value="ok"/>
+                           <input type="submit" id="saveComment" value="ok" class="btn btn-primary"/>
                         </div>
                      </div>
                      <c:set var="sNumber" value="${sNumber+1}" scope="page"/>

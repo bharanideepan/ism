@@ -134,7 +134,7 @@
                   <div class="modal-content">
                      <div>Comment</div>
                      <textarea id="feedback"/></textarea><br>
-                     <input type="submit" id="saveComment" value="ok"/>
+                     <input class="btn btn-primary" type="submit" id="saveComment" value="ok"/>
                   </div>
                </div>
             </c:if>
