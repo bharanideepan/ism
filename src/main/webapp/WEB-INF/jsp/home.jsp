@@ -14,7 +14,6 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
       <link rel="stylesheet" href="/css/user.css"/>
-<<<<<<< HEAD
   <style>
   body {
     font: 400 15px Lato, sans-serif;
@@ -246,12 +245,7 @@
         <li><a href="#services">HELP</a></li>
         <li><a href="#features">FEATURE</a></li>
         <li><a href="#contact">CONTACT</a></li>
-        <c:if test="${role != null}">
-            <li><a href="logout">LOGOUT</a></li>
-        </c:if>
-        <c:if test="${role == null}">
             <li><a onclick="loginForm()">LOGIN</a></li>
-        </c:if>
       </ul>
     </div>
   </div>
@@ -393,7 +387,7 @@
 			    <form:input type="password" placeholder="Password" path="password" class="form-control"/>
 			  </div><br>
 			  <div align="center;"><button type="submit" onclick="login()" class="btn btn-primary">Login</button>
-                <button id ="close" style="float:right; background-color:#B22222;" class="btn btn-primary">Close</button>
+                <input type="button" id ="close" style="float:right; background-color:#B22222;" class="btn btn-primary" value="Close">
               </div>
 			</form:form>
 		</div>
