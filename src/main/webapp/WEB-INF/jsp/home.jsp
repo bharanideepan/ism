@@ -246,12 +246,7 @@
         <li><a href="#services">HELP</a></li>
         <li><a href="#features">FEATURE</a></li>
         <li><a href="#contact">CONTACT</a></li>
-        <c:if test="${role != null}">
-            <li><a href="logout">LOGOUT</a></li>
-        </c:if>
-        <c:if test="${role == null}">
-            <li><a onclick="loginForm()">LOGIN</a></li>
-        </c:if>
+        <li><a onclick="loginForm()">LOGIN</a></li>
       </ul>
     </div>
   </div>
@@ -379,7 +374,7 @@
   <a href="#myPage" title="To Top">
     <span class="glyphicon glyphicon-chevron-up"></span>
   </a>
-  <p>Visit our page <a href="https://www.ideas2it.com" title="Visit w3schools">Copyrights &copy; Ideas2It</a></p>
+  <p>Visit our page <a href="https://www.ideas2it.com" title="Visiti Ideas2It">Copyrights &copy; Ideas2It</a></p>
 </footer>
 	    <div id="loginForm" class="loginform">
 	       <div class="bg">
@@ -392,16 +387,21 @@
 			    <label for="pwd">Password:</label>
 			    <form:input type="password" placeholder="Password" path="password" class="form-control"/>
 			  </div><br>
-			  <div align="center;"><input type="submit" onclick="login()" class="btn btn-primary" value="Login">
-                <button id ="close" style="float:right; background-color:#B22222;" class="btn btn-primary">Close</button>
-              </div>
-			</form:form>
+			  <div align="center">
+			    <input  type="submit" onclick="login()" class="btn btn-primary" value="Login">
+			  </div>
+			</form:form>	   
 		</div>
 		</div>
 <script>
 function loginForm() {
 	var form = document.getElementById('loginForm');
 	form.style.display="block";
+    window.onclick = function(event) {
+        if (event.target == form) {
+        	form.style.display = "none";
+        }
+    }
 }
 function login() {
 	var form = document.getElementById('loginUser');
