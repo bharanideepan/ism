@@ -7,6 +7,7 @@ package com.ideas2it.ism.common;
  * @date-04/09/19
  */
 public enum Technology {
+	None,
     Java,
     NodeJs,
     Angular,

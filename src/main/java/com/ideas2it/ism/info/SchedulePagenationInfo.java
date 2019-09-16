@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.common.Technology;
+import com.ideas2it.ism.entity.Employee;
 
 public class SchedulePagenationInfo {
 	private int totalCount;
@@ -12,6 +13,7 @@ public class SchedulePagenationInfo {
 	private String date; 
 	private String searchedDate; 
 	private Technology technology;
+	private List<Employee> interviewers;
 	private List<ScheduleInfo> scheduleInfos;
 	private List<Integer> pages;
 
@@ -54,6 +56,14 @@ public class SchedulePagenationInfo {
 
 	public void setTechnology(Technology technology) {
 		this.technology = technology;
+	}
+
+	public List<Employee> getInterviewers() {
+		return interviewers;
+	}
+
+	public void setInterviewers(List<Employee> interviewers) {
+		this.interviewers = interviewers;
 	}
 
 	public List<ScheduleInfo> getScheduleInfos() {

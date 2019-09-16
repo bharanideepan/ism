@@ -276,6 +276,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		    pagenationInfo.setTotalCount(count);
 		}
 		pagenationInfo.setTechnology(technology);
+		pagenationInfo.setInterviewers(employeeService.getEmployeesByTechnology(technology));
         return pagenationInfo;
 	}
 

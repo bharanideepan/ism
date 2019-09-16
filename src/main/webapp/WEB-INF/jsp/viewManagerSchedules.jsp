@@ -100,14 +100,15 @@
                         <td>${schedule.date}</td>
                         <td>${schedule.time}</td>
                         <td>${schedule.status}</td>
-                        <c:choose>
-                           <c:when test="${schedule.interviewer != null}">
-                              <td>${schedule.interviewer.name}</td>
-                           </c:when>
-                           <c:otherwise>
-                              <td>Not assigned</td>
-                           </c:otherwise>
-                        </c:choose>
+                        <td>
+                  	     <select  id="assigned" class="select" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
+                  	             <option value="${schedule.interviewer.id}">${schedule.interviewer.name}</option>
+                  	             <c:forEach var="interviewer" items="${pagenationInfo.interviewers}">
+                                 <option  
+                                     value="${interviewer.id}">${interviewer.name}</option>
+                                 </c:forEach>
+                  	     </select>
+                  	    </td>
                         <td>
         <a href="getScheduleWithInterviewers?scheduleId=${schedule.id}">&#9776;</a></td>
                      </tr>

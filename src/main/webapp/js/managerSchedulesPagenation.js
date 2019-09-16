@@ -82,3 +82,9 @@
   function onRecord(scheduleId) {
       location.href="getScheduleWithInterviewers?scheduleId="+scheduleId;
   }
+  function assignInterviewer(scheduleId) {
+	  var id = document.getElementById("assigned").value;
+	  if (id != "0") {
+	      location.href="assignInterviewer?scheduleId="+scheduleId+"&interviewerId="+id;
+	  }
+  }
