@@ -50,13 +50,9 @@
                       } else {
                     	  column[6].innerHTML = "Not Assigned";
                       }
-                      column[7].style.display ='';  
-                      column[7].innerHTML =''; 
-                      var recordBtn = document.createElement("BUTTON");
-                      recordBtn.id ='recBtn';
-                      recordBtn.innerHTML = "&#9776;";
-                      recordBtn.setAttribute("onclick", "onRecord("+scheduleId+");");
-                      column[7].appendChild(recordBtn); 
+                      var recordLink = "&#9776;";
+                      var record = recordLink.link("getScheduleWithInterviewers?scheduleId="+scheduleId);
+                      column[7].innerHTML = record;
                       j = j + 1;
                    }
                    for (var i=array.length+1 ; i<=10; i++) {
@@ -69,7 +65,7 @@
                       column[4].innerHTML = "";
                       column[5].innerHTML = "";
                       column[6].innerHTML = "";
-                      column[7].style.display ='none'; 
+                      column[7].innerHTML = "";
                    }   
               } else {
                    console.log('Something went wrong..!!');
