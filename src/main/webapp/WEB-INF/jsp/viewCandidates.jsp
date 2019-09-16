@@ -31,14 +31,12 @@
                   <li><a href="logout">Log Out</a></li>
                   </ul>    -->
                <form class="navbar-form navbar-right">
-                  <div class="select">
-                     <select class="status" id="candidateStatus" name="result"  onclick="getByStatus();">
+                     <select class="select" class="status" id="candidateStatus" name="result"  onclick="getByStatus();">
                         <option value="${candidateStatus}">${candidateStatus}</option>
                         <c:forEach var="result" items="${pagenationInfo.results}" >
                            <option value="${result}">${result}</option>
                         </c:forEach>
                      </select>
-                  </div>
                </form>
             </div>
             <div>

@@ -125,22 +125,20 @@
                <c:if test="${schedule.interviewer == null}">
                   <th>Assign Interviewer:</th>
                   <td>
-                  <div class="select">
-                  	 <select id="assigned" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
-                  	     <option value="0">None</option>
-                  	     <c:forEach var="interviewer" items="${interviewers}">
+                  	 <select class="select" id="assigned" name="interviewerId" onclick="assignInterviewer(${schedule.id})">
+                  	    <option value="0">None</option>
+                  	    <c:forEach var="interviewer" items="${interviewers}">
                              <option value="${interviewer.id}">${interviewer.name}</option>
                          </c:forEach>
                   	 </select>
-               	 </div>
                   </td>
                </c:if>
             </tr>
             <c:if test="${role == 'Recruiter' && !(schedule.status == 'Selected' || schedule.status == 'Rejected')}">
                <tr>
-                  <td><input type="button" class="form-control" value="Reschedule"/></td>
-                  <td><input type="button" class="form-control" value="Update"></td>
-                  <td><input type="button" class="form-control" value="Cancel Schedule"></td>
+                  <td><input class = "btn btn-primary" type="button" onclick="getRecruiter(this.value)" class="form-control" value="Reschedule"/></td>
+                  <td><input class = "btn btn-primary" type="button" onclick="getRecruiter(this.value)" class="form-control" value="Update"></td>
+                  <td><input class = "btn btn-primary" style=" background-color:#B22222;" type="button" onclick="getRecruiter(this.value)" class="form-control" value="Cancel Schedule"></td>
                </tr>
             </c:if>
             </table></div>
@@ -160,22 +158,22 @@
             </c:if>
       </div>
          
-         <div class="table-div-single" id="cancelDiv" style="display:none">
+         <div class="reschedule-div-single" id="cancelDiv" style="display:none">
             <form action="cancelSchedule" method="post">
             <table class="table">
                <tr>
-                  <td><textarea name="comment" placeHolder="Reason" required></textarea></td>
+                  <td><textarea class="form-control" name="comment" placeHolder="Reason" required></textarea></td>
                </tr>
                <tr>
                   <td><input type="hidden" name="scheduleId" value="${schedule.id}"/>
-                  		<input type="submit" value="Confirm"/></td>
-                  <td><input type="reset" onclick="getRecruiter(this.value)" value="Cancel"></td>
+                  		<input class = "btn btn-primary" type="submit" value="Confirm"/>
+                  		<input class = "btn btn-primary" style="align:center; background-color:#B22222;" type="reset" onclick="getRecruiter(this.value)" value="Cancel"></td>
                </tr>
                </table>
             </form>
          </div>
          
-      <div class ="table-div-single" id="rescheduleDiv" style="display:none">
+      <div class ="reschedule-div-single" id="rescheduleDiv" style="display:none">
             <form:form action="reschedule" method="post" modelAttribute="newSchedule">
          <table class="table">
             <tr>
@@ -188,28 +186,36 @@
             </tr>
             <tr>
                <th>Interview Type:</th>
-               <td><form:select path="interviewType" items="${types}" /></td>
+               <td><form:select class="select" path="interviewType" items="${types}" /></td>
             </tr>
             <tr>
                <th>Interview Round:</th>
-               <td><form:input path="round" value="${schedule.round}" readonly="true" /></td>
+               <td><form:input class="form-control" path="round" value="${schedule.round}" readonly="true" /></td>
             </tr>
             <tr>
                <th>Date:</th>
-               <td><input type="datetime-local" name="shdate" value="${schedule.dateTime}"/></td>
+               <td><input class="form-control" type="datetime-local" name="shdate" value="${schedule.dateTime}"/></td>
             </tr>
             <tr>
                <th>Reason:</th>
-               <td><textarea name="comment" required></textarea></td>
+               <td><textarea name="comment" class="form-control" required></textarea></td>
             </tr>
             <tr>
                <c:if test="${schedule.interviewer != null}">
 	               <th>Interviewer:</th>
 	               <td>${schedule.interviewer.name}</td>
                </c:if>
-	                 <th>Assign Interviewer</th>
+               </tr>
+               <tr>
+               <c:if test="${schedule.interviewer == null}">
+	              <th>Assign Interviewer</th>
+               </c:if>
+               <c:if test="${schedule.interviewer != null}">
+	              <th>Change Interviewer</th>
+               </c:if>
+	                 
 	                 <td>
-	                 	 <select name="interviewerId">
+	                 	 <select name="interviewerId" class="select">
 	                 	     <option value="">None</option>
 	                 	     <c:forEach var="interviewer" items="${interviewers}">
 	                            <option value="${interviewer.id}">${interviewer.name}</option>
@@ -221,17 +227,17 @@
                		<td>
               			<input type="hidden" name="candidateId" value="${candidate.id}"/>
                			<input type="hidden" name="scheduleId" value="${schedule.id}"/>
-               			<input type="submit" value="Confirm">
+               			<input class = "btn btn-primary" type="submit" value="Confirm">
           			</td>
                		<td>
-               			<input type="reset" value="Cancel" onclick="getRecruiter(this.value)">
+               			<input class = "btn btn-primary" style=" background-color:#B22222;" type="reset" value="Cancel" onclick="getRecruiter(this.value)">
           			</td>
            		</tr>
          </table>
         </form:form>
       </div>
          
-      <div class ="table-div-single" id="updateDiv" style="display:none">
+      <div class ="reschedule-div-single" id="updateDiv" style="display:none">
             <form:form action="updateSchedule" method="post" modelAttribute="schedule">
          <table class="table">
             <tr>
@@ -244,24 +250,31 @@
             </tr>
             <tr>
                <th>Interview Type:</th>
-               <td><form:select path="interviewType" items="${types}" /></td>
+               <td><form:select class="select" path="interviewType" items="${types}" /></td>
             </tr>
             <tr>
                <th>Interview Round:</th>
-               <td><form:input path="round" value="${schedule.round}" readonly="true"/></td>
+               <td><form:input class="form-control" path="round" value="${schedule.round}" readonly="true"/></td>
             </tr>
             <tr>
                <th>Date:</th>
-               <td><input type="datetime-local" name="shdate" value="${schedule.dateTime}"/></td>
+               <td><input type="datetime-local" class="form-control" name="shdate" value="${schedule.dateTime}"/></td>
             </tr>
             <tr>
                <c:if test="${schedule.interviewer != null}">
 	               <th>Interviewer:</th>
 	               <td>${schedule.interviewer.name}</td>
                </c:if>
-	                 <th>Assign Interviewer</th>
+               </tr>
+               <tr>
+               <c:if test="${schedule.interviewer == null}">
+	              <th>Assign Interviewer</th>
+               </c:if>
+               <c:if test="${schedule.interviewer != null}">
+	              <th>Change Interviewer</th>
+               </c:if>
 	                 <td>
-	                 	 <select name="interviewerId">
+	                 	 <select name="interviewerId" class="select">
 	                 	     <option value="">None</option>
 	                 	     <c:forEach var="interviewer" items="${interviewers}">
 	                            <option value="${interviewer.id}">${interviewer.name}</option>
@@ -272,9 +285,9 @@
                 <tr>
                		<td>
                			<input type="hidden" name="scheduleId" value="${schedule.id}"/>
-               			<input type="submit" value="Confirm">
+               			<input class = "btn btn-primary" type="submit" value="Confirm">
             		</td>
-               		<td><input type="reset" onclick="getRecruiter(this.value)" value="Cancel"/></td>
+               		<td><input class = "btn btn-primary" style=" background-color:#B22222;" type="reset" onclick="getRecruiter(this.value)" value="Cancel"/></td>
            		</tr>
          </table>
         </form:form>

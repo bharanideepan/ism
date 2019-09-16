@@ -117,12 +117,12 @@
                         <td>${schedule.date}</td>
                         <td>${schedule.time}</td>
                         <td > 
-                           <button class = "form-control" 
+                           <button class = "btn btn-primary" 
                               onclick="location.href='acceptSchedule?scheduleId=${schedule.id}&candidateId=${schedule.candidate.id}&id=${schedule.interviewer.id}';">&#10004;
                            </button>
                         </td>
                         <td>
-                           <button class = "form-control"
+                           <button class = "btn btn-primary" style=" background-color:#B22222;"
                               onclick="getComment('${schedule.interviewer.id}', '${schedule.id}', '${schedule.candidate.id}')">&times;
                            </button>
                         </td>

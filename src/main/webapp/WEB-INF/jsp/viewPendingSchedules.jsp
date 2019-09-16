@@ -116,12 +116,12 @@
                         <td>${schedule.date}</td>
                         <td>${schedule.time}</td>
                         <td > 
-                           <button class = "form-control" 
+                           <button class = "btn btn-primary" 
                               onclick="getComment('selected','${schedule.id}');">&#10004;
                            </button>
                         </td>
                         <td>
-                           <button class = "form-control"
+                           <button class = "btn btn-primary" style=" background-color:#B22222;"
                               onclick="getComment('rejected', '${schedule.id}');">&times;
                            </button>
                         </td>
