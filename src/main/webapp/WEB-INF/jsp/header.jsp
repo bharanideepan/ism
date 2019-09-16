@@ -9,9 +9,6 @@
 </head>
 <body>
       <div class="flex">
-        <div class="logo">
-           	<img src="/image/logo.png" width="200px" height="50px"/>
-        </div>
         <div class="box" >
            	<h2 align="center" >Interview Schedule Management</h2>
         </div>
