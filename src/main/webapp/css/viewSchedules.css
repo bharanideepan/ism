@@ -15,8 +15,13 @@
         border: none;
         border-radius: 20px;
         box-shadow: 10px 10px 5px grey; 
-        background:linear-gradient(to right, #ffefba, #ffffff);
+        background:linear-gradient(to top, #dad299, #b0dab9); 
      }
+     
+     #dateSearch {
+        margin: 2%;
+     }
+     
     #container {height: 100%; width:100%; font-size: 0;}
     #home, #left, #middle, #right {display: inline-block; *display: inline; zoom: 1; vertical-align: top; font-size: 12px;}
     #home {width: 20%; }

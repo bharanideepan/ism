@@ -23,4 +23,13 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	@Query("SELECT e FROM Employee e WHERE technology = :technology and is_interviewer = 1")
 	List<Employee> fetchEmployeesByTechnology(Technology technology);
 
+    /**
+     * Get list of employees to show while creating a new user. Employees
+     * who does not have an user account are fetched.
+     * 
+     * @return employees - List of employees who dont have an user account.
+     */
+	@Query("SELECT e FROM Employee e WHERE user_id = null")
+	List<Employee> getNewEmployees();
+
 }

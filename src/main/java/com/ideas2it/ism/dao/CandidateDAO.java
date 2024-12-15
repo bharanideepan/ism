@@ -6,6 +6,16 @@ import com.ideas2it.ism.common.Result;
 import com.ideas2it.ism.entity.Candidate;
 import com.ideas2it.ism.exception.IsmException;
 
+
+/**
+ * This layer act as an intermediate between DB and 
+ * our project. This layer interacts with the Candidate 
+ * table. It enable us to perform all required actions 
+ * to be done in DB.
+ * 
+ * @author M.Mani Bharathi
+ *
+ */
 public interface CandidateDAO {
 	
 	/**
