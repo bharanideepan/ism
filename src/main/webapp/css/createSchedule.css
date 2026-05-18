@@ -11,13 +11,14 @@ a:link {
      }
      .table {
         margin: auto;
-        width:400px;
-        height:500px;
+        width: 30%;
+        height: 400px;
+        margin-top: 3%;
         border: none;
         border-radius: 20px;
         box-shadow: 10px 10px 5px grey; 
         background:linear-gradient(to top, #dad299, #b0dab9); 
-        padding: 10px;
+        padding: 20px;
      }
     
   #save {
@@ -29,3 +30,17 @@ a:link {
   .td {
     color:goldenrod;
   }
+  
+  .flex {
+    display:flex;
+    flex-wrap:nowrap;
+  }
+  .box {
+    width:50%;
+  }  
+  
+     #background{
+       background-image: url("/image/login1.jpeg");
+       background-repeat: no-repeat;
+       background-size: 100% 700px;
+   }

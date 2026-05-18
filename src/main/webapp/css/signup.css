@@ -1,0 +1,75 @@
+
+.button {
+  padding: 10px;
+  width: 80px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  box-shadow: 0 5px #999;
+  margin:10px;
+}
+
+.info {
+	width: 200px;
+	font-family: verdana;
+	margin: 10px;
+}
+.ans{
+	width:200px;
+	box-shadow: 0 5px #666;
+	margin: 10px;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.role {
+	width:100px;
+	margin: 10px;
+	heigth: 50px;
+    border: none;
+    box-shadow: 5px 5px 5px grey; 
+    border-radius: 3px;
+}
+     .table {
+        margin: auto;
+        margin-top: 5%;
+        width:300px;
+        height:400px;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 10px 10px 5px grey; 
+        background:linear-gradient(to top, #dad299, #b0dab9);
+        padding: 10px; 
+     }
+
+   #login{
+       background-image: url("/image/login1.jpeg");
+       background-repeat: no-repeat;
+       background-size: 100% 700px;
+   }
+   #heading{
+  	position:relative;
+  	top:-50px;
+  	left:400px;
+  }
+  
+  #logo{
+  	position:relative;
+  	top:20px;
+  	left:0px;
+  }
+  
+  #header{
+  	height:75px;
+  	font-size:20px;
+  }@charset "UTF-8";
+  
